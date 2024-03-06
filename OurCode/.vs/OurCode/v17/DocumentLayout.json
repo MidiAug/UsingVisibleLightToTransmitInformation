@@ -1,0 +1,37 @@
+{
+  "Version": 1,
+  "WorkspaceRootPath": "D:\\Project\\GitHub\\UsingVisibleLightToTransmitInformation\\OurCode\\",
+  "Documents": [
+    {
+      "AbsoluteMoniker": "D:0:0:{39E937BB-EC0C-4A44-AF5D-9267A0F44544}|OurCode.vcxproj|D:\\Project\\GitHub\\UsingVisibleLightToTransmitInformation\\OurCode\\OurCode.cpp||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}",
+      "RelativeMoniker": "D:0:0:{39E937BB-EC0C-4A44-AF5D-9267A0F44544}|OurCode.vcxproj|solutionrelative:OurCode.cpp||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}"
+    }
+  ],
+  "DocumentGroupContainers": [
+    {
+      "Orientation": 0,
+      "VerticalTabListWidth": 256,
+      "DocumentGroups": [
+        {
+          "DockedWidth": 200,
+          "SelectedChildIndex": 0,
+          "Children": [
+            {
+              "$type": "Document",
+              "DocumentIndex": 0,
+              "Title": "OurCode.cpp",
+              "DocumentMoniker": "D:\\Project\\GitHub\\UsingVisibleLightToTransmitInformation\\OurCode\\OurCode.cpp",
+              "RelativeDocumentMoniker": "OurCode.cpp",
+              "ToolTip": "D:\\Project\\GitHub\\UsingVisibleLightToTransmitInformation\\OurCode\\OurCode.cpp",
+              "RelativeToolTip": "OurCode.cpp",
+              "ViewState": "AQIAAAAAAAAAAAAAAAAAAAgAAAABAAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000677|",
+              "WhenOpened": "2024-03-06T13:45:37.93Z",
+              "EditorCaption": ""
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}
