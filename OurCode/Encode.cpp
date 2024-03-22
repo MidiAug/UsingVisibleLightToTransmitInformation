@@ -105,17 +105,30 @@ namespace Code
 	// 使用海明码生成校验位
 	uint16_t CalCheckCode(const unsigned char* info, int len, bool isStart, bool isEnd, uint16_t frameBase)
 	{
-		uint16_t ans = 0;
-		int cutlen = (len / 2) * 2;
-		for (int i = 0; i < cutlen; i += 2)
-			ans ^= ((uint16_t)info[i] << 8) | info[i + 1];
-		if (len & 1)
-			ans ^= (uint16_t)info[cutlen] << 8;
-		ans ^= len;
-		ans ^= frameBase;
+		// 转换输入数据为比特序列
+		std::vector<int> data;
+		for (int i = 0; i < len; ++i) {
+			for (int j = 7; j >= 0; --j) {
+				data.push_back((info[i] >> j) & 1);
+			}
+		}
+
+		// 生成海明码
+		std::vector<int> hammingCode = generateHammingCode(data);
+
+		// 转换海明码为整数类型
+		uint16_t checkCode = 0;
+		for (int i = 0; i < hammingCode.size(); ++i) {
+			checkCode |= hammingCode[i] << i;
+		}
+
+		// 添加其他校验信息
+		checkCode ^= len;
+		checkCode ^= frameBase;
 		uint16_t temp = (isStart << 1) + isEnd;
-		ans ^= temp;
-		return ans;
+		checkCode ^= temp;
+
+		return checkCode;
 	}
 
 	void BulidCheckCodeAndFrameNo(Mat& mat, uint16_t checkcode, uint16_t FrameNo)
@@ -361,7 +374,7 @@ int main() {
 	vector<char> buffer(len);
 	file.read(buffer.data(), len);
 	file.close();
-	cout << buffer.data();
+
 	// 保存路径为当前文件夹，输出格式为png
 	const char* savePath = "./";
 	const char* outputFormat = "png";
