@@ -37,15 +37,15 @@ int main()
 	//	cout << "摄像头打开失败!" << endl;
 	//	return -1;
 	//}
-	std::string inputVideoPath = "D:\\computer network\\project1\\ff&opencx\\111.mp4";
-	std::string outputFolderPath = "D:\\computer network\\project1\\img\\";
+	//std::string inputVideoPath = "D:\\computer network\\project1\\ff&opencx\\111.mp4";
+	//std::string outputFolderPath = "D:\\computer network\\project1\\img\\";
 
-	if (VideoProcessing::convertVideoToFrames(inputVideoPath, outputFolderPath)) {
-		std::cout << "Video frames conversion complete." << std::endl;
-	}
-	else {
-		std::cerr << "Error converting video frames." << std::endl;
-	}
+	//if (VideoProcessing::convertVideoToFrames(inputVideoPath, outputFolderPath)) {
+	//	std::cout << "Video frames conversion complete." << std::endl;
+	//}
+	//else {
+	//	std::cerr << "Error converting video frames." << std::endl;
+	//}
 	string inputpath = "D:\\computer network\\project1\\img\\frame0.jpg";
 	while (1) {
 		Mat src;
@@ -183,10 +183,11 @@ int main()
 		//imwrite("D:\\computer network\\project1\\img2\\image1", image);
 		// 展示图像
 		imshow("QRcode", image);
-		imshow("canvas", canvas);
+		imwrite("D:\\computer network\\project1\\img2\\image1.jpg", image);
+		//imshow("canvas", canvas);
 		waitKey(10);
 
-	}
+	} 
 	return 0;
 }
 
