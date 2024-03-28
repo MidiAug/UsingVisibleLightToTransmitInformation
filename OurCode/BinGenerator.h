@@ -2,8 +2,8 @@
 #include <iostream>
 #include <fstream>
 #include <random>
-#define CAPACITY 8488
 
+#include "Basic.h"
 // 生成随机二进制文件的函数
 void generateRandomBinaryFile(const std::string& filename, std::size_t size);
 

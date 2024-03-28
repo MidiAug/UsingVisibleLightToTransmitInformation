@@ -129,15 +129,20 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="BinGenerator.cpp" />
+    <ClCompile Include="Decode.cpp" />
     <ClCompile Include="Encode.cpp" />
-    <ClCompile Include="ImgToVedio.cpp" />
+    <ClCompile Include="IVTran.cpp" />
     <ClCompile Include="OurCode.cpp" />
+    <ClCompile Include="QR_Location.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="Basic.h" />
     <ClInclude Include="BinGenerator.h" />
+    <ClInclude Include="Decode.h" />
     <ClInclude Include="Encode.h" />
-    <ClInclude Include="ImgToVedio.h" />
+    <ClInclude Include="IVTran.h" />
     <ClInclude Include="Matrix.h" />
+    <ClInclude Include="QR_location.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

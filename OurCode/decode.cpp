@@ -1,8 +1,5 @@
 #include"decode.h"
-#define MARGIN 1
-#define HIGH 97
-#define WIDTH 97
-#define CAPACITY 8483
+
 namespace Decode
 {
 	//定义像素点
@@ -65,8 +62,17 @@ namespace Decode
 		}
 	}
 	//主函数
-    void Main(Mat& image, vector<int>& data)
+    void Main(std::string codeFolderPath, vector<int>& data)
     {
-		readQrCode(data, image);
+        Mat image;
+        // 获取图片文件列表
+        std::vector<cv::String> imageFiles;
+        cv::glob(codeFolderPath + "/*.png", imageFiles);  // 假设图片格式为png
+        std::cout << codeFolderPath + "/*.png" << std::endl;
+        for (auto imageFile : imageFiles)
+        {
+            image = imread(imageFile);
+            readQrCode(data, image);
+        }
 	}
 }

@@ -1,7 +1,68 @@
-﻿  OurCode.cpp
-D:\Project\GitHub\UsingVisibleLightToTransmitInformation\OurCode\Encode.h(10,1): warning C4005: “CAPACITY”: 宏重定义
-  (编译源文件“OurCode.cpp”)
-  D:\Project\GitHub\UsingVisibleLightToTransmitInformation\OurCode\BinGenerator.h(5,1):
-  参见“CAPACITY”的前一个定义
-  
+﻿  QR_Location.cpp
+D:\Project\GitHub\UsingVisibleLightToTransmitInformation\OurCode\QR_Location.cpp(17,50): warning C4244: “参数”: 从“double”转换到“_Tp”，可能丢失数据
+D:\Project\GitHub\UsingVisibleLightToTransmitInformation\OurCode\QR_Location.cpp(17,50): warning C4244:         with
+D:\Project\GitHub\UsingVisibleLightToTransmitInformation\OurCode\QR_Location.cpp(17,50): warning C4244:         [
+D:\Project\GitHub\UsingVisibleLightToTransmitInformation\OurCode\QR_Location.cpp(17,50): warning C4244:             _Tp=int
+D:\Project\GitHub\UsingVisibleLightToTransmitInformation\OurCode\QR_Location.cpp(17,50): warning C4244:         ]
+D:\Project\GitHub\UsingVisibleLightToTransmitInformation\OurCode\QR_Location.cpp(17,27): warning C4244: “参数”: 从“double”转换到“_Tp”，可能丢失数据
+D:\Project\GitHub\UsingVisibleLightToTransmitInformation\OurCode\QR_Location.cpp(17,27): warning C4244:         with
+D:\Project\GitHub\UsingVisibleLightToTransmitInformation\OurCode\QR_Location.cpp(17,27): warning C4244:         [
+D:\Project\GitHub\UsingVisibleLightToTransmitInformation\OurCode\QR_Location.cpp(17,27): warning C4244:             _Tp=int
+D:\Project\GitHub\UsingVisibleLightToTransmitInformation\OurCode\QR_Location.cpp(17,27): warning C4244:         ]
+D:\Project\GitHub\UsingVisibleLightToTransmitInformation\OurCode\QR_Location.cpp(172,108): warning C4244: “参数”: 从“_Tp”转换到“_Tp”，可能丢失数据
+D:\Project\GitHub\UsingVisibleLightToTransmitInformation\OurCode\QR_Location.cpp(172,108): warning C4244:         with
+D:\Project\GitHub\UsingVisibleLightToTransmitInformation\OurCode\QR_Location.cpp(172,108): warning C4244:         [
+D:\Project\GitHub\UsingVisibleLightToTransmitInformation\OurCode\QR_Location.cpp(172,108): warning C4244:             _Tp=float
+D:\Project\GitHub\UsingVisibleLightToTransmitInformation\OurCode\QR_Location.cpp(172,108): warning C4244:         ]
+D:\Project\GitHub\UsingVisibleLightToTransmitInformation\OurCode\QR_Location.cpp(172,108): warning C4244:         and
+D:\Project\GitHub\UsingVisibleLightToTransmitInformation\OurCode\QR_Location.cpp(172,108): warning C4244:         [
+D:\Project\GitHub\UsingVisibleLightToTransmitInformation\OurCode\QR_Location.cpp(172,108): warning C4244:             _Tp=int
+D:\Project\GitHub\UsingVisibleLightToTransmitInformation\OurCode\QR_Location.cpp(172,108): warning C4244:         ]
+D:\Project\GitHub\UsingVisibleLightToTransmitInformation\OurCode\QR_Location.cpp(172,87): warning C4244: “参数”: 从“_Tp”转换到“_Tp”，可能丢失数据
+D:\Project\GitHub\UsingVisibleLightToTransmitInformation\OurCode\QR_Location.cpp(172,87): warning C4244:         with
+D:\Project\GitHub\UsingVisibleLightToTransmitInformation\OurCode\QR_Location.cpp(172,87): warning C4244:         [
+D:\Project\GitHub\UsingVisibleLightToTransmitInformation\OurCode\QR_Location.cpp(172,87): warning C4244:             _Tp=float
+D:\Project\GitHub\UsingVisibleLightToTransmitInformation\OurCode\QR_Location.cpp(172,87): warning C4244:         ]
+D:\Project\GitHub\UsingVisibleLightToTransmitInformation\OurCode\QR_Location.cpp(172,87): warning C4244:         and
+D:\Project\GitHub\UsingVisibleLightToTransmitInformation\OurCode\QR_Location.cpp(172,87): warning C4244:         [
+D:\Project\GitHub\UsingVisibleLightToTransmitInformation\OurCode\QR_Location.cpp(172,87): warning C4244:             _Tp=int
+D:\Project\GitHub\UsingVisibleLightToTransmitInformation\OurCode\QR_Location.cpp(172,87): warning C4244:         ]
+D:\Project\GitHub\UsingVisibleLightToTransmitInformation\OurCode\QR_Location.cpp(183,33): warning C4244: “=”: 从“_Tp”转换到“int”，可能丢失数据
+D:\Project\GitHub\UsingVisibleLightToTransmitInformation\OurCode\QR_Location.cpp(183,33): warning C4244:         with
+D:\Project\GitHub\UsingVisibleLightToTransmitInformation\OurCode\QR_Location.cpp(183,33): warning C4244:         [
+D:\Project\GitHub\UsingVisibleLightToTransmitInformation\OurCode\QR_Location.cpp(183,33): warning C4244:             _Tp=float
+D:\Project\GitHub\UsingVisibleLightToTransmitInformation\OurCode\QR_Location.cpp(183,33): warning C4244:         ]
+D:\Project\GitHub\UsingVisibleLightToTransmitInformation\OurCode\QR_Location.cpp(189,35): warning C4244: “=”: 从“_Tp”转换到“int”，可能丢失数据
+D:\Project\GitHub\UsingVisibleLightToTransmitInformation\OurCode\QR_Location.cpp(189,35): warning C4244:         with
+D:\Project\GitHub\UsingVisibleLightToTransmitInformation\OurCode\QR_Location.cpp(189,35): warning C4244:         [
+D:\Project\GitHub\UsingVisibleLightToTransmitInformation\OurCode\QR_Location.cpp(189,35): warning C4244:             _Tp=float
+D:\Project\GitHub\UsingVisibleLightToTransmitInformation\OurCode\QR_Location.cpp(189,35): warning C4244:         ]
+D:\Project\GitHub\UsingVisibleLightToTransmitInformation\OurCode\QR_Location.cpp(366,108): warning C4244: “参数”: 从“_Tp”转换到“_Tp”，可能丢失数据
+D:\Project\GitHub\UsingVisibleLightToTransmitInformation\OurCode\QR_Location.cpp(366,108): warning C4244:         with
+D:\Project\GitHub\UsingVisibleLightToTransmitInformation\OurCode\QR_Location.cpp(366,108): warning C4244:         [
+D:\Project\GitHub\UsingVisibleLightToTransmitInformation\OurCode\QR_Location.cpp(366,108): warning C4244:             _Tp=float
+D:\Project\GitHub\UsingVisibleLightToTransmitInformation\OurCode\QR_Location.cpp(366,108): warning C4244:         ]
+D:\Project\GitHub\UsingVisibleLightToTransmitInformation\OurCode\QR_Location.cpp(366,108): warning C4244:         and
+D:\Project\GitHub\UsingVisibleLightToTransmitInformation\OurCode\QR_Location.cpp(366,108): warning C4244:         [
+D:\Project\GitHub\UsingVisibleLightToTransmitInformation\OurCode\QR_Location.cpp(366,108): warning C4244:             _Tp=int
+D:\Project\GitHub\UsingVisibleLightToTransmitInformation\OurCode\QR_Location.cpp(366,108): warning C4244:         ]
+D:\Project\GitHub\UsingVisibleLightToTransmitInformation\OurCode\QR_Location.cpp(366,87): warning C4244: “参数”: 从“_Tp”转换到“_Tp”，可能丢失数据
+D:\Project\GitHub\UsingVisibleLightToTransmitInformation\OurCode\QR_Location.cpp(366,87): warning C4244:         with
+D:\Project\GitHub\UsingVisibleLightToTransmitInformation\OurCode\QR_Location.cpp(366,87): warning C4244:         [
+D:\Project\GitHub\UsingVisibleLightToTransmitInformation\OurCode\QR_Location.cpp(366,87): warning C4244:             _Tp=float
+D:\Project\GitHub\UsingVisibleLightToTransmitInformation\OurCode\QR_Location.cpp(366,87): warning C4244:         ]
+D:\Project\GitHub\UsingVisibleLightToTransmitInformation\OurCode\QR_Location.cpp(366,87): warning C4244:         and
+D:\Project\GitHub\UsingVisibleLightToTransmitInformation\OurCode\QR_Location.cpp(366,87): warning C4244:         [
+D:\Project\GitHub\UsingVisibleLightToTransmitInformation\OurCode\QR_Location.cpp(366,87): warning C4244:             _Tp=int
+D:\Project\GitHub\UsingVisibleLightToTransmitInformation\OurCode\QR_Location.cpp(366,87): warning C4244:         ]
+D:\Project\GitHub\UsingVisibleLightToTransmitInformation\OurCode\QR_Location.cpp(377,33): warning C4244: “=”: 从“_Tp”转换到“int”，可能丢失数据
+D:\Project\GitHub\UsingVisibleLightToTransmitInformation\OurCode\QR_Location.cpp(377,33): warning C4244:         with
+D:\Project\GitHub\UsingVisibleLightToTransmitInformation\OurCode\QR_Location.cpp(377,33): warning C4244:         [
+D:\Project\GitHub\UsingVisibleLightToTransmitInformation\OurCode\QR_Location.cpp(377,33): warning C4244:             _Tp=float
+D:\Project\GitHub\UsingVisibleLightToTransmitInformation\OurCode\QR_Location.cpp(377,33): warning C4244:         ]
+D:\Project\GitHub\UsingVisibleLightToTransmitInformation\OurCode\QR_Location.cpp(383,35): warning C4244: “=”: 从“_Tp”转换到“int”，可能丢失数据
+D:\Project\GitHub\UsingVisibleLightToTransmitInformation\OurCode\QR_Location.cpp(383,35): warning C4244:         with
+D:\Project\GitHub\UsingVisibleLightToTransmitInformation\OurCode\QR_Location.cpp(383,35): warning C4244:         [
+D:\Project\GitHub\UsingVisibleLightToTransmitInformation\OurCode\QR_Location.cpp(383,35): warning C4244:             _Tp=float
+D:\Project\GitHub\UsingVisibleLightToTransmitInformation\OurCode\QR_Location.cpp(383,35): warning C4244:         ]
   OurCode.vcxproj -> D:\Project\GitHub\UsingVisibleLightToTransmitInformation\OurCode\x64\Debug\OurCode.exe

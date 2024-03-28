@@ -1,18 +1,22 @@
 ﻿#include <iostream>
 #include <opencv2/opencv.hpp>
+#include "Basic.h"
 #include "BinGenerator.h"
 #include "Encode.h"
-#include "ImgToVedio.h"
+#include "IVTran.h"
+#include "QR_location.h"
+#include "Decode.h"
+
 using namespace cv;
 using namespace std;
 
 int main()
 {
-    int mode = 0;
+    int mode = 1;
     cout << "选择模式" << endl;
     cout << "输入'0'生成含有二维码的视频" << endl;
     cout << "输入'1'导入视频并解码" << endl;
-    //cin >> mode;
+    cin >> mode;
     if (mode == 0)
     {
         std::size_t fileSize = 5000; // 文件大小，单位为字节
@@ -25,15 +29,29 @@ int main()
         fillData(datas);
         cout << "填补数据后共有" << datas.size() << "个数据" << endl;
 
-        int cnt;// 记录几张图片
-        Mat img;
-        cnt = Encode::fileToImg(datas, img);
+        std::string imagePath = "originalImages";
 
-        ImgToVedio::Image2Video("images", "output.avi", 5000);
+        Mat img;
+        Encode::initImg(HIGH,WIDTH,img);
+        //Encode::saveImg(imagePath + "/image0.png",img);
+        Encode::fileToImg(datas, img, imagePath);
+
+        ImgToVideo(imagePath, "output.avi", 5000);
         
     }
     else if (mode == 1)
     {
-
+        string videoName = "output.avi";
+        string imgOutputPath = "exstractImages";
+        string imgInputPath = "exstractImages";
+        string codeOutputPath = "extractedCodes";
+        //cout << "请输入你的视频路径" << endl;
+        //cin >> vedioName;
+        //VideoToImg(videoName, imgOutputPath);
+        
+        vector<int> extractedDatas;
+        
+        //QR_Location::Main(imgInputPath, codeOutputPath);
+        //Decode::Main(imgInputPath,extractedDatas)
     }
 }

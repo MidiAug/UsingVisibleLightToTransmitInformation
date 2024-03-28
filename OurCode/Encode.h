@@ -1,13 +1,10 @@
 #pragma once
 #include <opencv2/opencv.hpp>
 #include <vector>
+#include "Basic.h"
+
 using namespace cv;
 using namespace std;
-
-#define MARGIN 1
-#define HIGH 97
-#define WIDTH 97
-#define CAPACITY 8483
 
 namespace Encode {
     const int saveCorrection[6][2] =
@@ -37,7 +34,7 @@ namespace Encode {
 
     void initImg(int high, int width, Mat& img);
 
-    int fileToImg(std::vector<int>& datas, Mat& img);
+    void fileToImg(std::vector<int>& datas, Mat& img,std::string outputPath);
 
     void saveImg(String filePath, Mat& img);
     void showImg(Mat& img);

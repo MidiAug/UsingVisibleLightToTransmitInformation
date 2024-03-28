@@ -1,197 +1,170 @@
-#include <opencv2/opencv.hpp>
-#include <iostream>    
-#include <opencv2\core\core.hpp>
-#include <iostream>  
-#include <stdio.h>
-#include <string>
-#include <sstream>
-#include "video_processor.h"
-
-using namespace cv;
-using namespace std;
+#include "QR_location.h"
 
 
 // 用于矫正
-Mat transformCorner(Mat src, RotatedRect rect);
-Mat transformQRcode(Mat src, RotatedRect rect, double angle);
-// 用于判断角点
-bool IsQrPoint(vector<Point>& contour, Mat& img);
-bool isCorner(Mat& image);
-double Rate(Mat& count);
-int leftTopPoint(vector<Point> centerPoint);
-vector<int> otherTwoPoint(vector<Point> centerPoint, int leftTopPointIndex);
-double rotateAngle(Point leftTopPoint, Point rightTopPoint, Point leftBottomPoint);
 
 
-int main()
+int QR_Location::Main(string inputFolderPath, string outputFolderPath)
 {
-	//VideoCapture cap;
-	//Mat src;
-	//cap.open(0);                             //打开相机，电脑自带摄像头一般编号为0，外接摄像头编号为1，主要是在设备管理器中查看自己摄像头的编号。
+	std::vector<cv::String> imageFiles;
+	cv::glob(inputFolderPath + "/*.png", imageFiles);
+	int cnt = 0;
+	for (auto imageFile : imageFiles)
+	{
+		while (1) {
+			Mat src;
+			src = imread(imageFile);
+			Size dsize = Size(round(0.5 * src.cols), round(0.5 * src.rows));
+			resize(src, src, dsize, 0, 0);
+			//cap >> src;                                //从相机捕获一帧图像
 
-	//cap.set(CV_CAP_PROP_FRAME_WIDTH, 1280);  //设置捕获视频的宽度
-	//cap.set(CV_CAP_PROP_FRAME_HEIGHT, 400);  //设置捕获视频的高度
+			Mat srcCopy = src.clone();
 
-	//if (!cap.isOpened())                         //判断是否成功打开相机
-	//{
-	//	cout << "摄像头打开失败!" << endl;
-	//	return -1;
-	//}
-	//std::string inputVideoPath = "D:\\computer network\\project1\\ff&opencx\\111.mp4";
-	//std::string outputFolderPath = "D:\\computer network\\project1\\img\\";
+			//canvas为画布 将找到的定位特征画出来
+			Mat canvas;
+			canvas = Mat::zeros(src.size(), CV_8UC3);
 
-	//if (VideoProcessing::convertVideoToFrames(inputVideoPath, outputFolderPath)) {
-	//	std::cout << "Video frames conversion complete." << std::endl;
-	//}
-	//else {
-	//	std::cerr << "Error converting video frames." << std::endl;
-	//}
-	string inputpath = "D:\\computer network\\project1\\img\\frame0.jpg";
-	while (1) {
-		Mat src;
-		src = imread(inputpath);
-		//cap >> src;                                //从相机捕获一帧图像
+			Mat srcGray;
 
-		Mat srcCopy = src.clone();
+			//center_all获取特性中心
+			vector<Point> center_all;
 
-		//canvas为画布 将找到的定位特征画出来
-		Mat canvas;
-		canvas = Mat::zeros(src.size(), CV_8UC3);
+			// 转化为灰度图
+			cvtColor(src, srcGray, COLOR_BGR2GRAY);
 
-		Mat srcGray;
+			// 3X3模糊
+			//blur(srcGray, srcGray, Size(3, 3));
 
-		//center_all获取特性中心
-		vector<Point> center_all;
+			// 计算直方图
+			//equalizeHist(srcGray, srcGray);
+			//int s = srcGray.at<Vec3b>(0, 0)[0];
+			// 设置阈值根据实际情况 如视图中已找不到特征 可适量调整
+			//threshold(srcGray, srcGray, 0, 255, THRESH_BINARY | THRESH_OTSU);
 
-		// 转化为灰度图
-		cvtColor(src, srcGray, COLOR_BGR2GRAY);
+			Canny(srcGray, srcGray, 50, 150, 3);
+			Mat erodeStruct = getStructuringElement(MORPH_RECT, Size(3, 3));
+			morphologyEx(srcGray, srcGray, MORPH_CLOSE, erodeStruct);
+			imshow("threshold", srcGray);
+			/*contours是第一次寻找轮廓*/
+			/*contours2是筛选出的轮廓*/
+			vector<vector<Point>> contours;
 
-		// 3X3模糊
-		//blur(srcGray, srcGray, Size(3, 3));
-
-		// 计算直方图
-		//equalizeHist(srcGray, srcGray);
-		//int s = srcGray.at<Vec3b>(0, 0)[0];
-		// 设置阈值根据实际情况 如视图中已找不到特征 可适量调整
-		//threshold(srcGray, srcGray, 0, 255, THRESH_BINARY | THRESH_OTSU);
-
-		Canny(srcGray, srcGray, 50, 150, 3);
-		Mat erodeStruct = getStructuringElement(MORPH_RECT, Size(3, 3));
-		morphologyEx(srcGray, srcGray, MORPH_CLOSE, erodeStruct);
-		imshow("threshold", srcGray);
-		/*contours是第一次寻找轮廓*/
-		/*contours2是筛选出的轮廓*/
-		vector<vector<Point>> contours;
-
-		//	用于轮廓检测
-		vector<Vec4i> hierarchy;
-		findContours(srcGray, contours, hierarchy, RETR_TREE, CHAIN_APPROX_SIMPLE);
+			//	用于轮廓检测
+			vector<Vec4i> hierarchy;
+			findContours(srcGray, contours, hierarchy, RETR_TREE, CHAIN_APPROX_SIMPLE);
 
 
-		// 小方块的数量
-		int numOfRec = 0;
+			// 小方块的数量
+			int numOfRec = 0;
 
-		// 检测方块
-		int ic = 0;
-		int parentIdx = -1;
-		for (int i = 0; i < contours.size(); i++)
-		{
-			if (hierarchy[i][2] != -1 && ic == 0)
+			// 检测方块
+			int ic = 0;
+			int parentIdx = -1;
+			for (int i = 0; i < contours.size(); i++)
 			{
-				parentIdx = i;
-				ic++;
-			}
-			else if (hierarchy[i][2] != -1)
-			{
-				ic++;
-			}
-			else if (hierarchy[i][2] == -1)
-			{
-				parentIdx = -1;
-				ic = 0;
-			}
-			if (ic == 3)
-			{
-				if (IsQrPoint(contours[parentIdx], src)) {
-					RotatedRect rect = minAreaRect(Mat(contours[parentIdx]));
-
-					// 画图部分
-					Point2f points[4];
-					rect.points(points);
-					for (int j = 0; j < 4; j++) {
-						line(src, points[j], points[(j + 1) % 4], Scalar(0, 255, 0), 2);
-					}
-					drawContours(canvas, contours, parentIdx, Scalar(0, 0, 255), -1);
-
-					// 如果满足条件则存入
-					center_all.push_back(rect.center);
-					numOfRec++;
+				if (hierarchy[i][2] != -1 && ic == 0)
+				{
+					parentIdx = i;
+					ic++;
 				}
-				ic = 0;
-				parentIdx = -1;
+				else if (hierarchy[i][2] != -1)
+				{
+					ic++;
+				}
+				else if (hierarchy[i][2] == -1)
+				{
+					parentIdx = -1;
+					ic = 0;
+				}
+				if (ic == 3)
+				{
+					if (QR_Location::IsQrPoint(contours[parentIdx], src)) {
+						RotatedRect rect = minAreaRect(Mat(contours[parentIdx]));
+
+						// 画图部分
+						Point2f points[4];
+						rect.points(points);
+						for (int j = 0; j < 4; j++) {
+							line(src, points[j], points[(j + 1) % 4], Scalar(0, 255, 0), 2);
+						}
+						drawContours(canvas, contours, parentIdx, Scalar(0, 0, 255), -1);
+
+						// 如果满足条件则存入
+						center_all.push_back(rect.center);
+						numOfRec++;
+					}
+					ic = 0;
+					parentIdx = -1;
+				}
 			}
-		}
 
-		// 连接三个正方形的部分
-		for (int i = 0; i < center_all.size(); i++)
-		{
-			line(canvas, center_all[i], center_all[(i + 1) % center_all.size()], Scalar(255, 0, 0), 3);
-		}
-
-		vector<vector<Point>> contours3;
-		Mat canvasGray;
-		cvtColor(canvas, canvasGray, COLOR_BGR2GRAY);
-		findContours(canvasGray, contours3, RETR_EXTERNAL, CHAIN_APPROX_SIMPLE);
-
-		vector<Point> maxContours;
-		double maxArea = 0;
-		// 在原图中画出二维码的区域
-
-		for (int i = 0; i < contours3.size(); i++)
-		{
-			RotatedRect rect = minAreaRect(contours3[i]);
-			Point2f boxpoint[4];
-			rect.points(boxpoint);
-			for (int i = 0; i < 4; i++)
-				line(src, boxpoint[i], boxpoint[(i + 1) % 4], Scalar(0, 0, 255), 3);
-
-			double area = contourArea(contours3[i]);
-			if (area > maxArea) {
-				maxContours = contours3[i];
-				maxArea = area;
+			// 连接三个正方形的部分
+			for (int i = 0; i < center_all.size(); i++)
+			{
+				line(canvas, center_all[i], center_all[(i + 1) % center_all.size()], Scalar(255, 0, 0), 3);
 			}
+
+			vector<vector<Point>> contours3;
+			Mat canvasGray;
+			cvtColor(canvas, canvasGray, COLOR_BGR2GRAY);
+			findContours(canvasGray, contours3, RETR_EXTERNAL, CHAIN_APPROX_SIMPLE);
+
+			vector<Point> maxContours;
+			double maxArea = 0;
+			// 在原图中画出二维码的区域
+
+			for (int i = 0; i < contours3.size(); i++)
+			{
+				RotatedRect rect = minAreaRect(contours3[i]);
+				Point2f boxpoint[4];
+				rect.points(boxpoint);
+				for (int i = 0; i < 4; i++)
+					line(src, boxpoint[i], boxpoint[(i + 1) % 4], Scalar(0, 0, 255), 3);
+
+				double area = contourArea(contours3[i]);
+				if (area > maxArea) {
+					maxContours = contours3[i];
+					maxArea = area;
+				}
+			}
+			imshow("src", src);
+			if (numOfRec < 3) {
+				waitKey(10);
+				continue;
+			}
+			// 计算“回”的次序关系
+			int leftTopPointIndex = QR_Location::leftTopPoint(center_all);
+			vector<int> otherTwoPointIndex = QR_Location::otherTwoPoint(center_all, leftTopPointIndex);
+			// canvas上标注三个“回”的次序关系
+			circle(canvas, center_all[leftTopPointIndex], 10, Scalar(255, 0, 255), -1);
+			circle(canvas, center_all[otherTwoPointIndex[0]], 10, Scalar(0, 255, 0), -1);
+			circle(canvas, center_all[otherTwoPointIndex[1]], 10, Scalar(0, 255, 255), -1);
+
+			// 计算旋转角
+			double angle = QR_Location::rotateAngle(center_all[leftTopPointIndex], center_all[otherTwoPointIndex[0]], center_all[otherTwoPointIndex[1]]);
+
+			// 拿出之前得到的最大的轮廓
+			RotatedRect rect = minAreaRect(Mat(maxContours));
+			Mat image = QR_Location::transformQRcode(srcCopy, rect, angle);
+			//imwrite("D:\\computer network\\project1\\img2\\image1", image);
+			// 展示图像
+			//imshow("QRcode", image);
+			string str1 = outputFolderPath;
+			string str2 = "/qrCode";
+			string str3 = to_string(cnt);
+			string str4 = ".png";
+			string fileName = str1 + str2 + str3 + str4;
+			imwrite(fileName, image);
+			break;
+			//imshow("canvas", canvas);
+
 		}
-		imshow("src", src);
-		if (numOfRec < 3) {
-			waitKey(10);
-			continue;
-		}
-		// 计算“回”的次序关系
-		int leftTopPointIndex = leftTopPoint(center_all);
-		vector<int> otherTwoPointIndex = otherTwoPoint(center_all, leftTopPointIndex);
-		// canvas上标注三个“回”的次序关系
-		circle(canvas, center_all[leftTopPointIndex], 10, Scalar(255, 0, 255), -1);
-		circle(canvas, center_all[otherTwoPointIndex[0]], 10, Scalar(0, 255, 0), -1);
-		circle(canvas, center_all[otherTwoPointIndex[1]], 10, Scalar(0, 255, 255), -1);
-
-		// 计算旋转角
-		double angle = rotateAngle(center_all[leftTopPointIndex], center_all[otherTwoPointIndex[0]], center_all[otherTwoPointIndex[1]]);
-
-		// 拿出之前得到的最大的轮廓
-		RotatedRect rect = minAreaRect(Mat(maxContours));
-		Mat image = transformQRcode(srcCopy, rect, angle);
-		//imwrite("D:\\computer network\\project1\\img2\\image1", image);
-		// 展示图像
-		imshow("QRcode", image);
-		imwrite("D:\\computer network\\project1\\img2\\image1.jpg", image);
-		//imshow("canvas", canvas);
-		waitKey(10);
-
-	} 
+	}
+	
 	return 0;
 }
 
-Mat transformCorner(Mat src, RotatedRect rect)
+Mat QR_Location::transformCorner(Mat src, RotatedRect rect)
 {
 	// 获得旋转中心
 	Point center = rect.center;
@@ -247,7 +220,7 @@ Mat transformCorner(Mat src, RotatedRect rect)
 }
 
 // 该部分用于检测是否是角点，与下面两个函数配合
-bool IsQrPoint(vector<Point>& contour, Mat& img) {
+bool QR_Location::IsQrPoint(vector<Point>& contour, Mat& img) {
 	double area = contourArea(contour);
 	// 角点不可以太小
 	if (area < 30)
@@ -260,7 +233,7 @@ bool IsQrPoint(vector<Point>& contour, Mat& img) {
 	{
 		// 返回旋转后的图片，用于把“回”摆正，便于处理
 		Mat image = transformCorner(img, rect);
-		if (isCorner(image))
+		if (QR_Location::isCorner(image))
 		{
 			return 1;
 		}
@@ -269,7 +242,7 @@ bool IsQrPoint(vector<Point>& contour, Mat& img) {
 }
 
 // 计算内部所有白色部分占全部的比率
-double Rate(Mat& count)
+double QR_Location::Rate(Mat& count)
 {
 	int number = 0;
 	int allpixel = 0;
@@ -289,7 +262,7 @@ double Rate(Mat& count)
 }
 
 // 用于判断是否属于角上的正方形
-bool isCorner(Mat& image)
+bool QR_Location::isCorner(Mat& image)
 {
 	// 定义mask
 	Mat imgCopy, dstCopy;
@@ -336,7 +309,7 @@ bool isCorner(Mat& image)
 	return  false;
 }
 
-int leftTopPoint(vector<Point> centerPoint) {
+int QR_Location::leftTopPoint(vector<Point> centerPoint) {
 	int minIndex = 0;
 	int multiple = 0;
 	int minMultiple = 10000;
@@ -358,7 +331,7 @@ int leftTopPoint(vector<Point> centerPoint) {
 	return minIndex;
 }
 
-vector<int> otherTwoPoint(vector<Point> centerPoint, int leftTopPointIndex) {
+vector<int> QR_Location::otherTwoPoint(vector<Point> centerPoint, int leftTopPointIndex) {
 	vector<int> otherIndex;
 	double waiji = (centerPoint[(leftTopPointIndex + 1) % 3].x - centerPoint[(leftTopPointIndex) % 3].x) *
 		(centerPoint[(leftTopPointIndex + 2) % 3].y - centerPoint[(leftTopPointIndex) % 3].y) -
@@ -375,7 +348,7 @@ vector<int> otherTwoPoint(vector<Point> centerPoint, int leftTopPointIndex) {
 	return otherIndex;
 }
 
-double rotateAngle(Point leftTopPoint, Point rightTopPoint, Point leftBottomPoint) {
+double QR_Location::rotateAngle(Point leftTopPoint, Point rightTopPoint, Point leftBottomPoint) {
 	double dy = rightTopPoint.y - leftTopPoint.y;
 	double dx = rightTopPoint.x - leftTopPoint.x;
 	double k = dy / dx;
@@ -385,7 +358,7 @@ double rotateAngle(Point leftTopPoint, Point rightTopPoint, Point leftBottomPoin
 	return angle;
 }
 
-Mat transformQRcode(Mat src, RotatedRect rect, double angle)
+Mat QR_Location::transformQRcode(Mat src, RotatedRect rect, double angle)
 {
 	// 获得旋转中心
 	Point center = rect.center;

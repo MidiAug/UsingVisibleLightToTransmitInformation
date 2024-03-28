@@ -1,6 +1,6 @@
 #include "Encode.h"
 
-int Encode::fileToImg(std::vector<int> &datas, Mat &img) {
+void Encode::fileToImg(std::vector<int> &datas, Mat &img,std::string outputPath) {
     initImg(HIGH, WIDTH, img);
     int numOfImg = datas.size() / (CAPACITY);
     int curNum = 0;
@@ -34,12 +34,11 @@ int Encode::fileToImg(std::vector<int> &datas, Mat &img) {
             }
         }
         curNum++;
-        bool result = cv::imwrite(filename, img);
         if (i == 0 && index != CAPACITY) cout << "容量计算有误，重新计算" << endl;
         showImg(img);
-        saveImg(filename, img);
+        waitKey(0);
+        saveImg(outputPath + '/' + filename, img);
     }
-    return numOfImg;
 }
 
 // 需要跳过的区域
@@ -188,7 +187,7 @@ void Encode::initImg(int high, int width, Mat &img) {
 }
 
 void Encode::saveImg(String filePath, Mat &img) {
-    imwrite("images/"+filePath, img);
+    cv::imwrite(filePath, img);
 }
 
 void Encode::showImg(Mat &img) {

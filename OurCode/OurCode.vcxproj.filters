@@ -24,7 +24,13 @@
     <ClCompile Include="Encode.cpp">
       <Filter>源文件</Filter>
     </ClCompile>
-    <ClCompile Include="ImgToVedio.cpp">
+    <ClCompile Include="IVTran.cpp">
+      <Filter>源文件</Filter>
+    </ClCompile>
+    <ClCompile Include="Decode.cpp">
+      <Filter>源文件</Filter>
+    </ClCompile>
+    <ClCompile Include="QR_Location.cpp">
       <Filter>源文件</Filter>
     </ClCompile>
   </ItemGroup>
@@ -38,7 +44,16 @@
     <ClInclude Include="Encode.h">
       <Filter>头文件</Filter>
     </ClInclude>
-    <ClInclude Include="ImgToVedio.h">
+    <ClInclude Include="IVTran.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="Basic.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="Decode.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="QR_location.h">
       <Filter>头文件</Filter>
     </ClInclude>
   </ItemGroup>
