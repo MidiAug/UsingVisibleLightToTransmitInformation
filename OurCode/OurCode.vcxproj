@@ -128,7 +128,7 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <ClCompile Include="BinGenerator.cpp" />
+    <ClCompile Include="Bin.cpp" />
     <ClCompile Include="Decode.cpp" />
     <ClCompile Include="Encode.cpp" />
     <ClCompile Include="IVTran.cpp" />
@@ -137,7 +137,7 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Basic.h" />
-    <ClInclude Include="BinGenerator.h" />
+    <ClInclude Include="Bin.h" />
     <ClInclude Include="Decode.h" />
     <ClInclude Include="Encode.h" />
     <ClInclude Include="IVTran.h" />

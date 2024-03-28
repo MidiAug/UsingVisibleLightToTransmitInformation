@@ -16,6 +16,8 @@ void Encode::fileToImg(std::vector<int> &datas, Mat &img,std::string outputPath)
 
         drawBasic(img);
         int data;
+        int data1;
+        int data2;
         curC = curR = 0;
         int flag = 1;
         for (int curR = MARGIN; curR < HIGH - MARGIN && flag; curR++)
@@ -31,9 +33,15 @@ void Encode::fileToImg(std::vector<int> &datas, Mat &img,std::string outputPath)
 
                 data = datas[index++];
                 drawPixel(data, curC, curR, img);
+
+                //data1 = datas[index++];
+                //data2 = datas[index++];
+                //drawPixel(data1,data2, curC, curR, img);
+                ////cout << data1 << " " << data2 << endl;
             }
         }
         curNum++;
+        cout << index << endl;
         if (i == 0 && index != CAPACITY) cout << "容量计算有误，重新计算" << endl;
         showImg(img);
         waitKey(0);
@@ -57,7 +65,7 @@ bool Encode::jump(int curR, int curC)
     {
         if (curR <= MARGIN + 7 + 2 && curR >= MARGIN + 7 - 2) return true;
         else if (curR <= WIDTH / 2 + 2 && curR >= WIDTH / 2 - 2) return true;
-        else if (curR <= WIDTH - MARGIN - 7 + 2 && curR >= WIDTH - MARGIN - 7 - 2 - 1) return true;
+        else if (curR <= WIDTH - MARGIN - 7 + 2 -1 && curR >= WIDTH - MARGIN - 7 - 2 - 1) return true;
     }
 
     if (curC <= MARGIN + 7 + 2 && curC >= MARGIN + 7 - 2) // 左中 4
@@ -165,20 +173,32 @@ void Encode::drawBasic(Mat &img) {
 
 // 画具体像素值
 void Encode::drawPixel(int val, int x, int y, Mat &img) {
-    if (val == 0)
-        rectangle(
-            img,
-            Point(x, y),
-            Point(x, y),
-            Scalar(0, 0, 0)
-        );
-    else
-        rectangle(
-            img,
-            Point(x, y),
-            Point(x, y),
-            Scalar(255, 255, 255)
-        );
+    Scalar color;
+    if (val == 0)color = cv::Scalar(0, 0, 0);
+    else color = cv::Scalar(255, 255, 255);
+    
+    rectangle(
+        img,
+        Point(x, y),
+        Point(x, y),
+        color
+    );
+};
+
+void Encode::drawPixel(int val,int lue, int x, int y, Mat& img) {
+    Scalar color;
+    if(val==0 && lue==0) color = cv::Scalar(0, 0, 0);
+    else if (val == 0 && lue == 1) color = cv::Scalar(232, 162, 0);
+    //else if (val == 1 && lue == 0) color = cv::Scalar(0, 125, 255);
+    else if (val == 1 && lue == 0) color = cv::Scalar(23, 93, 255);
+    else  color = cv::Scalar(255, 255, 255);
+    
+    rectangle(
+        img,
+        Point(x, y),
+        Point(x, y),
+        color
+    );
 };
 
 void Encode::initImg(int high, int width, Mat &img) {

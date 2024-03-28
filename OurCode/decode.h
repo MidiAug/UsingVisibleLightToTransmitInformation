@@ -8,7 +8,8 @@ namespace Decode
 {
 	//判断是否需要跳过
 	bool jump(int curR, int curC);
-	void judge(vector<int>& data, int curC, int curR, Mat image, int count);
-	void readQrCode(vector<int>& data, Mat image);
-	void Main(std::string codeFolderPath, vector<int>& data)
+	void judge(vector<int>& data, int curC, int curR, Mat imaget);
+	void readQrCode(vector<int>& data, Mat& image);
+	void Main(std::string codeFolderPath, vector<int>& data);
+	void showimg(Mat& img, float x, float y);
 }

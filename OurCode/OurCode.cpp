@@ -1,7 +1,7 @@
 ﻿#include <iostream>
 #include <opencv2/opencv.hpp>
 #include "Basic.h"
-#include "BinGenerator.h"
+#include "Bin.h"
 #include "Encode.h"
 #include "IVTran.h"
 #include "QR_location.h"
@@ -12,7 +12,7 @@ using namespace std;
 
 int main()
 {
-    int mode = 1;
+    int mode = 0;
     cout << "选择模式" << endl;
     cout << "输入'0'生成含有二维码的视频" << endl;
     cout << "输入'1'导入视频并解码" << endl;
@@ -49,9 +49,13 @@ int main()
         //cin >> vedioName;
         //VideoToImg(videoName, imgOutputPath);
         
-        vector<int> extractedDatas;
         
         //QR_Location::Main(imgInputPath, codeOutputPath);
-        //Decode::Main(imgInputPath,extractedDatas)
+        vector<int> extractedDatas;
+        Decode::Main("originalImages", extractedDatas);
+        //cout << extractedDatas.size();
+        //for (int i = 0; i < extractedDatas.size(); i++)
+        //    cout << extractedDatas[i];
+        outBin(extractedDatas,"random_out.bin");
     }
 }

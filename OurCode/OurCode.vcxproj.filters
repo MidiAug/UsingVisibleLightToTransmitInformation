@@ -18,7 +18,7 @@
     <ClCompile Include="OurCode.cpp">
       <Filter>源文件</Filter>
     </ClCompile>
-    <ClCompile Include="BinGenerator.cpp">
+    <ClCompile Include="Bin.cpp">
       <Filter>源文件</Filter>
     </ClCompile>
     <ClCompile Include="Encode.cpp">
@@ -35,7 +35,7 @@
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="BinGenerator.h">
+    <ClInclude Include="Bin.h">
       <Filter>头文件</Filter>
     </ClInclude>
     <ClInclude Include="Matrix.h">

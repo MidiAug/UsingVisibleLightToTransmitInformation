@@ -31,6 +31,7 @@ namespace Encode {
 
     // »­¾ßÌåÏñËØÖµ
     void drawPixel(int val, int x, int y, Mat& img);
+    void drawPixel(int val, int lue, int x, int y, Mat& img);
 
     void initImg(int high, int width, Mat& img);
 
