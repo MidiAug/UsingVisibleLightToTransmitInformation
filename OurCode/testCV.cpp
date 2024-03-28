@@ -1,12 +1,60 @@
 ﻿#include <iostream>
 #include <fstream>
+#include <random>
 #include <opencv2/opencv.hpp>
 #include <vector>
+
 using namespace std;
 using namespace cv;
 #define MARGIN 1
 #define HIGH 150
 #define WIDTH 150
+#define CAPACITY  HIGH * WIDTH - 2 * HIGH * MARGIN - 2 * WIDTH * MARGIN + 4 * MARGIN * MARGIN - 234// 234是二维码区域
+
+void generateRandomBinaryFile(const std::string& filename, std::size_t size) {
+    std::ofstream ofs(filename, std::ios::binary);
+    if (!ofs.is_open()) {
+        std::cerr << "Failed to open file: " << filename << std::endl;
+        return;
+    }
+
+    // 使用随机数生成器来生成随机二进制数据
+    std::random_device rd;
+    std::mt19937 gen(rd());
+    std::uniform_int_distribution<> dis(0, 255);
+
+    for (std::size_t i = 0; i < size; ++i) {
+        unsigned char byte = static_cast<unsigned char>(dis(gen));
+        ofs.write(reinterpret_cast<const char*>(&byte), sizeof(byte));
+    }
+
+    ofs.close();
+}
+
+std::vector<int> readBinaryFile(const std::string& filename) {
+    std::ifstream file(filename, std::ios::binary);
+    std::vector<int> result;
+
+    if (!file.is_open()) {
+        std::cerr << "Failed to open file: " << filename << std::endl;
+        return result;
+    }
+
+    char byte;
+
+    // 读取文件内容
+    while (file.read(&byte, sizeof(byte))) {
+        // 将字符转换为整数并逐位提取
+        for (int i = 7; i >= 0; --i) {
+            int bit = (byte >> i) & 1;
+            result.push_back(bit);
+        }
+    }
+
+    file.close();
+
+    return result;
+}
 class FileToImg
 {
 public:
@@ -54,33 +102,44 @@ public:
         img.setTo(Scalar(255, 255, 255));  
         
     }
-    void fileToImg(vector<char> ch) {
-        drawBlocks();
-        int num; // 第几张图
-        char data;
-        int index = 0;
-        int curC = 0, curR = 0;
-        int flag = 1;
-        for (int curR = MARGIN; curR < HIGH - MARGIN && flag; curR++)
+    void fileToImg(vector<int> datas) {
+        int numOfImg = datas.size() / (CAPACITY) + 1;
+        int curNum = 0;
+        int index = 0, curC = 0, curR = 0;
+        cout << numOfImg;
+        for (int i = 0; i < numOfImg; i++)
         {
-            for (int curC = MARGIN; curC < WIDTH - MARGIN && flag; curC++)
+            initImg(HIGH, WIDTH);
+
+            drawBlocks();
+            int data;
+            curC = curR = 0;
+            int flag = 1;
+            for (int curR = MARGIN; curR < HIGH - MARGIN && flag; curR++)
             {
-                if (ch.empty() || index >= ch.size()) {
-                    flag = 0;
-                    continue;
+                for (int curC = MARGIN; curC < WIDTH - MARGIN && flag; curC++)
+                {
+                    if (datas.empty() || index >= datas.size()) {
+                        flag = 0;
+                        continue;
+                    }
+                    // 跳过定位码区域
+                    if (curR <= MARGIN + 7 + 1) {
+                        if (curC <= MARGIN + 7 + 1 || curC >= WIDTH - (MARGIN + 7 + 1) - 1)continue;
+                    }
+                    else if (curR >= HIGH - (MARGIN + 7 + 1) && curC <= MARGIN + 7 + 1) continue;
+                    data = datas[index++];
+                    drawPixel(data, curC, curR, img);
                 }
-                // 跳过定位码区域
-                if (curR <= MARGIN + 7 + 1) {
-                    if (curC <= MARGIN + 7 + 1 || curC >= WIDTH - (MARGIN + 7 + 1)-1)continue;
-                }
-                else if (curR >= HIGH - (MARGIN + 7 + 1) && curC <= MARGIN + 7 + 1) continue;
-                data = ch[index++];
-                drawPixel(data - '0', curC, curR, img);
             }
+            curNum++;
+            std::string filename = "output_image" + curNum;
+            filename += ".png";
+            bool result = cv::imwrite(filename, img);
+            cout << filename;
+            if (index != CAPACITY) cout << "容量计算有误，重新计算" << endl;
         }
-        capacity = HIGH * WIDTH - 2 * HIGH * MARGIN - 2 * WIDTH * MARGIN + 4 * MARGIN * MARGIN - 234;// 234是二维码区域
-        cout << index << endl;
-        cout << capacity << endl;
+        
     }
     void saveImgs(String filePath,Mat img) {
         imwrite(filePath, img);
@@ -91,23 +150,22 @@ public:
     }
 private:
     Mat img;
-    int capacity;
 
    
 };
 
 int main()
 {
-    char tmp;
-    vector<char> datas;
-    fstream bins("tmp.txt");
-    while (bins >> tmp) {
-        datas.push_back(tmp);
-    }
-    FileToImg file;
-    file.initImg(HIGH, WIDTH);
-    file.fileToImg(datas);
-    file.showImg();
+    std::size_t fileSize = 5000; // 文件大小，单位为字节
+    std::string filename = "random.bin"; // 文件名
+    generateRandomBinaryFile(filename, fileSize);
+    std::cout << "Random binary file generated successfully." << std::endl;
+
+    vector<int> datas = readBinaryFile(filename);
+
+    FileToImg f2i;
+    f2i.fileToImg(datas);
+    f2i.showImg();
     waitKey(0);
     destroyAllWindows();
     return 0;
