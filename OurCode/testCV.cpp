@@ -5,12 +5,23 @@
 using namespace std;
 using namespace cv;
 #define MARGIN 1
-#define HIGH 150
-#define WIDTH 150
+#define HIGH 97
+#define WIDTH 97
+
 class FileToImg
 {
 public:
-    // 画定位点
+    const int capacity = HIGH * WIDTH - 2 * HIGH * MARGIN - 2 * WIDTH * MARGIN + 4 * MARGIN * MARGIN - 234;// 234是二维码区域
+    const int saveCorrection[6][2] =
+    {
+        WIDTH / 2, MARGIN + 7,
+        MARGIN + 7, WIDTH / 2 ,
+        WIDTH / 2, WIDTH / 2 ,
+        WIDTH / 2, WIDTH - MARGIN - 7 ,
+        WIDTH - MARGIN - 7, WIDTH - MARGIN - 7,
+        WIDTH - MARGIN - 7, WIDTH / 2
+    };
+    // 画寻像
     void block(int left,int top, Mat img) {
         rectangle(
             img,
@@ -43,19 +54,94 @@ public:
                 Scalar(255, 255, 255)
             );
     };
+
+    //画定位点
+    void findLacation(Mat img)
+    {
+        for (int i = MARGIN+7; i < WIDTH - 8; i++)
+        {
+            if (i % 2 == 0)
+            {
+                rectangle(
+                    img,
+                    Point(i, MARGIN + 7),
+                    Point(i, MARGIN + 7),
+                    Scalar(0, 0, 0)
+                );
+                rectangle(
+                    img,
+                    Point(MARGIN + 7, i),
+                    Point(MARGIN + 7, i),
+                    Scalar(0, 0, 0)
+                );
+            }
+            else
+            {
+                rectangle(
+                    img,
+                    Point(i, MARGIN + 7),
+                    Point(i, MARGIN + 7),
+                    Scalar(255, 255, 255)
+                );
+                rectangle(
+                    img,
+                    Point(MARGIN + 7, i),
+                    Point(MARGIN + 7, i),
+                    Scalar(255, 255, 255)
+                );
+            }
+        }
+    }
+    //画校正点
+    void correction(int x,int y,Mat img)
+    {
+        rectangle(
+            img,
+            Point(x, y),
+            Point(x, y),
+            Scalar(0, 0, 0)
+        );
+        rectangle(
+            img,
+            Point(x - 2, y - 2),
+            Point(x + 2, y + 2),
+            Scalar(0, 0, 0)
+        );
+    }
     void drawBlocks() {
         block(MARGIN, MARGIN, img);//左上
         block(WIDTH - MARGIN - 8, MARGIN, img);// 右上
         block(MARGIN, HIGH - MARGIN - 8, img); // 左下
     }
-
+    void drawCorrection()
+    {
+        correction(WIDTH / 2, MARGIN + 7,img);
+        correction(MARGIN + 7, WIDTH / 2, img);
+        correction(WIDTH / 2, WIDTH / 2, img);
+        correction(WIDTH / 2, WIDTH - MARGIN - 7, img);
+        correction(WIDTH - MARGIN - 7, WIDTH - MARGIN - 7, img);
+        correction(WIDTH - MARGIN - 7, WIDTH / 2, img);
+    }
     void initImg(int high, int width) {
         img = Mat(cv::Size(high, width), CV_8UC3);
         img.setTo(Scalar(255, 255, 255));  
-        
     }
+
+    //补齐数据
+    void fillData(vector<char> ch)
+    {
+        vector<char> fillarr(16);
+        fillarr = { 1,1,1,0,1,1,0,0,0,0,0,1,0,0,0,1 };
+        while (sizeof(ch) / sizeof(ch[0]) < capacity)
+        {
+            ch.insert(ch.end(), fillarr.begin(), fillarr.end());
+        }
+    }
+
     void fileToImg(vector<char> ch) {
         drawBlocks();
+        drawCorrection();
+        findLacation(img);
         int num; // 第几张图
         char data;
         int index = 0;
@@ -69,16 +155,21 @@ public:
                     flag = 0;
                     continue;
                 }
+                for (int i = 0; i < 6; i++)
+                {
+                    if (curR == saveCorrection[i][0] && curC == saveCorrection[i][1])
+                        continue;
+                }
                 // 跳过定位码区域
                 if (curR <= MARGIN + 7 + 1) {
-                    if (curC <= MARGIN + 7 + 1 || curC >= WIDTH - (MARGIN + 7 + 1)-1)continue;
+                    if (curC <= MARGIN + 7 + 1 || curC >= WIDTH - (MARGIN + 7 + 1) - 1)continue;
                 }
                 else if (curR >= HIGH - (MARGIN + 7 + 1) && curC <= MARGIN + 7 + 1) continue;
                 data = ch[index++];
                 drawPixel(data - '0', curC, curR, img);
             }
         }
-        capacity = HIGH * WIDTH - 2 * HIGH * MARGIN - 2 * WIDTH * MARGIN + 4 * MARGIN * MARGIN - 234;// 234是二维码区域
+        
         cout << index << endl;
         cout << capacity << endl;
     }
@@ -96,11 +187,11 @@ private:
    
 };
 
-int main()
-{
+int main() {
+
     char tmp;
     vector<char> datas;
-    fstream bins("tmp.txt");
+    fstream bins("random.bin");
     while (bins >> tmp) {
         datas.push_back(tmp);
     }
