@@ -1,0 +1,7 @@
+﻿  OurCode.cpp
+D:\Project\GitHub\UsingVisibleLightToTransmitInformation\OurCode\Encode.h(10,1): warning C4005: “CAPACITY”: 宏重定义
+  (编译源文件“OurCode.cpp”)
+  D:\Project\GitHub\UsingVisibleLightToTransmitInformation\OurCode\BinGenerator.h(5,1):
+  参见“CAPACITY”的前一个定义
+  
+  OurCode.vcxproj -> D:\Project\GitHub\UsingVisibleLightToTransmitInformation\OurCode\x64\Debug\OurCode.exe

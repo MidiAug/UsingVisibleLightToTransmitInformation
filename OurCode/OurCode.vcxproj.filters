@@ -18,5 +18,28 @@
     <ClCompile Include="OurCode.cpp">
       <Filter>源文件</Filter>
     </ClCompile>
+    <ClCompile Include="BinGenerator.cpp">
+      <Filter>源文件</Filter>
+    </ClCompile>
+    <ClCompile Include="Encode.cpp">
+      <Filter>源文件</Filter>
+    </ClCompile>
+    <ClCompile Include="ImgToVedio.cpp">
+      <Filter>源文件</Filter>
+    </ClCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="BinGenerator.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="Matrix.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="Encode.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="ImgToVedio.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
   </ItemGroup>
 </Project>

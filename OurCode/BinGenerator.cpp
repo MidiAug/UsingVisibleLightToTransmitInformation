@@ -1,9 +1,8 @@
-#include <iostream>
-#include <fstream>
-#include <random>
+#include "BinGenerator.h"
 
 // 生成随机二进制文件的函数
-void generateRandomBinaryFile(const std::string& filename, std::size_t size) {
+void generateRandomBinaryFile(const std::string& filename, std::size_t size)
+{
   std::ofstream ofs(filename, std::ios::binary);
   if (!ofs.is_open()) {
     std::cerr << "Failed to open file: " << filename << std::endl;
@@ -23,13 +22,47 @@ void generateRandomBinaryFile(const std::string& filename, std::size_t size) {
   ofs.close();
 }
 
-int main() {
-  std::size_t fileSize = 1000; // 文件大小，单位为字节
-  std::string filename = "random.bin"; // 文件名
+// 读取二进制文件
+std::vector<int> readBinaryFile(const std::string& filename) {
+    std::ifstream file(filename, std::ios::binary);
+    std::vector<int> result;
+    std::vector<int> tmp();
+    if (!file.is_open()) {
+        std::cerr << "Failed to open file: " << filename << std::endl;
+        return result;
+    }
 
-  generateRandomBinaryFile(filename, fileSize);
+    char byte;
 
-  std::cout << "Random binary file generated successfully." << std::endl;
+    // 读取文件内容
+    while (file.read(&byte, sizeof(byte))) {
+        // 将字符转换为整数并逐位提取
+        for (int i = 7; i >= 0; --i) {
+            int bit = (byte >> i) & 1;
+            result.push_back(bit);
+        }
+    }
 
-  return 0;
+    file.close();
+
+    return result;
 }
+
+// 填补数据
+void fillData(std::vector<int>& datas)
+{
+    std::vector<int> fillArr(16);
+    fillArr = { 1,1,1,0,1,1,0,0,0,0,0,1,0,0,0,1 };
+    int left = CAPACITY - (datas.size() % CAPACITY);
+    int cnt = 0;
+    for (int i = 0; i < left / 16; i++)
+    {
+        datas.insert(datas.end(), fillArr.begin(), fillArr.end());
+    }
+    left %= 16;
+    for (int i = 0; i < left; i++)
+    {
+        datas.push_back(fillArr[i]);
+    }
+}
+
