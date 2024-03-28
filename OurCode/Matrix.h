@@ -6,7 +6,7 @@
 
 #include <ostream>
 #include <iostream>
-#include <vector>
+#include <std::vector>
 #include <type_traits>
 #include <typeinfo>
 #include <memory>
@@ -53,13 +53,13 @@ public:
     Matrix() {}
     Matrix(int, int);
     Matrix(int, int, const T&);
-    Matrix(int, int, const vector<T>&);
-    Matrix(int, int, vector<vector<T>>&);
+    Matrix(int, int, const std::vector<T>&);
+    Matrix(int, int, std::vector<std::vector<T>>&);
     Matrix(int _row, int _col, const T** val, int val_row, int val_col);
     Matrix(const Matrix<T>&);
     T getValue(int row, int col) const;
     void setValue(int row, int col, const T& value);
-    void setValByArray(Matrix<int>& visit, const vector<T>& lists, int rPos, int cPos);
+    void setValByArray(Matrix<int>& visit, const std::vector<T>& lists, int rPos, int cPos);
     Matrix<T>& operator+(const Matrix&);
     Matrix<T>& operator-(const Matrix&);
     Matrix<double> operator*(Matrix<double>& obj);
@@ -102,7 +102,7 @@ Matrix<T>::Matrix(int _row, int _col) {
 }
 
 template<typename T>
-Matrix<T>::Matrix(int _row, int _col, const vector<T>& _val) {
+Matrix<T>::Matrix(int _row, int _col, const std::vector<T>& _val) {
     if (_col * _row != _val.size()) return;
     this->row = _row;
     this->col = _col;
@@ -117,7 +117,7 @@ Matrix<T>::Matrix(int _row, int _col, const vector<T>& _val) {
 }
 
 template<typename T>
-Matrix<T>::Matrix(int _row, int _col, vector<vector<T>>& _val) {
+Matrix<T>::Matrix(int _row, int _col, std::vector<std::vector<T>>& _val) {
     this->col = _col;
     this->row = _row;
     matrix = new T * [row];
@@ -190,7 +190,7 @@ void Matrix<T>::setValue(int row, int col, const T& value) {
 
 //将二维数组中的非0项目设置为lists对应的值，位置对应关系为-1
 template<typename T>
-void Matrix<T>::setValByArray(Matrix<int>& visit, const vector<T>& lists, int rPos, int cPos) {
+void Matrix<T>::setValByArray(Matrix<int>& visit, const std::vector<T>& lists, int rPos, int cPos) {
     for (int r = 0; r < visit.row && r < row; r++) {
         for (int c = 0; c < visit.col && c < col; c++) {
             int pos = visit.getValue(r, c);

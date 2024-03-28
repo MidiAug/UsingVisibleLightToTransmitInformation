@@ -3,8 +3,24 @@
   "WorkspaceRootPath": "D:\\Project\\GitHub\\UsingVisibleLightToTransmitInformation\\OurCode\\",
   "Documents": [
     {
+      "AbsoluteMoniker": "D:0:0:{39E937BB-EC0C-4A44-AF5D-9267A0F44544}|OurCode.vcxproj|D:\\Project\\GitHub\\UsingVisibleLightToTransmitInformation\\OurCode\\ImgToVedio.cpp||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}",
+      "RelativeMoniker": "D:0:0:{39E937BB-EC0C-4A44-AF5D-9267A0F44544}|OurCode.vcxproj|solutionrelative:ImgToVedio.cpp||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}"
+    },
+    {
       "AbsoluteMoniker": "D:0:0:{39E937BB-EC0C-4A44-AF5D-9267A0F44544}|OurCode.vcxproj|D:\\Project\\GitHub\\UsingVisibleLightToTransmitInformation\\OurCode\\OurCode.cpp||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}",
       "RelativeMoniker": "D:0:0:{39E937BB-EC0C-4A44-AF5D-9267A0F44544}|OurCode.vcxproj|solutionrelative:OurCode.cpp||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{39E937BB-EC0C-4A44-AF5D-9267A0F44544}|OurCode.vcxproj|D:\\Project\\GitHub\\UsingVisibleLightToTransmitInformation\\OurCode\\Encode.cpp||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}",
+      "RelativeMoniker": "D:0:0:{39E937BB-EC0C-4A44-AF5D-9267A0F44544}|OurCode.vcxproj|solutionrelative:Encode.cpp||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{39E937BB-EC0C-4A44-AF5D-9267A0F44544}|OurCode.vcxproj|D:\\Project\\GitHub\\UsingVisibleLightToTransmitInformation\\OurCode\\Encode.h||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}",
+      "RelativeMoniker": "D:0:0:{39E937BB-EC0C-4A44-AF5D-9267A0F44544}|OurCode.vcxproj|solutionrelative:Encode.h||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{39E937BB-EC0C-4A44-AF5D-9267A0F44544}|OurCode.vcxproj|D:\\Project\\GitHub\\UsingVisibleLightToTransmitInformation\\OurCode\\ImgToVedio.h||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}",
+      "RelativeMoniker": "D:0:0:{39E937BB-EC0C-4A44-AF5D-9267A0F44544}|OurCode.vcxproj|solutionrelative:ImgToVedio.h||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}"
     }
   ],
   "DocumentGroupContainers": [
@@ -14,17 +30,69 @@
       "DocumentGroups": [
         {
           "DockedWidth": 200,
-          "SelectedChildIndex": 0,
+          "SelectedChildIndex": 1,
           "Children": [
             {
               "$type": "Document",
+              "DocumentIndex": 4,
+              "Title": "ImgToVedio.h",
+              "DocumentMoniker": "D:\\Project\\GitHub\\UsingVisibleLightToTransmitInformation\\OurCode\\ImgToVedio.h",
+              "RelativeDocumentMoniker": "ImgToVedio.h",
+              "ToolTip": "D:\\Project\\GitHub\\UsingVisibleLightToTransmitInformation\\OurCode\\ImgToVedio.h",
+              "RelativeToolTip": "ImgToVedio.h",
+              "ViewState": "AQIAAAAAAAAAAAAAAAAAAAwAAABbAAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000680|",
+              "WhenOpened": "2024-03-28T13:51:40.203Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
               "DocumentIndex": 0,
+              "Title": "ImgToVedio.cpp",
+              "DocumentMoniker": "D:\\Project\\GitHub\\UsingVisibleLightToTransmitInformation\\OurCode\\ImgToVedio.cpp",
+              "RelativeDocumentMoniker": "ImgToVedio.cpp",
+              "ToolTip": "D:\\Project\\GitHub\\UsingVisibleLightToTransmitInformation\\OurCode\\ImgToVedio.cpp",
+              "RelativeToolTip": "ImgToVedio.cpp",
+              "ViewState": "AQIAAAAAAAAAAAAAAAAAAAkAAAAAAAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000677|",
+              "WhenOpened": "2024-03-28T13:51:08.605Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 2,
+              "Title": "Encode.cpp",
+              "DocumentMoniker": "D:\\Project\\GitHub\\UsingVisibleLightToTransmitInformation\\OurCode\\Encode.cpp",
+              "RelativeDocumentMoniker": "Encode.cpp",
+              "ToolTip": "D:\\Project\\GitHub\\UsingVisibleLightToTransmitInformation\\OurCode\\Encode.cpp",
+              "RelativeToolTip": "Encode.cpp",
+              "ViewState": "AQIAABkAAAAAAAAAAAAwwCcAAAAAAAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000677|",
+              "WhenOpened": "2024-03-28T12:58:28.013Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 3,
+              "Title": "Encode.h",
+              "DocumentMoniker": "D:\\Project\\GitHub\\UsingVisibleLightToTransmitInformation\\OurCode\\Encode.h",
+              "RelativeDocumentMoniker": "Encode.h",
+              "ToolTip": "D:\\Project\\GitHub\\UsingVisibleLightToTransmitInformation\\OurCode\\Encode.h",
+              "RelativeToolTip": "Encode.h",
+              "ViewState": "AQIAAAMAAAAAAAAAAAAwwBYAAAAiAAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000680|",
+              "WhenOpened": "2024-03-28T12:57:55.233Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 1,
               "Title": "OurCode.cpp",
               "DocumentMoniker": "D:\\Project\\GitHub\\UsingVisibleLightToTransmitInformation\\OurCode\\OurCode.cpp",
               "RelativeDocumentMoniker": "OurCode.cpp",
               "ToolTip": "D:\\Project\\GitHub\\UsingVisibleLightToTransmitInformation\\OurCode\\OurCode.cpp",
               "RelativeToolTip": "OurCode.cpp",
-              "ViewState": "AQIAAAAAAAAAAAAAAAAAAAgAAAABAAAA",
+              "ViewState": "AQIAAA8AAAAAAAAAAAAAAB4AAAAAAAAA",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000677|",
               "WhenOpened": "2024-03-06T13:45:37.93Z",
               "EditorCaption": ""
