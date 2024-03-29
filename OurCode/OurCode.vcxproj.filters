@@ -18,13 +18,7 @@
     <ClCompile Include="OurCode.cpp">
       <Filter>源文件</Filter>
     </ClCompile>
-    <ClCompile Include="Bin.cpp">
-      <Filter>源文件</Filter>
-    </ClCompile>
     <ClCompile Include="Encode.cpp">
-      <Filter>源文件</Filter>
-    </ClCompile>
-    <ClCompile Include="IVTran.cpp">
       <Filter>源文件</Filter>
     </ClCompile>
     <ClCompile Include="Decode.cpp">
@@ -33,18 +27,15 @@
     <ClCompile Include="QR_Location.cpp">
       <Filter>源文件</Filter>
     </ClCompile>
+    <ClCompile Include="Files.cpp">
+      <Filter>源文件</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="Bin.h">
-      <Filter>头文件</Filter>
-    </ClInclude>
     <ClInclude Include="Matrix.h">
       <Filter>头文件</Filter>
     </ClInclude>
     <ClInclude Include="Encode.h">
-      <Filter>头文件</Filter>
-    </ClInclude>
-    <ClInclude Include="IVTran.h">
       <Filter>头文件</Filter>
     </ClInclude>
     <ClInclude Include="Basic.h">
@@ -54,6 +45,9 @@
       <Filter>头文件</Filter>
     </ClInclude>
     <ClInclude Include="QR_location.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="Files.h">
       <Filter>头文件</Filter>
     </ClInclude>
   </ItemGroup>

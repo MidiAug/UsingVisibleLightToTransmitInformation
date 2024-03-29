@@ -1,12 +1,19 @@
 #include "Encode.h"
 
-void Encode::fileToImg(std::vector<int> &datas, Mat &img,std::string outputPath) {
+void Encode::fileToImg(std::vector<int>& datas, Mat& img, std::string outputPath,int wait) {
     initImg(HIGH, WIDTH, img);
     int numOfImg = datas.size() / (CAPACITY);
     int curNum = 0;
     int index = 0, curC = 0, curR = 0;
     string filename;
     cout << "图片数量" << numOfImg << endl;
+    Files::create_or_clear_directory(outputPath, img);
+
+    drawBasic(img);
+    //cv::namedWindow("Window with adjustable size", cv::WINDOW_NORMAL);
+    //imshow("Window with adjustable size", img);
+    //waitKey(0);
+
     for (int i = 0; i < numOfImg; i++)
     {
         string str1 = "image";
@@ -14,10 +21,10 @@ void Encode::fileToImg(std::vector<int> &datas, Mat &img,std::string outputPath)
         string str3 = ".png";
         filename = str1 + str2 + str3;
 
-        drawBasic(img);
-        int data;
+        
         int data1;
         int data2;
+        int data3;
         curC = curR = 0;
         int flag = 1;
         for (int curR = MARGIN; curR < HIGH - MARGIN && flag; curR++)
@@ -30,21 +37,31 @@ void Encode::fileToImg(std::vector<int> &datas, Mat &img,std::string outputPath)
                 }
                 if (jump(curR, curC)) continue;
                 // 跳过定位码区域
-
-                data = datas[index++];
-                drawPixel(data, curC, curR, img);
-
-                //data1 = datas[index++];
-                //data2 = datas[index++];
-                //drawPixel(data1,data2, curC, curR, img);
-                ////cout << data1 << " " << data2 << endl;
+                
+                if (BIT == 1)
+                {
+                    data1 = datas[index++];
+                    drawPixel(data1, curC, curR, img);
+                }
+                else if (BIT == 2)
+                {
+                    data1 = datas[index++];
+                    data2 = datas[index++];
+                    drawPixel(data1, data2, curC, curR, img);
+                }
+                else if (BIT == 3)
+                {
+                    data1 = datas[index++];
+                    data2 = datas[index++];
+                    data3 = datas[index++];
+                    drawPixel(data1, data2, data3, curC, curR, img);
+                }
             }
         }
         curNum++;
-        cout << index << endl;
-        if (i == 0 && index != CAPACITY) cout << "容量计算有误，重新计算" << endl;
+        if (i == 0 && index != CAPACITY) cout << "容量计算有误，重新计算，index为" << index <<"" << endl;
         showImg(img);
-        waitKey(0);
+        if(wait==1)waitKey(0);
         saveImg(outputPath + '/' + filename, img);
     }
 }
@@ -57,22 +74,22 @@ bool Encode::jump(int curR, int curC)
     if (curR <= MARGIN + 7 + 1) {
         if (curC <= MARGIN + 7 + 1 || curC >= WIDTH - (MARGIN + 7 + 1) - 1) return true;
     }
-    else if (curR >= HIGH - (MARGIN + 7 + 1) -1 && curC <= MARGIN + 7 + 1) return true;
+    else if (curR >= HIGH - (MARGIN + 7 + 1) - 1 && curC <= MARGIN + 7 + 1) return true;
 
 
     // 矫正点
     if (curC <= WIDTH / 2 + 2 && curC >= WIDTH / 2 - 2) // 中间三个（258）
     {
         if (curR <= MARGIN + 7 + 2 && curR >= MARGIN + 7 - 2) return true;
-        else if (curR <= WIDTH / 2 + 2 && curR >= WIDTH / 2 - 2) return true;
-        else if (curR <= WIDTH - MARGIN - 7 + 2 -1 && curR >= WIDTH - MARGIN - 7 - 2 - 1) return true;
+        else if (curR <= HIGH / 2 + 2 && curR >= HIGH / 2 - 2) return true;
+        else if (curR <= HIGH - MARGIN - 7 + 2 - 1 && curR >= HIGH - MARGIN - 7 - 2 - 1) return true;
     }
 
     if (curC <= MARGIN + 7 + 2 && curC >= MARGIN + 7 - 2) // 左中 4
         if (curR >= HIGH / 2 - 2 && curR <= HIGH / 2 + 2)
             return true;
 
-    if (curC <= WIDTH - MARGIN - 7 + 2 && curC >= WIDTH - MARGIN - 7 - 2) // 右2个（69）
+    if (curC <= WIDTH - MARGIN - 7 + 2 -1&& curC >= WIDTH - MARGIN - 7 - 2 -1 ) // 右2个（69）
     {
         if (curR <= HIGH - MARGIN - 7 + 2 - 1 && curR >= HIGH - MARGIN - 7 - 2 - 1) // 9
             return true;
@@ -87,7 +104,7 @@ bool Encode::jump(int curR, int curC)
 }
 
 // 寻像区域（3个）
-void Encode::block(int left, int top, Mat &img) {
+void Encode::block(int left, int top, Mat& img) {
     rectangle(
         img,
         Point(left, top),
@@ -103,50 +120,37 @@ void Encode::block(int left, int top, Mat &img) {
     );
 }
 // 画定位点（2条线）
-void Encode::findLacation(Mat &img)
+void Encode::findLacation(Mat& img)
 {
-    for (int i = MARGIN + 7; i < WIDTH - 8; i++)
+    int row, col;
+    col = MARGIN + 7;
+    for (int row = MARGIN +7 + 2; row < HIGH - MARGIN - 7 - 2; row++)
     {
-        if (i % 2 == 0)
-        {
-            rectangle(
-                img,
-                Point(i, MARGIN + 7),
-                Point(i, MARGIN + 7),
-                Scalar(0, 0, 0)
-            );
-            rectangle(
-                img,
-                Point(MARGIN + 7, i),
-                Point(MARGIN + 7, i),
-                Scalar(0, 0, 0)
-            );
-        }
-        else
-        {
-            rectangle(
-                img,
-                Point(i, MARGIN + 7),
-                Point(i, MARGIN + 7),
-                Scalar(255, 255, 255)
-            );
-            rectangle(
-                img,
-                Point(MARGIN + 7, i),
-                Point(MARGIN + 7, i),
-                Scalar(255, 255, 255)
-            );
-        }
+        if (row % 2 == 1) drawPixel(0, col, row, img);
+        else drawPixel(1, col, row, img);
+    }
+
+    row = MARGIN + 7;
+    for (int col = MARGIN + 7 + 2; col < WIDTH - MARGIN - 7 - 2; col++)
+    {
+        if (col % 2 == 1) drawPixel(0, col, row, img);
+        else drawPixel(1, col, row, img);
     }
 }
 //画校正点 (6个）
-void Encode::correction(int x, int y, Mat &img)
+void Encode::correction(int x, int y, Mat& img)
 {
     rectangle(
         img,
         Point(x, y),
         Point(x, y),
         Scalar(0, 0, 0)
+    );
+    rectangle(
+        img,
+        Point(x-1, y-1),
+        Point(x+1, y+1),
+        Scalar(255, 255, 255)
     );
     rectangle(
         img,
@@ -156,14 +160,13 @@ void Encode::correction(int x, int y, Mat &img)
     );
 }
 // 将上述3种东西画到图里
-void Encode::drawBasic(Mat &img) {
+void Encode::drawBasic(Mat& img) {
 
+    findLacation(img);
     // 寻像区域
     block(MARGIN, MARGIN, img);//左上
     block(WIDTH - MARGIN - 8, MARGIN, img);// 右上
     block(MARGIN, HIGH - MARGIN - 8, img); // 左下
-
-    findLacation(img);
 
     for (int i = 0; i < 6; i++)
     {
@@ -172,11 +175,11 @@ void Encode::drawBasic(Mat &img) {
 }
 
 // 画具体像素值
-void Encode::drawPixel(int val, int x, int y, Mat &img) {
+void Encode::drawPixel(int val, int x, int y, Mat& img) {
     Scalar color;
     if (val == 0)color = cv::Scalar(0, 0, 0);
     else color = cv::Scalar(255, 255, 255);
-    
+
     rectangle(
         img,
         Point(x, y),
@@ -185,14 +188,14 @@ void Encode::drawPixel(int val, int x, int y, Mat &img) {
     );
 };
 
-void Encode::drawPixel(int val,int lue, int x, int y, Mat& img) {
+void Encode::drawPixel(int val, int lue, int x, int y, Mat& img) {
     Scalar color;
-    if(val==0 && lue==0) color = cv::Scalar(0, 0, 0);
+    if (val == 0 && lue == 0) color = cv::Scalar(0, 0, 0);
     else if (val == 0 && lue == 1) color = cv::Scalar(232, 162, 0);
     //else if (val == 1 && lue == 0) color = cv::Scalar(0, 125, 255);
     else if (val == 1 && lue == 0) color = cv::Scalar(23, 93, 255);
     else  color = cv::Scalar(255, 255, 255);
-    
+
     rectangle(
         img,
         Point(x, y),
@@ -201,16 +204,54 @@ void Encode::drawPixel(int val,int lue, int x, int y, Mat& img) {
     );
 };
 
-void Encode::initImg(int high, int width, Mat &img) {
-    img = Mat(cv::Size(high, width), CV_8UC3);
+void Encode::drawPixel(int v1, int v2, int v3, int x, int y, Mat& img)
+{
+    Scalar color;
+    /*if (v1 == 0 && v2 == 0 && v3 == 0) color = cv::Scalar(0, 0, 255);
+    else if (v1 == 0 && v2 == 0 && v3 == 1) color = cv::Scalar(255, 0, 0);
+    else if (v1 == 0 && v2 == 1 && v3 == 0) color = cv::Scalar(0, 255, 255);
+    else if (v1 == 0 && v2 == 1 && v3 == 1) color = cv::Scalar(128, 0, 128);
+    else if (v1 == 1 && v2 == 0 && v3 == 0) color = cv::Scalar(0, 255, 0);
+    else if (v1 == 1 && v2 == 0 && v3 == 1) color = cv::Scalar(0, 165, 255);
+    else if (v1 == 1 && v2 == 1 && v3 == 0) color = cv::Scalar(203, 192, 255);
+    else  color = cv::Scalar(255, 255, 255);*/
+
+    //if (v1 == 0 && v2 == 0 && v3 == 0) color = cv::Scalar(0, 0, 0);
+    //else if (v1 == 0 && v2 == 0 && v3 == 1) color = cv::Scalar(0, 0, 255);
+    //else if (v1 == 0 && v2 == 1 && v3 == 0) color = cv::Scalar(0, 255, 0);
+    //else if (v1 == 0 && v2 == 1 && v3 == 1) color = cv::Scalar(0, 255, 255);
+    //else if (v1 == 1 && v2 == 0 && v3 == 0) color = cv::Scalar(255, 0, 0);
+    //else if (v1 == 1 && v2 == 0 && v3 == 1) color = cv::Scalar(255, 0, 255);
+    //else if (v1 == 1 && v2 == 1 && v3 == 0) color = cv::Scalar(255, 255, 0);
+    //else  color = cv::Scalar(255, 255, 255);
+
+    if (v1 == 0 && v2 == 0 && v3 == 0) color = cv::Scalar(10, 10, 10);
+    else if (v1 == 0 && v2 == 0 && v3 == 1) color = cv::Scalar(0, 0, 255);
+    else if (v1 == 0 && v2 == 1 && v3 == 0) color = cv::Scalar(0, 255, 0);
+    else if (v1 == 0 && v2 == 1 && v3 == 1) color = cv::Scalar(0, 255, 255);
+    else if (v1 == 1 && v2 == 0 && v3 == 0) color = cv::Scalar(255, 0, 0);
+    else if (v1 == 1 && v2 == 0 && v3 == 1) color = cv::Scalar(255, 0, 255);
+    else if (v1 == 1 && v2 == 1 && v3 == 0) color = cv::Scalar(255, 255, 0);
+    else  color = cv::Scalar(245, 245, 245);
+
+    rectangle(
+        img,
+        Point(x, y),
+        Point(x, y),
+        color
+    );
+}
+void Encode::initImg(int high, int width, Mat& img) {
+    img = Mat(cv::Size(width, high), CV_8UC3);
     img.setTo(Scalar(255, 255, 255));
 }
 
-void Encode::saveImg(String filePath, Mat &img) {
+void Encode::saveImg(String filePath, Mat& img) {
+
     cv::imwrite(filePath, img);
 }
 
-void Encode::showImg(Mat &img) {
+void Encode::showImg(Mat& img) {
     cv::namedWindow("image", cv::WINDOW_NORMAL);
     cv::imshow("image", img);
 }

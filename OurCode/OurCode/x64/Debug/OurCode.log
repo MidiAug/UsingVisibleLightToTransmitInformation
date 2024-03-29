@@ -1,18 +1,3 @@
-﻿  Decode.cpp
-D:\Project\GitHub\UsingVisibleLightToTransmitInformation\OurCode\Decode.cpp(46,53): warning C4244: “参数”: 从“float”转换到“_Tp”，可能丢失数据
-D:\Project\GitHub\UsingVisibleLightToTransmitInformation\OurCode\Decode.cpp(46,53): warning C4244:         with
-D:\Project\GitHub\UsingVisibleLightToTransmitInformation\OurCode\Decode.cpp(46,53): warning C4244:         [
-D:\Project\GitHub\UsingVisibleLightToTransmitInformation\OurCode\Decode.cpp(46,53): warning C4244:             _Tp=int
-D:\Project\GitHub\UsingVisibleLightToTransmitInformation\OurCode\Decode.cpp(46,53): warning C4244:         ]
-D:\Project\GitHub\UsingVisibleLightToTransmitInformation\OurCode\Decode.cpp(46,32): warning C4244: “参数”: 从“float”转换到“_Tp”，可能丢失数据
-D:\Project\GitHub\UsingVisibleLightToTransmitInformation\OurCode\Decode.cpp(46,32): warning C4244:         with
-D:\Project\GitHub\UsingVisibleLightToTransmitInformation\OurCode\Decode.cpp(46,32): warning C4244:         [
-D:\Project\GitHub\UsingVisibleLightToTransmitInformation\OurCode\Decode.cpp(46,32): warning C4244:             _Tp=int
-D:\Project\GitHub\UsingVisibleLightToTransmitInformation\OurCode\Decode.cpp(46,32): warning C4244:         ]
-  Encode.cpp
-D:\Project\GitHub\UsingVisibleLightToTransmitInformation\OurCode\Encode.cpp(5,18): warning C4267: “初始化”: 从“size_t”转换到“int”，可能丢失数据
-D:\Project\GitHub\UsingVisibleLightToTransmitInformation\OurCode\Encode.cpp(20,13): warning C4101: “data2”: 未引用的局部变量
-D:\Project\GitHub\UsingVisibleLightToTransmitInformation\OurCode\Encode.cpp(19,13): warning C4101: “data1”: 未引用的局部变量
-  OurCode.cpp
-  正在生成代码...
+﻿  OurCode.cpp
+C:\Program Files\Microsoft Visual Studio\2022\Community\VC\Tools\MSVC\14.39.33519\include\filesystem(12): warning STL4038: The contents of <filesystem> are available only with C++17 or later.
   OurCode.vcxproj -> D:\Project\GitHub\UsingVisibleLightToTransmitInformation\OurCode\x64\Debug\OurCode.exe
