@@ -1,3 +1,33 @@
-﻿  OurCode.cpp
-C:\Program Files\Microsoft Visual Studio\2022\Community\VC\Tools\MSVC\14.39.33519\include\filesystem(12): warning STL4038: The contents of <filesystem> are available only with C++17 or later.
+﻿  Decode.cpp
+D:\Project\GitHub\UsingVisibleLightToTransmitInformation\OurCode\Decode.cpp(277,68): warning C4244: “参数”: 从“int”转换到“_Tp”，可能丢失数据
+D:\Project\GitHub\UsingVisibleLightToTransmitInformation\OurCode\Decode.cpp(277,68): warning C4244:         with
+D:\Project\GitHub\UsingVisibleLightToTransmitInformation\OurCode\Decode.cpp(277,68): warning C4244:         [
+D:\Project\GitHub\UsingVisibleLightToTransmitInformation\OurCode\Decode.cpp(277,68): warning C4244:             _Tp=float
+D:\Project\GitHub\UsingVisibleLightToTransmitInformation\OurCode\Decode.cpp(277,68): warning C4244:         ]
+D:\Project\GitHub\UsingVisibleLightToTransmitInformation\OurCode\Decode.cpp(277,92): warning C4244: “参数”: 从“int”转换到“_Tp”，可能丢失数据
+D:\Project\GitHub\UsingVisibleLightToTransmitInformation\OurCode\Decode.cpp(277,92): warning C4244:         with
+D:\Project\GitHub\UsingVisibleLightToTransmitInformation\OurCode\Decode.cpp(277,92): warning C4244:         [
+D:\Project\GitHub\UsingVisibleLightToTransmitInformation\OurCode\Decode.cpp(277,92): warning C4244:             _Tp=float
+D:\Project\GitHub\UsingVisibleLightToTransmitInformation\OurCode\Decode.cpp(277,92): warning C4244:         ]
+D:\Project\GitHub\UsingVisibleLightToTransmitInformation\OurCode\Decode.cpp(277,85): warning C4244: “参数”: 从“int”转换到“_Tp”，可能丢失数据
+D:\Project\GitHub\UsingVisibleLightToTransmitInformation\OurCode\Decode.cpp(277,85): warning C4244:         with
+D:\Project\GitHub\UsingVisibleLightToTransmitInformation\OurCode\Decode.cpp(277,85): warning C4244:         [
+D:\Project\GitHub\UsingVisibleLightToTransmitInformation\OurCode\Decode.cpp(277,85): warning C4244:             _Tp=float
+D:\Project\GitHub\UsingVisibleLightToTransmitInformation\OurCode\Decode.cpp(277,85): warning C4244:         ]
+D:\Project\GitHub\UsingVisibleLightToTransmitInformation\OurCode\Decode.cpp(277,109): warning C4244: “参数”: 从“int”转换到“_Tp”，可能丢失数据
+D:\Project\GitHub\UsingVisibleLightToTransmitInformation\OurCode\Decode.cpp(277,109): warning C4244:         with
+D:\Project\GitHub\UsingVisibleLightToTransmitInformation\OurCode\Decode.cpp(277,109): warning C4244:         [
+D:\Project\GitHub\UsingVisibleLightToTransmitInformation\OurCode\Decode.cpp(277,109): warning C4244:             _Tp=float
+D:\Project\GitHub\UsingVisibleLightToTransmitInformation\OurCode\Decode.cpp(277,109): warning C4244:         ]
+D:\Project\GitHub\UsingVisibleLightToTransmitInformation\OurCode\Decode.cpp(354,53): warning C4244: “参数”: 从“float”转换到“_Tp”，可能丢失数据
+D:\Project\GitHub\UsingVisibleLightToTransmitInformation\OurCode\Decode.cpp(354,53): warning C4244:         with
+D:\Project\GitHub\UsingVisibleLightToTransmitInformation\OurCode\Decode.cpp(354,53): warning C4244:         [
+D:\Project\GitHub\UsingVisibleLightToTransmitInformation\OurCode\Decode.cpp(354,53): warning C4244:             _Tp=int
+D:\Project\GitHub\UsingVisibleLightToTransmitInformation\OurCode\Decode.cpp(354,53): warning C4244:         ]
+D:\Project\GitHub\UsingVisibleLightToTransmitInformation\OurCode\Decode.cpp(354,32): warning C4244: “参数”: 从“float”转换到“_Tp”，可能丢失数据
+D:\Project\GitHub\UsingVisibleLightToTransmitInformation\OurCode\Decode.cpp(354,32): warning C4244:         with
+D:\Project\GitHub\UsingVisibleLightToTransmitInformation\OurCode\Decode.cpp(354,32): warning C4244:         [
+D:\Project\GitHub\UsingVisibleLightToTransmitInformation\OurCode\Decode.cpp(354,32): warning C4244:             _Tp=int
+D:\Project\GitHub\UsingVisibleLightToTransmitInformation\OurCode\Decode.cpp(354,32): warning C4244:         ]
+D:\Project\GitHub\UsingVisibleLightToTransmitInformation\OurCode\Decode.cpp(291,1): warning C4715: “Decode::extractCodeHelper”: 不是所有的控件路径都返回值
   OurCode.vcxproj -> D:\Project\GitHub\UsingVisibleLightToTransmitInformation\OurCode\x64\Debug\OurCode.exe

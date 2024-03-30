@@ -1,15 +1,22 @@
 #pragma once
 #include<opencv2/opencv.hpp>
 #include"Basic.h"
+#include"Files.h"
 using namespace cv;
 using namespace std;
 
 namespace Decode
 {
+
+	int extractCode(string& inFolderPath, string outFolderPath);
+	Mat extractCodeHelper(Mat& src);
+	bool isColorConflict(Vec3b* upperThresholds, Vec3b* lowerThresholds);
 	//判断是否需要跳过
 	bool jump(int curR, int curC);
-	void judge(vector<int>& data, int curC, int curR, Mat imaget);
-	void readQrCode(vector<int>& data, Mat& image);
-	void Main(std::string codeFolderPath, vector<int>& data);
+	inline void judge1( cv::Vec3b thisPixel,int &val);
+	inline void judge2( cv::Vec3b thisPixel, int &val1, int &val2);
+	int readCodeHelper(vector<int>& data, Mat& image, vector<int>& origianl, int debug = 0);
+	int readCode(std::string extCodePath, vector<int>& data, vector<int>& origianl);
 	void showimg(Mat& img, float x, float y);
+	void test(vector<int>& data, Mat& image, vector<int>& origianl);
 }

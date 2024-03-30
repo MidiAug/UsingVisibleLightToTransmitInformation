@@ -46,7 +46,7 @@ namespace Files
 	void create_or_clear_directory(const std::string& dir, cv::Mat& img);
 
 	// 图片与视频间的转换
-	bool ImgToVideo(std::string imageFolderPath, std::string outputVideoPath, float time);
+	bool ImgToVideo(std::string imageFolderPath, std::string outputVideoPath, float time,int FPS);
 
 	bool VideoToImg(std::string vedioPath, std::string outputPath);
 

@@ -1,13 +1,14 @@
 #include "Encode.h"
 
 void Encode::fileToImg(std::vector<int>& datas, Mat& img, std::string outputPath,int wait) {
-    initImg(HIGH, WIDTH, img);
+    initImg(HEIGHT, WIDTH, img);
     int numOfImg = datas.size() / (CAPACITY);
     int curNum = 0;
     int index = 0, curC = 0, curR = 0;
     string filename;
     cout << "图片数量" << numOfImg << endl;
-    Files::create_or_clear_directory(outputPath, img);
+    Mat white = ScaleToDisSize(img, MULTIPLE);
+    Files::create_or_clear_directory(outputPath, white);
 
     drawBasic(img);
     //cv::namedWindow("Window with adjustable size", cv::WINDOW_NORMAL);
@@ -27,7 +28,7 @@ void Encode::fileToImg(std::vector<int>& datas, Mat& img, std::string outputPath
         int data3;
         curC = curR = 0;
         int flag = 1;
-        for (int curR = MARGIN; curR < HIGH - MARGIN && flag; curR++)
+        for (int curR = MARGIN; curR < HEIGHT - MARGIN && flag; curR++)
         {
             for (int curC = MARGIN; curC < WIDTH - MARGIN && flag; curC++)
             {
@@ -60,9 +61,13 @@ void Encode::fileToImg(std::vector<int>& datas, Mat& img, std::string outputPath
         }
         curNum++;
         if (i == 0 && index != CAPACITY) cout << "容量计算有误，重新计算，index为" << index <<"" << endl;
-        showImg(img);
-        if(wait==1)waitKey(0);
-        saveImg(outputPath + '/' + filename, img);
+        
+        Mat adjust = ScaleToDisSize(img, MULTIPLE);
+        if (wait == 1) {
+            showImg(adjust);
+            waitKey(0);
+        }
+        saveImg(outputPath + '/' + filename, adjust);
     }
 }
 
@@ -74,26 +79,26 @@ bool Encode::jump(int curR, int curC)
     if (curR <= MARGIN + 7 + 1) {
         if (curC <= MARGIN + 7 + 1 || curC >= WIDTH - (MARGIN + 7 + 1) - 1) return true;
     }
-    else if (curR >= HIGH - (MARGIN + 7 + 1) - 1 && curC <= MARGIN + 7 + 1) return true;
+    else if (curR >= HEIGHT - (MARGIN + 7 + 1) - 1 && curC <= MARGIN + 7 + 1) return true;
 
 
     // 矫正点
     if (curC <= WIDTH / 2 + 2 && curC >= WIDTH / 2 - 2) // 中间三个（258）
     {
         if (curR <= MARGIN + 7 + 2 && curR >= MARGIN + 7 - 2) return true;
-        else if (curR <= HIGH / 2 + 2 && curR >= HIGH / 2 - 2) return true;
-        else if (curR <= HIGH - MARGIN - 7 + 2 - 1 && curR >= HIGH - MARGIN - 7 - 2 - 1) return true;
+        else if (curR <= HEIGHT / 2 + 2 && curR >= HEIGHT / 2 - 2) return true;
+        else if (curR <= HEIGHT - MARGIN - 7 + 2 - 1 && curR >= HEIGHT - MARGIN - 7 - 2 - 1) return true;
     }
 
     if (curC <= MARGIN + 7 + 2 && curC >= MARGIN + 7 - 2) // 左中 4
-        if (curR >= HIGH / 2 - 2 && curR <= HIGH / 2 + 2)
+        if (curR >= HEIGHT / 2 - 2 && curR <= HEIGHT / 2 + 2)
             return true;
 
     if (curC <= WIDTH - MARGIN - 7 + 2 -1&& curC >= WIDTH - MARGIN - 7 - 2 -1 ) // 右2个（69）
     {
-        if (curR <= HIGH - MARGIN - 7 + 2 - 1 && curR >= HIGH - MARGIN - 7 - 2 - 1) // 9
+        if (curR <= HEIGHT - MARGIN - 7 + 2 - 1 && curR >= HEIGHT - MARGIN - 7 - 2 - 1) // 9
             return true;
-        else if (curR <= HIGH / 2 + 2 && curR >= HIGH / 2 - 2) // 6
+        else if (curR <= HEIGHT / 2 + 2 && curR >= HEIGHT / 2 - 2) // 6
             return true;
     }
 
@@ -124,7 +129,7 @@ void Encode::findLacation(Mat& img)
 {
     int row, col;
     col = MARGIN + 7;
-    for (int row = MARGIN +7 + 2; row < HIGH - MARGIN - 7 - 2; row++)
+    for (int row = MARGIN +7 + 2; row < HEIGHT - MARGIN - 7 - 2; row++)
     {
         if (row % 2 == 1) drawPixel(0, col, row, img);
         else drawPixel(1, col, row, img);
@@ -161,17 +166,15 @@ void Encode::correction(int x, int y, Mat& img)
 }
 // 将上述3种东西画到图里
 void Encode::drawBasic(Mat& img) {
-
     findLacation(img);
     // 寻像区域
     block(MARGIN, MARGIN, img);//左上
     block(WIDTH - MARGIN - 8, MARGIN, img);// 右上
-    block(MARGIN, HIGH - MARGIN - 8, img); // 左下
+    block(MARGIN, HEIGHT - MARGIN - 8, img); // 左下
 
     for (int i = 0; i < 6; i++)
-    {
         correction(saveCorrection[i][0], saveCorrection[i][1], img);
-    }
+
 }
 
 // 画具体像素值
@@ -241,8 +244,24 @@ void Encode::drawPixel(int v1, int v2, int v3, int x, int y, Mat& img)
         color
     );
 }
-void Encode::initImg(int high, int width, Mat& img) {
-    img = Mat(cv::Size(width, high), CV_8UC3);
+
+Mat Encode::ScaleToDisSize(const Mat& src,int outputRate)
+{
+    Mat dis;
+    dis = Mat( HEIGHT * outputRate, WIDTH * outputRate, CV_8UC3);
+    for (int i = 0; i < HEIGHT * outputRate; ++i)
+    {
+        for (int j = 0; j < WIDTH  * outputRate; ++j)
+        {
+            dis.at<Vec3b>(i, j) = src.at<Vec3b>(i / outputRate, j / outputRate);
+            //cout << "i:" << i << " j:" << j << " i/out:" << i / outputRate << " j/out:" << j / outputRate << endl;
+        }
+    }
+    return dis;
+}
+
+void Encode::initImg(int height, int width, Mat& img) {
+    img = Mat(cv::Size(width, HEIGHT), CV_8UC3);
     img.setTo(Scalar(255, 255, 255));
 }
 

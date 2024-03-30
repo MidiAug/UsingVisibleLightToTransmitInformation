@@ -307,15 +307,13 @@ namespace Files
 * - outputVideoPath:输出视频路径
 * - time:时间(毫秒)
 */
-    bool ImgToVideo(std::string imageFolderPath, std::string outputVideoPath, float time) {
+    bool ImgToVideo(std::string imageFolderPath, std::string outputVideoPath, float time,int FPS) {
 
         // 获取图片文件列表
         std::vector<cv::String> imageFiles;
-        cv::glob(imageFolderPath + "/*.png", imageFiles);  // 假设图片格式为png
-        std::cout << imageFolderPath + "/*.png" << std::endl;
+        cv::glob(imageFolderPath + "/*"+PICFORMAT, imageFiles);  // 假设图片格式为png
 
         // 每张图片录入几次()
-        constexpr int FPS = 5;
         int times = time / 1000 * FPS / imageFiles.size();
 
         // 检查是否有图片
@@ -328,8 +326,7 @@ namespace Files
         cv::Mat firstImage = cv::imread(imageFiles[0]);
 
         // 创建视频编写器
-        cv::VideoWriter videoWriter(outputVideoPath, cv::VideoWriter::fourcc('M', 'J', 'P', 'G'), FPS, firstImage.size()); // 设置帧率为 5
-
+        cv::VideoWriter videoWriter(outputVideoPath, cv::VideoWriter::fourcc('M', 'P', '4', 'V'), FPS, firstImage.size());
         // 检查视频编写器是否成功打开
         if (!videoWriter.isOpened()) {
             std::cerr << "failed to open the video writer." << std::endl;

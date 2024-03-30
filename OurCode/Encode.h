@@ -12,11 +12,11 @@ namespace Encode {
     const int saveCorrection[6][2] =
     {
         WIDTH / 2, MARGIN + 7,// 上
-        MARGIN + 7, HIGH / 2 ,// 中左
-        WIDTH / 2, HIGH / 2 ,// 中中
-        WIDTH - MARGIN - 7 - 1, HIGH / 2, //中右
-        WIDTH / 2, HIGH - MARGIN - 8 ,//下中
-        WIDTH - MARGIN -  7 - 1, HIGH - MARGIN - 7 -1,// 下右
+        MARGIN + 7, HEIGHT / 2 ,// 中左
+        WIDTH / 2, HEIGHT / 2 ,// 中中
+        WIDTH - MARGIN - 7 - 1, HEIGHT / 2, //中右
+        WIDTH / 2, HEIGHT - MARGIN - 8 ,//下中
+        WIDTH - MARGIN -  7 - 1, HEIGHT - MARGIN - 7 -1,// 下右
     };
     // 需要跳过的区域
     bool jump(int curR, int curC);
@@ -36,7 +36,9 @@ namespace Encode {
     void drawPixel(int val, int lue, int x, int y, Mat& img); // 两位
     void drawPixel(int v1, int v2, int v3,int x, int y, Mat& img); // 三位
 
-    void initImg(int high, int width, Mat& img);
+    Mat ScaleToDisSize(const Mat& src, int outputRate);
+
+    void initImg(int height, int width, Mat& img);
 
     void fileToImg(std::vector<int>& datas, Mat& img,std::string outputPath, int wait = 0);
 
