@@ -4,171 +4,36 @@ namespace Decode
 {
     Vec3b pixel1[2] = { {0,0,0},{255,255,255} };
 
+
     // 黑 蓝 橙 白
     //Vec3b lowerThresholds[4] = {
     //    {0, 0, 0},// 00
-    //    {170, 109, 0},//01
-    //    {9, 86, 200},//10
-    //    {156,156, 156}//11
+    //    {150, 80, 0},//01
+    //    {0, 40, 150},//10
+    //    {181,156, 156}//11
     //};
     //Vec3b upperThresholds[4] = {
-    //    {155, 155, 155},//00
-    //    {255, 185, 100},//01
-    //    {155, 160, 255},//10
+    //    {149, 149, 149},//00
+    //    {255, 200, 135},//01
+    //    {180, 160, 255},//10
     //    {255, 255, 255}//11
     //};
 
+
+    // 黑 蓝 橙 白
     Vec3b lowerThresholds[4] = {
         {0, 0, 0},// 00
-        {160, 80, 0},//01
-        {0, 60, 160},//10
+        {150, 80, 0},//01
+        {0, 40, 150},//10
         {156,156, 156}//11
     };
     Vec3b upperThresholds[4] = {
-        {155, 155, 155},//00
-        {255, 200, 130},//01
+        {149, 149, 149},//00
+        {255, 200, 135},//01
         {155, 160, 255},//10
         {255, 255, 255}//11
     };
 
-    void test(vector<int>& data, Mat& image, vector<int>& origianl)
-    {
-        int arr[24];
-        int error;
-        float errorRate = 1;
-        float newRate;
-        int length = 256;
-        for (int a = 0; a < length; a++)
-        {
-            for (int b = 0; b < length; b++)
-            {
-                for (int c = 0; c < length; c++)
-                {
-                    for (int d = 0; d < length; d++)
-                    {
-                        for (int e = 0; e < length; e++)
-                        {
-                            for (int f = 0; f < length; f++)
-                            {
-                                for (int g = 0; g < length; g++)
-                                {
-                                    for (int h = 0; h < length; h++)
-                                    {
-                                        for (int i = 0; i < length; i++)
-                                        {
-                                            for (int j = 140; j < length; j++)
-                                            {
-                                                for (int k = 140; k < length; k++)
-                                                {
-                                                    for (int l = 140; l < length; l++)
-                                                    {
-                                                        for (int m = 0; m < 171; m++)
-                                                        {
-                                                            for (int n = 0; n < 171; n++)
-                                                            {
-                                                                for (int o = 0; o < 171; o++)
-                                                                {
-                                                                    for (int p = 0; p < length; p++)
-                                                                    {
-                                                                        for (int q = 0; q < length; q++)
-                                                                        {
-                                                                            for (int r = 0; r < length; r++)
-                                                                            {
-                                                                                for (int s = 0; s < length; s++)
-                                                                                {
-                                                                                    for (int t = 0; t < length; t++)
-                                                                                    {
-                                                                                        for (int u = 0; u < length; u++)
-                                                                                        {
-                                                                                            for (int v = 0; v < length; v++)
-                                                                                            {
-                                                                                                for (int w = 0; w < length; w++)
-                                                                                                {
-                                                                                                    for (int x = 0; x < length; x++)
-                                                                                                    {
-                                                                                                        lowerThresholds[0][0] = a;
-                                                                                                        lowerThresholds[0][1] = b;
-                                                                                                        lowerThresholds[0][2] = c;
-                                                                                                        lowerThresholds[1][0] = d;
-                                                                                                        lowerThresholds[1][1] = e;
-                                                                                                        lowerThresholds[1][2] = f;
-                                                                                                        lowerThresholds[2][0] = g;
-                                                                                                        lowerThresholds[2][1] = h;
-                                                                                                        lowerThresholds[2][2] = i;
-                                                                                                        lowerThresholds[3][0] = j;
-                                                                                                        lowerThresholds[3][1] = k;
-                                                                                                        lowerThresholds[3][2] = l;
-
-                                                                                                        upperThresholds[0][0] = m;
-                                                                                                        upperThresholds[0][1] = n;
-                                                                                                        upperThresholds[0][2] = o;
-                                                                                                        upperThresholds[1][0] = p;
-                                                                                                        upperThresholds[1][1] = q;
-                                                                                                        upperThresholds[1][2] = r;
-                                                                                                        upperThresholds[2][0] = s;
-                                                                                                        upperThresholds[2][1] = t;
-                                                                                                        upperThresholds[2][2] = u;
-                                                                                                        upperThresholds[3][0] = v;
-                                                                                                        upperThresholds[3][1] = w;
-                                                                                                        upperThresholds[3][2] = x;
-
-                                                                                                        if (isColorConflict(upperThresholds, lowerThresholds)) continue;
-                                                                                                        error = readCodeHelper(data, image, origianl);
-                                                                                                        newRate = (float)error / CAPACITY * BIT;
-                                                                                                        if (newRate < errorRate)
-                                                                                                        {
-                                                                                                            errorRate = newRate;
-                                                                                                            arr[0] = a;
-                                                                                                            arr[1] = b;
-                                                                                                            arr[2] = c;
-                                                                                                            arr[3] = d;
-                                                                                                            arr[4] = e;
-                                                                                                            arr[5] = f;
-                                                                                                            arr[6] = g;
-                                                                                                            arr[7] = h;
-                                                                                                            arr[8] = i;
-                                                                                                            arr[9] = j;
-                                                                                                            arr[10] = k;
-                                                                                                            arr[11] = l;
-                                                                                                            arr[12] = m;
-                                                                                                            arr[13] = n;
-                                                                                                            arr[14] = o;
-                                                                                                            arr[15] = p;
-                                                                                                            arr[16] = q;
-                                                                                                            arr[17] = r;
-                                                                                                            arr[18] = s;
-                                                                                                            arr[19] = t;
-                                                                                                            arr[20] = u;
-                                                                                                            arr[21] = v;
-                                                                                                            arr[22] = w;
-                                                                                                            arr[23] = x;
-                                                                                                            cout << newRate << endl;
-                                                                                                        }
-                                                                                                    }
-                                                                                                }
-                                                                                            }
-                                                                                        }
-                                                                                    }
-                                                                                }
-                                                                            }
-                                                                        }
-                                                                    }
-                                                                }
-                                                            }
-                                                        }
-                                                    }
-                                                }
-                                            }
-                                        }
-                                    }
-                                }
-                            }
-                        }
-                    }
-                }
-            }
-        }
-    }
     bool isColorConflict(Vec3b* upperThresholds, Vec3b* lowerThresholds)
     {
 
@@ -270,11 +135,32 @@ namespace Decode
                 //    line(image, approxCurve[j], approxCurve[(j + 1) % 4], Scalar(0, 255, 0), 2);
                 //}
 
-                int width = 1990;
-                int height = 1110;
+                double width = norm(approxCurve[0] - approxCurve[1]);
+                double height = norm(approxCurve[1] - approxCurve[2]);
+                Point2f dstPoints[4];
+                if (width > height)
+                {
+                    cout << "width:" <<width<<" > height: "<<height<<"." << endl;
+                    width = 1990;
+                    height = 1110;
+                    dstPoints[0] = Point2f(width, 0);
+                    dstPoints[1] = Point2f(0, 0);
+                    dstPoints[2] = Point2f(0, height);
+                    dstPoints[3] = Point2f(width, height);
 
+                }
+                else
+                {
+                    cout << "width:" << width << " < height: " << height << "." << endl;
+                    width = 1990;
+                    height = 1110;
+                    dstPoints[0] = Point2f(0, 0);
+                    dstPoints[1] = Point2f(0, height);
+                    dstPoints[2] = Point2f(width, height);
+                    dstPoints[3] = Point2f(width, 0);
+                }
+                
                 Point2f srcPoints[4];
-                Point2f dstPoints[4] = { Point2f(0, 0), Point2f(0, height), Point2f(width, height) ,Point2f(width, 0) };
 
                 for (int j = 0; j < 4; ++j) {
                     srcPoints[j] = approxCurve[j];
@@ -299,7 +185,7 @@ namespace Decode
         cv::glob(inFolderPath + "/*" + PICFORMAT, imageFiles);  // 假设图片格式为png
         if (imageFiles.size() == 0)
         {
-            cout << inFolderPath << "目录为空" << endl;
+            cout << "错误：帧图片路径：" << inFolderPath << "为空" << endl;
             return -1;
         }
         int cnt = 1;
@@ -387,10 +273,10 @@ namespace Decode
 
 
     //读取二维码
-    int readCodeHelper(vector<int>& data, Mat& image, vector<int>& origianl, int debug)
+    int readCodeHelper(int curCodeNo,vector<int>& data, Mat& image, vector<int>& origianl, int debug)
     {
         //showimg(image,3,3);
-        int count = 0;
+        int count = curCodeNo*CAPACITY;
         int error = 0;
         for (int curR = MARGIN; curR < HEIGHT - MARGIN; curR++)
         {
@@ -402,6 +288,7 @@ namespace Decode
                 {
                     int val;
                     int oVal = origianl[count++];
+                    data.push_back(val);
                     judge1(pixel, val);
                     if (val != oVal)
                     {
@@ -418,6 +305,8 @@ namespace Decode
                     int val1, val2, oVal1, oVal2;
                     oVal1 = origianl[count++], oVal2 = origianl[count++];
                     judge2(pixel, val1, val2);
+                    data.push_back(val1);
+                    data.push_back(val2);
                     if (val1 != oVal1 || val2 != oVal2)
                     {
                         error++;
@@ -446,22 +335,25 @@ namespace Decode
         return error;
     }
     //主函数
-    int readCode(std::string extCodePath, vector<int>& data, vector<int>& origianl)
+    int readCode(std::string extCodePath, vector<int>& data, vector<int>& origianl,int debugMode)
     {
         Mat image;
         // 获取图片文件列表
         std::vector<cv::String> imageFiles;
         if (isColorConflict(upperThresholds, lowerThresholds)) return -1;
         cv::glob(extCodePath + "/*" + PICFORMAT, imageFiles);  // 假设图片格式为png
-        std::cout << extCodePath + "/*" + PICFORMAT << std::endl;
+        if (imageFiles.size() == 0)
+        {
+            cout << "错误：提取二维码路径："<<extCodePath<<"为空" << endl;
+        }
         for (int i = 0;i< imageFiles.size();i++)
         {
             image = imread(imageFiles[i]);
-            int error = readCodeHelper(data, image, origianl,1);
+            int error = readCodeHelper(i,data, image, origianl, debugMode);
             if (error == -1) return -1;
             
-            cout << "图" << to_string(i + 1) <<"误码"<<error << " 误码率" << (float)error / CAPACITY * BIT;
-            imwrite("error"+to_string(i)+PICFORMAT, image);
+            cout << "图" << to_string(i + 1) << " 误码数" << error << " 误码率" << (float)error / CAPACITY * BIT << endl;
+            if(debugMode==1)imwrite("error"+to_string(i)+PICFORMAT, image);
         }
         return 0;
     }

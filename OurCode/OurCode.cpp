@@ -66,15 +66,20 @@ int main()
         string extFramePath = "extractedFrames";
         string extCodePath = "extractedCodes";
 
-        //flag = Decode::extractCode(extFramePath, extCodePath);
+        flag = Decode::extractCode(extFramePath, extCodePath);
         if (flag == -1) return -1;
 
         vector<int> extractedDatas;
-        Decode::readCode("test", extractedDatas,filledDatas);
-        //for (int i = 0; i < extractedDatas.size(); i++)
-        //    cout << extractedDatas[i];
-        //cout << extractedDatas.size();
-        Files::outBin(extractedDatas,"random_out.bin");
+        Decode::readCode(extCodePath, extractedDatas,filledDatas);
+        //vector<int> unCheckDatas = Files::CRCDecode(extractedDatas);
+        //int n = 0;
+        //for (int i = 0; i < unCheckDatas.size(); i++)
+        //{
+        //    if (unCheckDatas[i] != originalDatas[i])
+        //        n++;
+        //}
+        //cout << n;
+        //Files::outBin(unCheckDatas,"random_out.bin");
 
         return 0;
     }
