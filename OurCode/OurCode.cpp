@@ -28,6 +28,7 @@ int main()
 
             // 生成二进制文件
             Files::delete_files_with_format(".bin","");
+            Files::delete_files_with_format(".mp4", "");
             string binFileName = Files::getFileName("生成的二进制文件",".bin");
             cout << "请输入二进制文件大小（单位：字节）" << endl;
             // 文件大小，单位为字节
@@ -39,7 +40,7 @@ int main()
                 cin >> fileSize;
             }
             Files::generateRandomBinaryFile(binFileName, fileSize);
-            std::cout << "Random binary file generated successfully." << std::endl;
+            std::cout << "随机二进制文件生成成功" << std::endl;
 
             // 读取、CRC、补齐二进制数据
             vector<int> originalDatas = Files::readBinaryFile(binFileName);
@@ -50,7 +51,6 @@ int main()
             cout << "二进制文件中共有" << originalDatas.size() << "个数据" << endl;
             cout << "CRC编码后共有" << postCheckDatas.size() << "个数据" << endl;
             cout << "填补数据后共有" << filledDatas.size() << "个数据" << endl;
-            cout << endl;
 
             // 二进制转图片
             Mat img;
@@ -78,38 +78,44 @@ int main()
         {
             vector<cv::String> tmp;
             cv::glob("*.bin"  , tmp);
-
             std::string binFilename = tmp[0]; // 文件名
+            
             vector<int> originalDatas = Files::readBinaryFile(binFilename);
             vector<int> postCheckDatas = Files::CRCEncode(originalDatas);
             vector<int> filledDatas = Files::fillData(postCheckDatas);
 
-            string videoName = Files::getFileName("拍摄的视频文件（格式：mp4）", ".mp4");
+            cout << endl;
+            //string videoName = Files::getFileName("拍摄的视频文件（格式：mp4）", ".mp4");
             string originalCodePath = "originalCodes";
-            string extFramePath = "frames";
+            string extFramePath = "extractedFrames";
             string extCodePath = "extractedCodes";
 
-            Files::FrameExtractor(videoName, extFramePath,0.1,250);
-            return 0;
-
-            Decode::extractCode(extFramePath, extCodePath);
-
+            // 截取帧
+            //cout << "---截取帧---" << endl;
+            //Files::FrameExtractor(videoName, extFramePath,0.25,200);
+            //// 提取二维码
+            //cout << "---提取二维码---" << endl;
+            //Decode::extractCode(extFramePath, extCodePath);
+            // 解码二维码
+            cout << "---解码二维码---" << endl;
             vector<int> extractedDatas;
             Decode::readCode(extCodePath, extractedDatas, filledDatas);
-            //vector<int> unCheckDatas = Files::CRCDecode(extractedDatas);
-            //int n = 0;
-            //for (int i = 0; i < unCheckDatas.size(); i++)
-            //{
-            //    if (unCheckDatas[i] != originalDatas[i])
-            //        n++;
-            //}
-            //cout << n;
-            //Files::outBin(unCheckDatas,"random_out.bin");
 
+
+            vector<int> unCheckDatas = Files::CRCDecode(extractedDatas);
+            int n = 0;
+
+            // 以下代码为测试一张图传输的原始数据的错误比例
+            for (int i = 0; i < unCheckDatas.size(); i++)
+            {
+                if (unCheckDatas[i] != originalDatas[i])
+                    n++;
+                if (i % (CAPACITY/21*16) == 0) cout << (float)n / (CAPACITY / 21 * 16) << endl , n =0;
+            }
             return 0;
         }
 
-        cout << "请勿输入'0'或'1'以外的文本。" << endl;
+        cout << "请勿输入\"encode\"或\"decode\"以外的文本。" << endl;
         cin >> mode;
     }
 }

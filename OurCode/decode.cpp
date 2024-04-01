@@ -125,55 +125,60 @@ namespace Decode
         vector<vector<Point>> contours;
         findContours(image, contours, RETR_EXTERNAL, CHAIN_APPROX_SIMPLE);
 
-        for (size_t i = 0; i < contours.size(); ++i) {
+        // 查找最大轮廓的四边形
+        int largestContourIndex = -1;
+        double largestArea = 0;
+        vector<Point> approxCurve;
+        for (size_t i = 0; i < contours.size(); i++) {
             double perimeter = arcLength(contours[i], true);
-            vector<Point> approxCurve;
             approxPolyDP(contours[i], approxCurve, 0.02 * perimeter, true);
-            if (approxCurve.size() == 4) { // 如果是四边形
-                // 绘制找到的矩形
-                //for (int j = 0; j < 4; ++j) {
-                //    line(image, approxCurve[j], approxCurve[(j + 1) % 4], Scalar(0, 255, 0), 2);
-                //}
-
-                double width = norm(approxCurve[0] - approxCurve[1]);
-                double height = norm(approxCurve[1] - approxCurve[2]);
-                Point2f dstPoints[4];
-                if (width > height)
-                {
-                    cout << "width:" <<width<<" > height: "<<height<<"." << endl;
-                    width = 1990;
-                    height = 1110;
-                    dstPoints[0] = Point2f(width, 0);
-                    dstPoints[1] = Point2f(0, 0);
-                    dstPoints[2] = Point2f(0, height);
-                    dstPoints[3] = Point2f(width, height);
-
-                }
-                else
-                {
-                    cout << "width:" << width << " < height: " << height << "." << endl;
-                    width = 1990;
-                    height = 1110;
-                    dstPoints[0] = Point2f(0, 0);
-                    dstPoints[1] = Point2f(0, height);
-                    dstPoints[2] = Point2f(width, height);
-                    dstPoints[3] = Point2f(width, 0);
-                }
-                
-                Point2f srcPoints[4];
-
-                for (int j = 0; j < 4; ++j) {
-                    srcPoints[j] = approxCurve[j];
-                }
-                Mat perspectiveMatrix = getPerspectiveTransform(srcPoints, dstPoints);
-                Mat warpedImage;
-                warpPerspective(src, warpedImage, perspectiveMatrix, Size(width, height));
-
-                // 显示结果
-                return warpedImage;
+            if (approxCurve.size() != 4) continue;
+            double area = contourArea(contours[i]);
+            if (area > largestArea) {
+                largestArea = area;
+                largestContourIndex = i;
             }
+        }
+
+        double perimeter = arcLength(contours[largestContourIndex], true);
+        approxPolyDP(contours[largestContourIndex], approxCurve, 0.02 * perimeter, true);
+
+        double width = norm(approxCurve[0] - approxCurve[1]);
+        double height = norm(approxCurve[1] - approxCurve[2]);
+        Point2f dstPoints[4];
+        if (width > height)
+        {
+            //cout << "width:" <<width<<" > height: "<<height<<"." << endl;
+            width = 1990;
+            height = 1110;
+            dstPoints[0] = Point2f(width, 0);
+            dstPoints[1] = Point2f(0, 0);
+            dstPoints[2] = Point2f(0, height);
+            dstPoints[3] = Point2f(width, height);
 
         }
+        else
+        {
+            //cout << "width:" << width << " < height: " << height << "." << endl;
+            width = 1990;
+            height = 1110;
+            dstPoints[0] = Point2f(0, 0);
+            dstPoints[1] = Point2f(0, height);
+            dstPoints[2] = Point2f(width, height);
+            dstPoints[3] = Point2f(width, 0);
+        }
+                
+        Point2f srcPoints[4];
+
+        for (int j = 0; j < 4; ++j) {
+            srcPoints[j] = approxCurve[j];
+        }
+        Mat perspectiveMatrix = getPerspectiveTransform(srcPoints, dstPoints);
+        Mat warpedImage;
+        warpPerspective(src, warpedImage, perspectiveMatrix, Size(width, height));
+
+        // 显示结果
+        return warpedImage;
     }
     int extractCode(string& inFolderPath, string outFolderPath)
     {
@@ -185,7 +190,7 @@ namespace Decode
         cv::glob(inFolderPath + "/*" + PICFORMAT, imageFiles);  // 假设图片格式为png
         if (imageFiles.size() == 0)
         {
-            cout << "错误：帧图片路径：" << inFolderPath << "为空" << endl;
+            cout << "错误：帧图片路径" << inFolderPath << "为空" << endl;
             return -1;
         }
         int cnt = 1;
@@ -344,7 +349,7 @@ namespace Decode
         cv::glob(extCodePath + "/*" + PICFORMAT, imageFiles);  // 假设图片格式为png
         if (imageFiles.size() == 0)
         {
-            cout << "错误：提取二维码路径："<<extCodePath<<"为空" << endl;
+            cout << "错误：提取二维码路径"<<extCodePath<<"为空" << endl;
         }
         for (int i = 0;i< imageFiles.size();i++)
         {

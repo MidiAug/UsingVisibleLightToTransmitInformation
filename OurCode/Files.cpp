@@ -242,7 +242,7 @@ namespace Files
                         break;
                     }
                 }
-                std::cout << wrongBit << '\n';
+                //std::cout << wrongBit << '\n';
                 if (wrongBit != -1) {
                     // 翻转错误位
                     if (bString[wrongBit - 1] == '1')
@@ -305,16 +305,14 @@ namespace Files
                 }
             }
         }
-        std::cout << whitePixels << " " << totalPixels << '\n';
+        //std::cout << whitePixels << " " << totalPixels << '\n';
         return (static_cast<double>(whitePixels) / totalPixels) > 0.8;
     }
 
     bool FrameExtractor(const std::string& videoPath, const std::string& outputPath, double samplingRatio, int RGBThreshold) {
         std::string outputDirectory = outputPath;
-        // 检查文件夹是否存在，如果不存在，则创建它
-        if (!std::filesystem::exists(outputDirectory)) {
-            create_or_clear_directory(outputDirectory);
-        }
+        // 检查文件夹是否存在，如果不存在，则创建它；若果存在则清空内部文件
+        create_or_clear_directory(outputDirectory);
 
         cv::VideoCapture cap(videoPath);
         if (!cap.isOpened()) {
@@ -334,7 +332,7 @@ namespace Files
             if (doSaveFrame && !isFrameWhite(frame, threshold, checkRatio)) {
                 std::string filename = outputDirectory + "/frame_" + std::to_string(frameNumber) + PICFORMAT;
                 cv::imwrite(filename, frame);
-                std::cout << "Saved: " << filename << std::endl;
+                //std::cout << "Saved: " << filename << std::endl;
                 doSaveFrame = false;
                 ++frameNumber;
             }
@@ -342,7 +340,7 @@ namespace Files
                 doSaveFrame = isFrameWhite(frame, threshold, checkRatio);
         }
 
-        std::cout << "Processing Successfully\n";
+        //std::cout << "Processing Successfully\n";
         return true;
     }
 
@@ -392,7 +390,7 @@ namespace Files
 
         videoWriter.release();
 
-        std::cout << "Video created with name " << outputVideoPath << std::endl;
+        std::cout << "视频生成成功"<< std::endl;
         return true;
     }
 
