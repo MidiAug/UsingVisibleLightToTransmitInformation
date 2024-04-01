@@ -11,12 +11,15 @@
 #include <unordered_map>
 #include <cmath>
 #include <opencv2/opencv.hpp>
+#include <filesystem> //这个需要C++17,右键OurCode，属性->常规->C++标准改为C++17及以上
+
 
 using namespace std;
 using namespace cv;
 
 namespace Files
 {
+	string getFileName(string fileInfo, string format);
 
 	// 数据CRC编码解码
 	using Code = std::vector<std::bitset<16>>;
@@ -43,12 +46,35 @@ namespace Files
 
 	// 文件夹操作
 	void create_or_clear_directory(const std::string& dir);
-	void create_or_clear_directory(const std::string& dir, cv::Mat& img);
+
+	void delete_files_with_format(string formatpath, string path);
 
 	// 图片与视频间的转换
-	bool ImgToVideo(std::string imageFolderPath, std::string outputVideoPath, float time,int FPS);
+	bool ImgToVideo(std::string imageFolderPath, std::string outputVideoPath, float time,int FPS, int whitefps);
 
-	bool VideoToImg(std::string vedioPath, std::string outputPath);
+
+
+	bool isFrameWhite(const cv::Mat& frame, int threshold, double checkRatio);
+
+	/// <summary>
+	///   实现二维码提取
+	/// </summary>
+	/// <param name="videoPath">
+	///   指定的视频路径
+	/// </param>
+	/// <param name="outputPath">
+	///   指定的文件夹路径，无则创建
+	/// </param>
+	/// <param name="samplingRatio">
+	///   帧抽样检查区域的比例，传入isFrameWhite中，默认为0.1
+	/// </param>
+	/// <param name="RGBThreshold">
+	///   判断是否为白色的分量阈值，传入isFrameWhite中，默认为200
+	/// </param>
+	/// <returns>
+	///   是否成功抽取二维码，一个逻辑值
+	/// </returns>
+	bool FrameExtractor(const std::string& videoPath, const std::string& outputPath, double samplingRatio = 0.1, int RGBThreshold = 200);
 
 
 

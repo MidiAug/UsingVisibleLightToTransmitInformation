@@ -1,5 +1,6 @@
 ﻿#include <iostream>
 #include <opencv2/opencv.hpp>
+#include <opencv2/core/utils/logger.hpp>
 #include "Basic.h"
 #include "Encode.h"
 #include "QR_location.h"
@@ -11,76 +12,104 @@ using namespace std;
 
 int main()
 {
-    int mode = 0;
-    cout << "当前编码状态：每" << BIT << "位二进制构成一位像素" << endl;
+    cv::utils::logging::setLogLevel(utils::logging::LOG_LEVEL_SILENT);// 关闭控制台输出日志
+
+    string mode ;
     cout << "选择模式" << endl;
-    cout << "输入'0'生成含有二维码的视频" << endl;
-    cout << "输入'1'导入视频并解码" << endl;
+    cout << "输入\"encode\"进行编码（生成随机bin文件、生成二维码、生成视频）" << endl;
+    cout << "输入\"dncode\"进行解码（视频生成图片、扣出二维码、二维码转数据）" << endl;
     cin >> mode;
-    if (mode == 0)
+    while (true)
     {
-        //cv::Mat image = cv::imread("originalImages/image1.png", cv::IMREAD_UNCHANGED);
-        // 生成二进制文件
-        std::size_t fileSize = 30000; // 文件大小，单位为字节
-        std::string binFilename = "random.bin"; // 文件名
-        //Files::generateRandomBinaryFile(binFilename, fileSize);
-        //std::cout << "Random binary file generated successfully." << std::endl;
+        if (mode == "encode")
+        {
+            cout << endl;
+            // cout << "当前编码状态：每" << BIT << "位二进制数据构成一位像素" << endl;
 
+            // 生成二进制文件
+            Files::delete_files_with_format(".bin","");
+            string binFileName = Files::getFileName("生成的二进制文件",".bin");
+            cout << "请输入二进制文件大小（单位：字节）" << endl;
+            // 文件大小，单位为字节
+            std::size_t fileSize;
+            cin >> fileSize;
+            while (fileSize < 1)
+            {
+                cout << "请正确输入二进制文件大小" << endl;
+                cin >> fileSize;
+            }
+            Files::generateRandomBinaryFile(binFileName, fileSize);
+            std::cout << "Random binary file generated successfully." << std::endl;
 
-        // 读取、CRC、补齐二进制数据
-        vector<int> originalDatas = Files::readBinaryFile(binFilename);
-        vector<int> postCheckDatas = Files::CRCEncode(originalDatas);
-        vector<int> filledDatas = Files::fillData(postCheckDatas);
+            // 读取、CRC、补齐二进制数据
+            vector<int> originalDatas = Files::readBinaryFile(binFileName);
+            vector<int> postCheckDatas = Files::CRCEncode(originalDatas);
+            vector<int> filledDatas = Files::fillData(postCheckDatas);
+            
+            cout << endl;
+            cout << "二进制文件中共有" << originalDatas.size() << "个数据" << endl;
+            cout << "CRC编码后共有" << postCheckDatas.size() << "个数据" << endl;
+            cout << "填补数据后共有" << filledDatas.size() << "个数据" << endl;
+            cout << endl;
 
-        cout << "二进制文件中共有" << originalDatas.size() << "个数据" << endl;
-        cout << "CRC编码后共有" << postCheckDatas.size() << "个数据" << endl;
-        cout << "填补数据后共有" << filledDatas.size() << "个数据" << endl;
+            // 二进制转图片
+            Mat img;
+            std::string imagePath = "originalImages";
+            Files::create_or_clear_directory(imagePath);
+            Encode::initImg(HEIGHT, WIDTH, img);
+            Encode::fileToImg(filledDatas, img, imagePath, 0);// 1\0表示 展示\不展示图片
 
+            // 图片转视频
+            string videoName = Files::getFileName("生成的视频文件（格式：mp4）", ".mp4");
+            int length = 0;
+            cout << "请输入视频时长（单位：ms）" << endl;
+            cin >> length;
+            while (length < 1)
+            {
+                cout << "请正确输入视频时长（单位：ms）" << endl;
+                cin >> length;
+            }
+            Files::ImgToVideo(imagePath, videoName, length, 90,10);
 
-        // 二进制转图片
-        Mat img;
-        std::string imagePath = "originalImages";
-        Encode::initImg(HEIGHT, WIDTH, img);
-        Encode::fileToImg(filledDatas, img, imagePath, 0);// 1\0表示 展示\不展示图片
+            return 0;
+        }
 
-        // 图片转视频
-        Files::ImgToVideo(imagePath, "output.mp4", 3000,90);
-        // 30000KB,3000ms,90fps
-    }
-    
-    else if (mode == 1)
-    {
-        std::string binFilename = "random.bin"; // 文件名
-        vector<int> originalDatas = Files::readBinaryFile(binFilename);
-        vector<int> postCheckDatas = Files::CRCEncode(originalDatas);
-        vector<int> filledDatas = Files::fillData(postCheckDatas);
+        else if (mode == "decode")
+        {
+            vector<cv::String> tmp;
+            cv::glob("*.bin"  , tmp);
 
-        int flag = 0;
-        string videoName = "output.avi";
-        string imgOutputPath = "exstractImages";
-        string imgInputPath = "exstractImages";
-        string originalCodePath = "originalCodes";
-        //cout << "请输入你的视频路径" << endl;
-        //cin >> vedioName;
-        //Files::VideoToImg(videoName, imgOutputPath);
-        string extFramePath = "extractedFrames";
-        string extCodePath = "extractedCodes";
+            std::string binFilename = tmp[0]; // 文件名
+            vector<int> originalDatas = Files::readBinaryFile(binFilename);
+            vector<int> postCheckDatas = Files::CRCEncode(originalDatas);
+            vector<int> filledDatas = Files::fillData(postCheckDatas);
 
-        flag = Decode::extractCode(extFramePath, extCodePath);
-        if (flag == -1) return -1;
+            string videoName = Files::getFileName("拍摄的视频文件（格式：mp4）", ".mp4");
+            string originalCodePath = "originalCodes";
+            string extFramePath = "extractedFrames";
+            string extCodePath = "extractedCodes";
 
-        vector<int> extractedDatas;
-        Decode::readCode(extCodePath, extractedDatas,filledDatas);
-        //vector<int> unCheckDatas = Files::CRCDecode(extractedDatas);
-        //int n = 0;
-        //for (int i = 0; i < unCheckDatas.size(); i++)
-        //{
-        //    if (unCheckDatas[i] != originalDatas[i])
-        //        n++;
-        //}
-        //cout << n;
-        //Files::outBin(unCheckDatas,"random_out.bin");
+            Files::FrameExtractor(videoName, extFramePath,0.1,250);
+            return 0;
 
-        return 0;
+            Decode::extractCode(extFramePath, extCodePath);
+
+            vector<int> extractedDatas;
+            Decode::readCode(extCodePath, extractedDatas, filledDatas);
+            //vector<int> unCheckDatas = Files::CRCDecode(extractedDatas);
+            //int n = 0;
+            //for (int i = 0; i < unCheckDatas.size(); i++)
+            //{
+            //    if (unCheckDatas[i] != originalDatas[i])
+            //        n++;
+            //}
+            //cout << n;
+            //Files::outBin(unCheckDatas,"random_out.bin");
+
+            return 0;
+        }
+
+        cout << "请勿输入'0'或'1'以外的文本。" << endl;
+        cin >> mode;
     }
 }

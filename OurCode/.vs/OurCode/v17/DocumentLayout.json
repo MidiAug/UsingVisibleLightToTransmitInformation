@@ -3,46 +3,20 @@
   "WorkspaceRootPath": "D:\\Project\\GitHub\\UsingVisibleLightToTransmitInformation\\OurCode\\",
   "Documents": [
     {
-      "AbsoluteMoniker": "D:0:0:{39E937BB-EC0C-4A44-AF5D-9267A0F44544}|OurCode.vcxproj|D:\\Project\\GitHub\\UsingVisibleLightToTransmitInformation\\OurCode\\Decode.cpp||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}",
-      "RelativeMoniker": "D:0:0:{39E937BB-EC0C-4A44-AF5D-9267A0F44544}|OurCode.vcxproj|solutionrelative:Decode.cpp||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}"
+      "AbsoluteMoniker": "D:0:0:{39E937BB-EC0C-4A44-AF5D-9267A0F44544}|OurCode.vcxproj|D:\\Project\\GitHub\\UsingVisibleLightToTransmitInformation\\OurCode\\Encode.cpp||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}",
+      "RelativeMoniker": "D:0:0:{39E937BB-EC0C-4A44-AF5D-9267A0F44544}|OurCode.vcxproj|solutionrelative:Encode.cpp||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}"
     },
     {
       "AbsoluteMoniker": "D:0:0:{39E937BB-EC0C-4A44-AF5D-9267A0F44544}|OurCode.vcxproj|D:\\Project\\GitHub\\UsingVisibleLightToTransmitInformation\\OurCode\\OurCode.cpp||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}",
       "RelativeMoniker": "D:0:0:{39E937BB-EC0C-4A44-AF5D-9267A0F44544}|OurCode.vcxproj|solutionrelative:OurCode.cpp||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{39E937BB-EC0C-4A44-AF5D-9267A0F44544}|OurCode.vcxproj|D:\\Project\\GitHub\\UsingVisibleLightToTransmitInformation\\OurCode\\QR_Location.cpp||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}",
-      "RelativeMoniker": "D:0:0:{39E937BB-EC0C-4A44-AF5D-9267A0F44544}|OurCode.vcxproj|solutionrelative:QR_Location.cpp||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{39E937BB-EC0C-4A44-AF5D-9267A0F44544}|OurCode.vcxproj|D:\\Project\\GitHub\\UsingVisibleLightToTransmitInformation\\OurCode\\Basic.h||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}",
-      "RelativeMoniker": "D:0:0:{39E937BB-EC0C-4A44-AF5D-9267A0F44544}|OurCode.vcxproj|solutionrelative:Basic.h||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{39E937BB-EC0C-4A44-AF5D-9267A0F44544}|OurCode.vcxproj|D:\\Project\\GitHub\\UsingVisibleLightToTransmitInformation\\OurCode\\Encode.h||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}",
-      "RelativeMoniker": "D:0:0:{39E937BB-EC0C-4A44-AF5D-9267A0F44544}|OurCode.vcxproj|solutionrelative:Encode.h||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{39E937BB-EC0C-4A44-AF5D-9267A0F44544}|OurCode.vcxproj|D:\\Project\\GitHub\\UsingVisibleLightToTransmitInformation\\OurCode\\Decode.h||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}",
-      "RelativeMoniker": "D:0:0:{39E937BB-EC0C-4A44-AF5D-9267A0F44544}|OurCode.vcxproj|solutionrelative:Decode.h||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}"
+      "AbsoluteMoniker": "D:0:0:{39E937BB-EC0C-4A44-AF5D-9267A0F44544}|OurCode.vcxproj|D:\\Project\\GitHub\\UsingVisibleLightToTransmitInformation\\OurCode\\Files.h||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}",
+      "RelativeMoniker": "D:0:0:{39E937BB-EC0C-4A44-AF5D-9267A0F44544}|OurCode.vcxproj|solutionrelative:Files.h||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}"
     },
     {
       "AbsoluteMoniker": "D:0:0:{39E937BB-EC0C-4A44-AF5D-9267A0F44544}|OurCode.vcxproj|D:\\Project\\GitHub\\UsingVisibleLightToTransmitInformation\\OurCode\\Files.cpp||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}",
       "RelativeMoniker": "D:0:0:{39E937BB-EC0C-4A44-AF5D-9267A0F44544}|OurCode.vcxproj|solutionrelative:Files.cpp||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{39E937BB-EC0C-4A44-AF5D-9267A0F44544}|OurCode.vcxproj|D:\\Project\\GitHub\\UsingVisibleLightToTransmitInformation\\OurCode\\Encode.cpp||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}",
-      "RelativeMoniker": "D:0:0:{39E937BB-EC0C-4A44-AF5D-9267A0F44544}|OurCode.vcxproj|solutionrelative:Encode.cpp||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|D:\\Env\\opencv\\build\\include\\opencv2\\core\\mat.inl.hpp||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|D:\\Env\\opencv\\build\\include\\opencv2\\core\\matx.hpp||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{39E937BB-EC0C-4A44-AF5D-9267A0F44544}|OurCode.vcxproj|D:\\Project\\GitHub\\UsingVisibleLightToTransmitInformation\\OurCode\\Files.h||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}",
-      "RelativeMoniker": "D:0:0:{39E937BB-EC0C-4A44-AF5D-9267A0F44544}|OurCode.vcxproj|solutionrelative:Files.h||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}"
     }
   ],
   "DocumentGroupContainers": [
@@ -52,31 +26,45 @@
       "DocumentGroups": [
         {
           "DockedWidth": 200,
-          "SelectedChildIndex": 1,
+          "SelectedChildIndex": 0,
           "Children": [
             {
               "$type": "Document",
-              "DocumentIndex": 2,
-              "Title": "QR_Location.cpp",
-              "DocumentMoniker": "D:\\Project\\GitHub\\UsingVisibleLightToTransmitInformation\\OurCode\\QR_Location.cpp",
-              "RelativeDocumentMoniker": "QR_Location.cpp",
-              "ToolTip": "D:\\Project\\GitHub\\UsingVisibleLightToTransmitInformation\\OurCode\\QR_Location.cpp",
-              "RelativeToolTip": "QR_Location.cpp",
-              "ViewState": "AQIAAAAAAAAAAAAAAAAAAAAAAAAAAAAA",
+              "DocumentIndex": 0,
+              "Title": "Encode.cpp",
+              "DocumentMoniker": "D:\\Project\\GitHub\\UsingVisibleLightToTransmitInformation\\OurCode\\Encode.cpp",
+              "RelativeDocumentMoniker": "Encode.cpp",
+              "ToolTip": "D:\\Project\\GitHub\\UsingVisibleLightToTransmitInformation\\OurCode\\Encode.cpp",
+              "RelativeToolTip": "Encode.cpp",
+              "ViewState": "AQIAAG0AAAAAAAAAAAAcwL8AAAAAAAAA",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000677|",
-              "WhenOpened": "2024-04-01T07:54:58.862Z"
+              "WhenOpened": "2024-04-01T10:04:42.529Z",
+              "EditorCaption": ""
             },
             {
               "$type": "Document",
-              "DocumentIndex": 0,
-              "Title": "Decode.cpp",
-              "DocumentMoniker": "D:\\Project\\GitHub\\UsingVisibleLightToTransmitInformation\\OurCode\\Decode.cpp",
-              "RelativeDocumentMoniker": "Decode.cpp",
-              "ToolTip": "D:\\Project\\GitHub\\UsingVisibleLightToTransmitInformation\\OurCode\\Decode.cpp",
-              "RelativeToolTip": "Decode.cpp",
-              "ViewState": "AQIAAAAAAAAAAAAAAAAAAA0AAAAIAAAA",
+              "DocumentIndex": 3,
+              "Title": "Files.cpp",
+              "DocumentMoniker": "D:\\Project\\GitHub\\UsingVisibleLightToTransmitInformation\\OurCode\\Files.cpp",
+              "RelativeDocumentMoniker": "Files.cpp",
+              "ToolTip": "D:\\Project\\GitHub\\UsingVisibleLightToTransmitInformation\\OurCode\\Files.cpp",
+              "RelativeToolTip": "Files.cpp",
+              "ViewState": "AQIAAEMBAAAAAAAAAAAcwE4BAABsAAAA",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000677|",
-              "WhenOpened": "2024-03-30T19:39:41.926Z",
+              "WhenOpened": "2024-04-01T09:54:21.726Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 2,
+              "Title": "Files.h",
+              "DocumentMoniker": "D:\\Project\\GitHub\\UsingVisibleLightToTransmitInformation\\OurCode\\Files.h",
+              "RelativeDocumentMoniker": "Files.h",
+              "ToolTip": "D:\\Project\\GitHub\\UsingVisibleLightToTransmitInformation\\OurCode\\Files.h",
+              "RelativeToolTip": "Files.h",
+              "ViewState": "AQIAAEAAAAAAAAAAAAAcwE8AAAAAAAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000680|",
+              "WhenOpened": "2024-04-01T09:53:19.683Z",
               "EditorCaption": ""
             },
             {
@@ -87,105 +75,10 @@
               "RelativeDocumentMoniker": "OurCode.cpp",
               "ToolTip": "D:\\Project\\GitHub\\UsingVisibleLightToTransmitInformation\\OurCode\\OurCode.cpp",
               "RelativeToolTip": "OurCode.cpp",
-              "ViewState": "AQIAAAAAAAAAAAAAAAAAAEQAAAAIAAAA",
+              "ViewState": "AQIAAEcAAAAAAAAAAAAcwE8AAAAlAAAA",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000677|",
-              "WhenOpened": "2024-03-06T13:45:37.93Z"
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 9,
-              "Title": "matx.hpp",
-              "DocumentMoniker": "D:\\Env\\opencv\\build\\include\\opencv2\\core\\matx.hpp",
-              "RelativeDocumentMoniker": "..\\..\\..\\..\\Env\\opencv\\build\\include\\opencv2\\core\\matx.hpp",
-              "ToolTip": "D:\\Env\\opencv\\build\\include\\opencv2\\core\\matx.hpp",
-              "RelativeToolTip": "..\\..\\..\\..\\Env\\opencv\\build\\include\\opencv2\\core\\matx.hpp",
-              "ViewState": "AQIAAHQEAAAAAAAAAAApwIYEAAAAAAAA",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000680|",
-              "WhenOpened": "2024-03-30T20:53:12.206Z"
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 8,
-              "Title": "mat.inl.hpp",
-              "DocumentMoniker": "D:\\Env\\opencv\\build\\include\\opencv2\\core\\mat.inl.hpp",
-              "RelativeDocumentMoniker": "..\\..\\..\\..\\Env\\opencv\\build\\include\\opencv2\\core\\mat.inl.hpp",
-              "ToolTip": "D:\\Env\\opencv\\build\\include\\opencv2\\core\\mat.inl.hpp",
-              "RelativeToolTip": "..\\..\\..\\..\\Env\\opencv\\build\\include\\opencv2\\core\\mat.inl.hpp",
-              "ViewState": "AQIAAHEDAAAAAAAAAIAwwHMDAAAAAAAA",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000680|",
-              "WhenOpened": "2024-03-30T20:50:25.763Z"
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 7,
-              "Title": "Encode.cpp",
-              "DocumentMoniker": "D:\\Project\\GitHub\\UsingVisibleLightToTransmitInformation\\OurCode\\Encode.cpp",
-              "RelativeDocumentMoniker": "Encode.cpp",
-              "ToolTip": "D:\\Project\\GitHub\\UsingVisibleLightToTransmitInformation\\OurCode\\Encode.cpp",
-              "RelativeToolTip": "Encode.cpp",
-              "ViewState": "AQIAALQAAAAAAAAAAAAAANAAAAAAAAAA",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000677|",
-              "WhenOpened": "2024-03-29T06:11:30.496Z"
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 3,
-              "Title": "Basic.h",
-              "DocumentMoniker": "D:\\Project\\GitHub\\UsingVisibleLightToTransmitInformation\\OurCode\\Basic.h",
-              "RelativeDocumentMoniker": "Basic.h",
-              "ToolTip": "D:\\Project\\GitHub\\UsingVisibleLightToTransmitInformation\\OurCode\\Basic.h",
-              "RelativeToolTip": "Basic.h",
-              "ViewState": "AQIAAAAAAAAAAAAAAAAAAAcAAAASAAAA",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000680|",
-              "WhenOpened": "2024-03-30T14:50:15.082Z"
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 10,
-              "Title": "Files.h",
-              "DocumentMoniker": "D:\\Project\\GitHub\\UsingVisibleLightToTransmitInformation\\OurCode\\Files.h",
-              "RelativeDocumentMoniker": "Files.h",
-              "ToolTip": "D:\\Project\\GitHub\\UsingVisibleLightToTransmitInformation\\OurCode\\Files.h",
-              "RelativeToolTip": "Files.h",
-              "ViewState": "AQIAAAAAAAAAAAAAAAAAAAcAAAAPAAAA",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000680|",
-              "WhenOpened": "2024-03-29T05:54:37.762Z"
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 4,
-              "Title": "Encode.h",
-              "DocumentMoniker": "D:\\Project\\GitHub\\UsingVisibleLightToTransmitInformation\\OurCode\\Encode.h",
-              "RelativeDocumentMoniker": "Encode.h",
-              "ToolTip": "D:\\Project\\GitHub\\UsingVisibleLightToTransmitInformation\\OurCode\\Encode.h",
-              "RelativeToolTip": "Encode.h",
-              "ViewState": "AQIAAAAAAAAAAAAAAAAAABgAAAAOAAAA",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000680|",
-              "WhenOpened": "2024-03-29T06:26:29.42Z"
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 5,
-              "Title": "Decode.h",
-              "DocumentMoniker": "D:\\Project\\GitHub\\UsingVisibleLightToTransmitInformation\\OurCode\\Decode.h",
-              "RelativeDocumentMoniker": "Decode.h",
-              "ToolTip": "D:\\Project\\GitHub\\UsingVisibleLightToTransmitInformation\\OurCode\\Decode.h",
-              "RelativeToolTip": "Decode.h",
-              "ViewState": "AQIAAAYAAAAAAAAAAAAcwBIAAAANAAAA",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000680|",
-              "WhenOpened": "2024-03-29T06:01:04.101Z"
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 6,
-              "Title": "Files.cpp",
-              "DocumentMoniker": "D:\\Project\\GitHub\\UsingVisibleLightToTransmitInformation\\OurCode\\Files.cpp",
-              "RelativeDocumentMoniker": "Files.cpp",
-              "ToolTip": "D:\\Project\\GitHub\\UsingVisibleLightToTransmitInformation\\OurCode\\Files.cpp",
-              "RelativeToolTip": "Files.cpp",
-              "ViewState": "AQIAAEIBAAAAAAAAAAAswDkBAAAxAAAA",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000677|",
-              "WhenOpened": "2024-03-29T05:53:54.6Z"
+              "WhenOpened": "2024-03-06T13:45:37.93Z",
+              "EditorCaption": ""
             }
           ]
         }

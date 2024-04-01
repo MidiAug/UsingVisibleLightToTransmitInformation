@@ -6,10 +6,9 @@ void Encode::fileToImg(std::vector<int>& datas, Mat& img, std::string outputPath
     int curNum = 0;
     int index = 0, curC = 0, curR = 0;
     string filename;
-    cout << "图片数量" << numOfImg << endl;
+    cout << "生成二维码图片数量：" << numOfImg << endl;
     Mat white = ScaleToDisSize(img, MULTIPLE);
-    Files::create_or_clear_directory(outputPath, white);
-
+    cv::imwrite(outputPath + "/image0"+PICFORMAT, white);
     drawBasic(img);
     //cv::namedWindow("Window with adjustable size", cv::WINDOW_NORMAL);
     //imshow("Window with adjustable size", img);

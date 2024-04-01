@@ -2,6 +2,37 @@
 
 namespace Files
 {
+    string getFileName(string fileInfo, string format)
+    {
+        string name;
+
+        cout << "请输入" << fileInfo << "的文件名" << endl;
+        cin >> name;
+
+        int r0 = 1;// 长度 ＞ 5
+        int r1 = 1;// 有.bin
+        int r2 = 1;// 文件名中有小数点
+
+        if (name.size() < 5) r0 = 0;
+        if (name.find(format) != name.size() - format.size()) r1 = 0;
+        if (name.find(".") != name.size() - format.size()) r2 = 0;
+
+        while ((r0 * r1 * r2) == 0)
+        {
+            cout << "请正确输入文件名" << endl;
+            cin >> name;
+            if (name.size() < 5) r0 = 0;
+            else r0 = 1;
+            if (name.find(format) != name.size() - format.size()) r1 = 0;
+            else r1 = 1;
+            if (name.find(".") != name.size() - format.size()) r2 = 0;
+            else r2 = 1;
+        }
+        return name;
+
+    }
+
+
     void create_or_clear_directory(const std::string& dir) {
         // 检测文件夹是否存在
         if (_access(dir.c_str(), 0) == -1) {
@@ -46,53 +77,6 @@ namespace Files
             } while (!_findnext(handle, &fileinfo));
             _findclose(handle);
         }
-    }
-
-    void create_or_clear_directory(const std::string& dir,cv::Mat &img) {
-        // 检测文件夹是否存在
-        if (_access(dir.c_str(), 0) == -1) {
-            // 不存在则创建文件夹
-            _mkdir(dir.c_str());
-        }
-        else {
-            // 存在则删除文件夹内部的所有文件
-            // 在目录后面加上"\\*.*"进行第一次搜索
-            std::string newDir = dir + "\\*.*";
-            // 用于查找的句柄
-            intptr_t handle;
-            struct _finddata_t fileinfo;
-            // 第一次查找
-            handle = _findfirst(newDir.c_str(), &fileinfo);
-
-            if (handle == -1) {
-                return;
-            }
-            do
-            {
-                if (fileinfo.attrib & _A_SUBDIR)
-                {
-                    // 如果为文件夹，加上文件夹路径，再次遍历
-                    if (strcmp(fileinfo.name, ".") == 0 || strcmp(fileinfo.name, "..") == 0)
-                    {
-                        continue;
-                    }
-                    // 在目录后面加上"\\"和搜索到的目录名进行下一次搜索
-                    newDir = dir + "\\" + fileinfo.name;
-                    //先遍历删除文件夹下的文件，再删除空的文件夹
-                    create_or_clear_directory(newDir.c_str());
-                    //删除文件夹
-                    _rmdir(newDir.c_str());
-                }
-                else
-                {
-                    string file_path = dir + "\\" + fileinfo.name;
-                    //删除文件
-                    remove(file_path.c_str());
-                }
-            } while (!_findnext(handle, &fileinfo));
-            _findclose(handle);
-        }
-        cv::imwrite(dir + "/image0.png", img);
     }
 
 
@@ -301,17 +285,79 @@ namespace Files
         return ans;
     }
 
+
+    bool isFrameWhite(const cv::Mat& frame, int threshold, double checkRatio) {
+        int rowsToCheck = frame.rows * checkRatio; // 检查中心的行数
+        int colsToCheck = frame.cols * checkRatio; // 检查中心的列数
+        int rowStart = (frame.rows - rowsToCheck) / 2;
+        int colStart = (frame.cols - colsToCheck) / 2;
+
+        cv::Mat centerRegion = frame(cv::Range(rowStart, rowStart + rowsToCheck), cv::Range(colStart, colStart + colsToCheck));
+
+        int whitePixels = 0;
+        int totalPixels = centerRegion.rows * centerRegion.cols;
+
+        for (int row = 0; row < centerRegion.rows; ++row) {
+            for (int col = 0; col < centerRegion.cols; ++col) {
+                cv::Vec3b pixel = centerRegion.at<cv::Vec3b>(row, col);
+                if (pixel[0] > threshold && pixel[1] > threshold && pixel[2] > threshold) {
+                    ++whitePixels;
+                }
+            }
+        }
+        std::cout << whitePixels << " " << totalPixels << '\n';
+        return (static_cast<double>(whitePixels) / totalPixels) < 0.01;
+    }
+
+    bool FrameExtractor(const std::string& videoPath, const std::string& outputPath, double samplingRatio, int RGBThreshold) {
+        std::string outputDirectory = outputPath;
+        // 检查文件夹是否存在，如果不存在，则创建它
+        if (!std::filesystem::exists(outputDirectory)) {
+            std::filesystem::create_directory(outputDirectory);
+        }
+
+        cv::VideoCapture cap(videoPath);
+        if (!cap.isOpened()) {
+            std::cout << "Video opening failed,please retry\n";
+            return false;
+        }
+
+        cv::Mat frame;
+        bool doSaveFrame = false;
+        int frameNumber = 0;
+        int threshold = RGBThreshold;
+        double checkRatio = samplingRatio;
+
+        while (true) {
+            if (!cap.read(frame)) break;
+
+            if (doSaveFrame && !isFrameWhite(frame, threshold, checkRatio)) {
+                std::string filename = outputDirectory + "/frame_" + std::to_string(frameNumber) + PICFORMAT;
+                cv::imwrite(filename, frame);
+                std::cout << "Saved: " << filename << std::endl;
+                doSaveFrame = false;
+                ++frameNumber;
+            }
+            else {
+                doSaveFrame = isFrameWhite(frame, threshold, checkRatio);
+            }
+        }
+
+        std::cout << "Processing Successfully\n";
+        return true;
+    }
+
     /*
 * 功能：图像转视频
 * - imageFolderPath:图片文件夹路径
 * - outputVideoPath:输出视频路径
 * - time:时间(毫秒)
 */
-    bool ImgToVideo(std::string imageFolderPath, std::string outputVideoPath, float time,int FPS) {
+    bool ImgToVideo(std::string imageFolderPath, std::string outputVideoPath, float time, int FPS,int whitefps) {
 
         // 获取图片文件列表
         std::vector<cv::String> imageFiles;
-        cv::glob(imageFolderPath + "/*"+PICFORMAT, imageFiles);  // 假设图片格式为png
+        cv::glob(imageFolderPath + "/*" + PICFORMAT, imageFiles);  // 假设图片格式为png
 
         // 每张图片录入几次()
         int times = time / 1000 * FPS / imageFiles.size();
@@ -334,69 +380,29 @@ namespace Files
         }
 
         cv::Mat frame0 = cv::imread(imageFiles[0]);// 首张白图
-        for (int i = 0; i < imageFiles.size(); i++)
+        for (int i = 1; i < imageFiles.size(); i++)
         {
             cv::Mat frame = cv::imread(imageFiles[i]);
-            videoWriter.write(frame0);
-            for (int i = 1; i < times-1; i++) { // 每张图片50帧
+            
+            for (int j = 0; j < whitefps; j++)
+                videoWriter.write(frame0);
+
+            for (int j = 1; j < times - 1; j++)
                 videoWriter.write(frame);
-            }
         }
 
         videoWriter.release();
 
-        std::cout << "video created in " << outputVideoPath << std::endl;
+        std::cout << "Video created with name " << outputVideoPath << std::endl;
         return true;
     }
 
-    bool VideoToImg(std::string vedioPath, std::string outputPath)
+    void delete_files_with_format(string format, string path= "")
     {
-        // 打开视频文件
-        cv::VideoCapture cap(vedioPath);
-
-        Files::create_or_clear_directory(outputPath);
-
-        if (!cap.isOpened()) {
-            std::cerr << "Error: Unable to open the video file." << std::endl;
-            return -1;
-        }
-
-        // 定义帧计数器
-        int frame_count = 0;
-
-        while (true) {
-            cv::Mat frame;
-
-            // 读取视频帧
-            cap >> frame;
-
-            // 检查是否已经到达视频末尾
-            if (frame.empty()) {
-                std::cout << "End of video." << std::endl;
-                break;
-            }
-
-            // 只处理每隔五帧的视频帧
-            if (frame_count % 5 == 0) {
-                // 在这里对帧进行处理，例如保存为图像文件
-                std::string output_path = outputPath + "/frame_" + std::to_string(frame_count) + ".png";
-                cv::imwrite(output_path, frame);
-                std::cout << "Frame " << frame_count << " saved." << std::endl;
-            }
-
-            // 增加帧计数器
-            frame_count++;
-
-            // 检查按键以退出循环
-            if (cv::waitKey(1) == 27) // ESC键的ASCII码为27
-                break;
-        }
-
-        // 释放视频捕获对象
-        cap.release();
-        cv::destroyAllWindows();
-
-
+        std::vector<cv::String> files;
+        cv::glob(path + "*" + format, files);
+        for (auto file : files)
+            remove(file.c_str());
     }
 
 }
