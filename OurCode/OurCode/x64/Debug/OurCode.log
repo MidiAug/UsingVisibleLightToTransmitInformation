@@ -59,8 +59,16 @@ D:\Project\GitHub\UsingVisibleLightToTransmitInformation\OurCode\Decode.cpp(240,
 D:\Project\GitHub\UsingVisibleLightToTransmitInformation\OurCode\Decode.cpp(240,32): warning C4244:         [
 D:\Project\GitHub\UsingVisibleLightToTransmitInformation\OurCode\Decode.cpp(240,32): warning C4244:             _Tp=int
 D:\Project\GitHub\UsingVisibleLightToTransmitInformation\OurCode\Decode.cpp(240,32): warning C4244:         ]
+  Encode.cpp
+C:\Program Files\Microsoft Visual Studio\2022\Community\VC\Tools\MSVC\14.39.33519\include\filesystem(12): warning STL4038: The contents of <filesystem> are available only with C++17 or later.
+D:\Project\GitHub\UsingVisibleLightToTransmitInformation\OurCode\Encode.cpp(5,18): warning C4267: “初始化”: 从“size_t”转换到“int”，可能丢失数据
+  Files.cpp
+D:\Project\GitHub\UsingVisibleLightToTransmitInformation\OurCode\Files.cpp(124,26): warning C4930: “std::vector<int,std::allocator<int>> tmp(void)”: 未调用原型函数(是否是有意用变量定义的?)
+D:\Project\GitHub\UsingVisibleLightToTransmitInformation\OurCode\Files.cpp(317,19): warning C4244: “初始化”: 从“float”转换到“int”，可能丢失数据
+D:\Project\GitHub\UsingVisibleLightToTransmitInformation\OurCode\Files.cpp(361,21): warning C4305: “return”: 从“int”到“bool”截断
   OurCode.cpp
 C:\Program Files\Microsoft Visual Studio\2022\Community\VC\Tools\MSVC\14.39.33519\include\filesystem(12): warning STL4038: The contents of <filesystem> are available only with C++17 or later.
   正在生成代码...
+D:\Project\GitHub\UsingVisibleLightToTransmitInformation\OurCode\Files.cpp(400,1): warning C4715: “Files::VideoToImg”: 不是所有的控件路径都返回值
 D:\Project\GitHub\UsingVisibleLightToTransmitInformation\OurCode\Decode.cpp(177,1): warning C4715: “Decode::extractCodeHelper”: 不是所有的控件路径都返回值
   OurCode.vcxproj -> D:\Project\GitHub\UsingVisibleLightToTransmitInformation\OurCode\x64\Debug\OurCode.exe
