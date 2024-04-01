@@ -23,7 +23,7 @@ bool isFrameWhite(const cv::Mat& frame, int threshold, double checkRatio) {
   return (static_cast<double>(whitePixels) / totalPixels) < 0.01;
 }
 
-bool FrameExtractor(const std::string& videoPath,const std::string& outputPath,double samplingRatio=0.1,int RGBThreshold=200) {
+bool FrameExtractor(const std::string& videoPath,const std::string& outputPath,double samplingRatio,int RGBThreshold) {
   std::string outputDirectory = outputPath;
   // 检查文件夹是否存在，如果不存在，则创建它
   if (!std::filesystem::exists(outputDirectory)) {
