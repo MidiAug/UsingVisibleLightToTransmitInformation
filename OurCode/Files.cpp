@@ -306,14 +306,14 @@ namespace Files
             }
         }
         std::cout << whitePixels << " " << totalPixels << '\n';
-        return (static_cast<double>(whitePixels) / totalPixels) < 0.01;
+        return (static_cast<double>(whitePixels) / totalPixels) > 0.8;
     }
 
     bool FrameExtractor(const std::string& videoPath, const std::string& outputPath, double samplingRatio, int RGBThreshold) {
         std::string outputDirectory = outputPath;
         // 检查文件夹是否存在，如果不存在，则创建它
         if (!std::filesystem::exists(outputDirectory)) {
-            std::filesystem::create_directory(outputDirectory);
+            create_or_clear_directory(outputDirectory);
         }
 
         cv::VideoCapture cap(videoPath);
@@ -338,9 +338,8 @@ namespace Files
                 doSaveFrame = false;
                 ++frameNumber;
             }
-            else {
+            else 
                 doSaveFrame = isFrameWhite(frame, threshold, checkRatio);
-            }
         }
 
         std::cout << "Processing Successfully\n";
@@ -348,11 +347,11 @@ namespace Files
     }
 
     /*
-* 功能：图像转视频
-* - imageFolderPath:图片文件夹路径
-* - outputVideoPath:输出视频路径
-* - time:时间(毫秒)
-*/
+      * 功能：图像转视频
+      * - imageFolderPath:图片文件夹路径
+      * - outputVideoPath:输出视频路径
+      * - time:时间(毫秒)
+    */
     bool ImgToVideo(std::string imageFolderPath, std::string outputVideoPath, float time, int FPS,int whitefps) {
 
         // 获取图片文件列表

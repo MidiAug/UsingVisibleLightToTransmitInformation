@@ -11,13 +11,13 @@ using namespace cv;
 using namespace std;
 
 int main()
-{
+{   
     cv::utils::logging::setLogLevel(utils::logging::LOG_LEVEL_SILENT);// 关闭控制台输出日志
 
     string mode ;
     cout << "选择模式" << endl;
     cout << "输入\"encode\"进行编码（生成随机bin文件、生成二维码、生成视频）" << endl;
-    cout << "输入\"dncode\"进行解码（视频生成图片、扣出二维码、二维码转数据）" << endl;
+    cout << "输入\"decode\"进行解码（视频生成图片、扣出二维码、二维码转数据）" << endl;
     cin >> mode;
     while (true)
     {
@@ -86,7 +86,7 @@ int main()
 
             string videoName = Files::getFileName("拍摄的视频文件（格式：mp4）", ".mp4");
             string originalCodePath = "originalCodes";
-            string extFramePath = "extractedFrames";
+            string extFramePath = "frames";
             string extCodePath = "extractedCodes";
 
             Files::FrameExtractor(videoName, extFramePath,0.1,250);
