@@ -78,12 +78,12 @@ int main()
         {
             vector<cv::String> tmp;
             cv::glob("*.bin"  , tmp);
-            std::string binFilename = tmp[0]; // 文件名
+            std::string binFilename =tmp[0]; // 文件名
             
             vector<int> originalDatas = Files::readBinaryFile(binFilename);
             vector<int> postCheckDatas = Files::CRCEncode(originalDatas);
             vector<int> filledDatas = Files::fillData(postCheckDatas);
-
+            //std::cout << originalDatas.size() << " " << postCheckDatas.size() << " " << filledDatas.size() << "\n";
             cout << endl;
             string videoName = Files::getFileName("拍摄的视频文件（格式：mp4）", ".mp4");
             string originalCodePath = "originalCodes";
@@ -92,7 +92,7 @@ int main()
 
             // 截取帧
             cout << "---截取帧---" << endl;
-            Files::FrameExtractor(videoName, extFramePath,0.25,150);
+            Files::FrameExtractor(videoName, extFramePath,0.1,150);
             // 提取二维码
             cout << "---提取二维码---" << endl;
             Decode::extractCode(extFramePath, extCodePath);
@@ -101,13 +101,42 @@ int main()
             vector<int> extractedDatas;
             Decode::readCode(extCodePath, extractedDatas, filledDatas);
 
-
+            //std::cout << extractedDatas.size() << '\n';
+            //std::cout << filledDatas.size() << '\n';
             vector<int> unCheckDatas = Files::CRCDecode(extractedDatas);
+
+            //计算误码率，这部分hw要求输出一个vout文件，每一位指示原文件和解码后是否比对正确
+            vector<int> vout;
+            int wrongBits = 0;
+            for (int i = 0, j = 0; i < originalDatas.size(); ++i, ++j) {
+              if (j >= unCheckDatas.size()) 
+                vout.push_back(0);
+              else {
+                if (unCheckDatas[j] == originalDatas[i]) {
+                  vout.push_back(1);
+                  ++wrongBits;
+                }
+                else 
+                  vout.push_back(0);
+                
+              }
+            }
+            Files::outBin(vout, "vout.bin");
+
+            //std::cout << unCheckDatas.size() << '\n';
+            Files::outBin(unCheckDatas, "out.bin");
             int n = 0;
+            cout <<"本次传输正确率为：" << static_cast<double>(wrongBits) / originalDatas.size()<<'\n';
+            cout << "传输数据位数为：" << originalDatas.size();
+            
+
             return 0;
         }
-
         cout << "请勿输入\"encode\"或\"decode\"以外的文本。" << endl;
+
         cin >> mode;
+
     }
+    
+
 }

@@ -219,13 +219,13 @@ namespace Files
     // CRC解码
     Code CRCDecodeHelper(CRCCode crcData) {
         Code decodeData;
-        for (auto x : crcData) {
+        for (auto& x : crcData) {
             // 提取数据位
             std::bitset<16> data = std::bitset<16>(x.to_ullong() >> 5);
             // 提取校验位
-            uint8_t crcExtracted = x.to_ulong() & 0x1F; // 提取低5位作为CRC
-            uint8_t crc = 0;
-            std::string bString = x.to_string();
+            int crcExtracted = static_cast<int>(x.to_ulong() & 0x1F); // 提取低5位作为CRC
+            int crc = 0;
+            std::string bString = x.to_string().substr(0,16);
             for (int i = 0; i < 16; ++i) {
                 if (bString[i] == '1')
                     crc ^= table[i + 1];
@@ -239,18 +239,18 @@ namespace Files
                 int wrongBit = -1;
                 for (int i = 1; i <= 16; ++i) {
                     if ((crc ^ crcExtracted) == table[i]) {
-                        wrongBit = i; // 表的索引从1开始，bitset的索引从0开始，所以这里需要-1
+                        wrongBit = i-1; // 表的索引从1开始，bitset的索引从0开始，所以这里需要-1
                         break;
                     }
                 }
-                //std::cout << wrongBit << '\n';
+                // 不是一位错，没办法
+                if (wrongBit == -1) 
+                  decodeData.push_back(data);
+                
                 if (wrongBit != -1) {
                     // 翻转错误位
-                    if (bString[wrongBit - 1] == '1')
-                        bString[wrongBit - 1] = '0';
-                    if (bString[wrongBit - 1] == '0')
-                        bString[wrongBit - 1] = '1';
-                    data = std::bitset<16>(bString);
+                    bString[wrongBit] = (bString[wrongBit] == '1') ? '0' : '1';
+                    data = std::bitset<16>(bString); // 确保这是一个16位的数据位字符串
                     decodeData.push_back(data);
                 }
             }
@@ -410,5 +410,4 @@ namespace Files
         for (auto file : files)
             remove(file.c_str());
     }
-
 }

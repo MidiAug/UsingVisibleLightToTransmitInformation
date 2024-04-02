@@ -78,8 +78,6 @@ namespace Files
 	/// </returns>
 	bool FrameExtractor(const std::string& videoPath, const std::string& outputPath, double samplingRatio = 0.1, int RGBThreshold = 200);
 
-
-
 }
 
 
