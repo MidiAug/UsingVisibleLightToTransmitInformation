@@ -19,6 +19,7 @@ using namespace cv;
 
 namespace Files
 {
+	// 使用控制台获取格式为format的文件名
 	string getFileName(string fileInfo, string format);
 
 	// 数据CRC编码解码
@@ -44,10 +45,11 @@ namespace Files
 	// 将二进制数据输出
 	void outBin(const std::vector<int>& bits, const std::string& filename);
 
-	// 文件夹操作
+	// 创建或清空文件夹
 	void create_or_clear_directory(const std::string& dir);
 
-	void delete_files_with_format(string formatpath, string path);
+	// 删除指定目录下的format文件
+	void delete_files_with_format(string format, string path);
 
 	// 图片与视频间的转换
 	bool ImgToVideo(std::string imageFolderPath, std::string outputVideoPath, float time,int FPS, int whitefps);

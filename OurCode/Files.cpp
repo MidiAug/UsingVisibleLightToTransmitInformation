@@ -2,6 +2,7 @@
 
 namespace Files
 {
+    
     string getFileName(string fileInfo, string format)
     {
         string name;
@@ -316,28 +317,35 @@ namespace Files
 
         cv::VideoCapture cap(videoPath);
         if (!cap.isOpened()) {
-            std::cout << "Video opening failed,please retry\n";
+            std::cout << videoPath << "视频不存在" << endl;
             return false;
         }
 
-        cv::Mat frame;
-        bool doSaveFrame = false;
+        // this会跟next变成同一张图，bug
+        cv::Mat this_frame;
+        cv::Mat next_frame;
+        bool this_is_white = false;
+        bool next_is_white = false;
         int frameNumber = 0;
         int threshold = RGBThreshold;
         double checkRatio = samplingRatio;
 
+        if (!cap.read(this_frame)) return false;
+        this_is_white = isFrameWhite(this_frame, threshold, checkRatio);
         while (true) {
-            if (!cap.read(frame)) break;
+            if (!cap.read(next_frame)) break;
+            next_is_white = isFrameWhite(next_frame, threshold, checkRatio);
+            cout << "this: " << this_is_white << "next: " << next_is_white << endl;
 
-            if (doSaveFrame && !isFrameWhite(frame, threshold, checkRatio)) {
-                std::string filename = outputDirectory + "/frame_" + std::to_string(frameNumber) + PICFORMAT;
-                cv::imwrite(filename, frame);
-                //std::cout << "Saved: " << filename << std::endl;
-                doSaveFrame = false;
-                ++frameNumber;
+            if (!this_is_white && next_is_white) {
+
+                std::string filename = outputDirectory + "/frame_" + std::to_string(++frameNumber) + PICFORMAT;
+                cv::imwrite(filename, this_frame);
+                std::cout << "保存提取帧: " << filename << std::endl;
             }
-            else 
-                doSaveFrame = isFrameWhite(frame, threshold, checkRatio);
+
+            this_frame = next_frame;
+            this_is_white = next_is_white;
         }
 
         //std::cout << "Processing Successfully\n";
@@ -369,7 +377,7 @@ namespace Files
         cv::Mat firstImage = cv::imread(imageFiles[0]);
 
         // 创建视频编写器
-        cv::VideoWriter videoWriter(outputVideoPath, cv::VideoWriter::fourcc('M', 'P', '4', 'V'), FPS, firstImage.size());
+        cv::VideoWriter videoWriter(outputVideoPath, cv::VideoWriter::fourcc('X', 'V', 'I', 'D'), FPS, firstImage.size());
         // 检查视频编写器是否成功打开
         if (!videoWriter.isOpened()) {
             std::cerr << "failed to open the video writer." << std::endl;
@@ -381,11 +389,12 @@ namespace Files
         {
             cv::Mat frame = cv::imread(imageFiles[i]);
             
+            for (int j = 1; j < times - 1; j++)
+                videoWriter.write(frame);
+
             for (int j = 0; j < whitefps; j++)
                 videoWriter.write(frame0);
 
-            for (int j = 1; j < times - 1; j++)
-                videoWriter.write(frame);
         }
 
         videoWriter.release();

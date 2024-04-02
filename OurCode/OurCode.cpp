@@ -69,7 +69,7 @@ int main()
                 cout << "请正确输入视频时长（单位：ms）" << endl;
                 cin >> length;
             }
-            Files::ImgToVideo(imagePath, videoName, length, 90,10);
+            Files::ImgToVideo(imagePath, videoName, length, 90,5);
 
             return 0;
         }
@@ -85,17 +85,17 @@ int main()
             vector<int> filledDatas = Files::fillData(postCheckDatas);
 
             cout << endl;
-            //string videoName = Files::getFileName("拍摄的视频文件（格式：mp4）", ".mp4");
+            string videoName = Files::getFileName("拍摄的视频文件（格式：mp4）", ".mp4");
             string originalCodePath = "originalCodes";
             string extFramePath = "extractedFrames";
             string extCodePath = "extractedCodes";
 
             // 截取帧
-            //cout << "---截取帧---" << endl;
-            //Files::FrameExtractor(videoName, extFramePath,0.25,200);
-            //// 提取二维码
-            //cout << "---提取二维码---" << endl;
-            //Decode::extractCode(extFramePath, extCodePath);
+            cout << "---截取帧---" << endl;
+            Files::FrameExtractor(videoName, extFramePath,0.25,150);
+            // 提取二维码
+            cout << "---提取二维码---" << endl;
+            Decode::extractCode(extFramePath, extCodePath);
             // 解码二维码
             cout << "---解码二维码---" << endl;
             vector<int> extractedDatas;

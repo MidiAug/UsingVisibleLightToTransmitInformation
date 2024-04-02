@@ -191,7 +191,6 @@ void Encode::drawPixel(int val, int x, int y, Mat& img) {
         color
     );
 };
-
 void Encode::drawPixel(int val, int lue, int x, int y, Mat& img) {
     Scalar color;
     if (val == 0 && lue == 0) color = cv::Scalar(0, 0, 0);
@@ -207,7 +206,6 @@ void Encode::drawPixel(int val, int lue, int x, int y, Mat& img) {
         color
     );
 };
-
 void Encode::drawPixel(int v1, int v2, int v3, int x, int y, Mat& img)
 {
     Scalar color;
@@ -265,12 +263,10 @@ void Encode::initImg(int height, int width, Mat& img) {
     img = Mat(cv::Size(width, HEIGHT), CV_8UC3);
     img.setTo(Scalar(255, 255, 255));
 }
-
 void Encode::saveImg(String filePath, Mat& img) {
 
     cv::imwrite(filePath, img);
 }
-
 void Encode::showImg(Mat& img) {
     cv::namedWindow("image", cv::WINDOW_NORMAL);
     cv::imshow("image", img);

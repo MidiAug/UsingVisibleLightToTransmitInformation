@@ -1,63 +1,6 @@
-﻿  Decode.cpp
-D:\Project\GitHub\UsingVisibleLightToTransmitInformation\OurCode\Decode.cpp(139,39): warning C4267: “=”: 从“size_t”转换到“int”，可能丢失数据
-D:\Project\GitHub\UsingVisibleLightToTransmitInformation\OurCode\Decode.cpp(154,36): warning C4244: “参数”: 从“double”转换到“_Tp”，可能丢失数据
-D:\Project\GitHub\UsingVisibleLightToTransmitInformation\OurCode\Decode.cpp(154,36): warning C4244:         with
-D:\Project\GitHub\UsingVisibleLightToTransmitInformation\OurCode\Decode.cpp(154,36): warning C4244:         [
-D:\Project\GitHub\UsingVisibleLightToTransmitInformation\OurCode\Decode.cpp(154,36): warning C4244:             _Tp=float
-D:\Project\GitHub\UsingVisibleLightToTransmitInformation\OurCode\Decode.cpp(154,36): warning C4244:         ]
-D:\Project\GitHub\UsingVisibleLightToTransmitInformation\OurCode\Decode.cpp(156,39): warning C4244: “参数”: 从“double”转换到“_Tp”，可能丢失数据
-D:\Project\GitHub\UsingVisibleLightToTransmitInformation\OurCode\Decode.cpp(156,39): warning C4244:         with
-D:\Project\GitHub\UsingVisibleLightToTransmitInformation\OurCode\Decode.cpp(156,39): warning C4244:         [
-D:\Project\GitHub\UsingVisibleLightToTransmitInformation\OurCode\Decode.cpp(156,39): warning C4244:             _Tp=float
-D:\Project\GitHub\UsingVisibleLightToTransmitInformation\OurCode\Decode.cpp(156,39): warning C4244:         ]
-D:\Project\GitHub\UsingVisibleLightToTransmitInformation\OurCode\Decode.cpp(157,43): warning C4244: “参数”: 从“double”转换到“_Tp”，可能丢失数据
-D:\Project\GitHub\UsingVisibleLightToTransmitInformation\OurCode\Decode.cpp(157,43): warning C4244:         with
-D:\Project\GitHub\UsingVisibleLightToTransmitInformation\OurCode\Decode.cpp(157,43): warning C4244:         [
-D:\Project\GitHub\UsingVisibleLightToTransmitInformation\OurCode\Decode.cpp(157,43): warning C4244:             _Tp=float
-D:\Project\GitHub\UsingVisibleLightToTransmitInformation\OurCode\Decode.cpp(157,43): warning C4244:         ]
-D:\Project\GitHub\UsingVisibleLightToTransmitInformation\OurCode\Decode.cpp(157,36): warning C4244: “参数”: 从“double”转换到“_Tp”，可能丢失数据
-D:\Project\GitHub\UsingVisibleLightToTransmitInformation\OurCode\Decode.cpp(157,36): warning C4244:         with
-D:\Project\GitHub\UsingVisibleLightToTransmitInformation\OurCode\Decode.cpp(157,36): warning C4244:         [
-D:\Project\GitHub\UsingVisibleLightToTransmitInformation\OurCode\Decode.cpp(157,36): warning C4244:             _Tp=float
-D:\Project\GitHub\UsingVisibleLightToTransmitInformation\OurCode\Decode.cpp(157,36): warning C4244:         ]
-D:\Project\GitHub\UsingVisibleLightToTransmitInformation\OurCode\Decode.cpp(166,39): warning C4244: “参数”: 从“double”转换到“_Tp”，可能丢失数据
-D:\Project\GitHub\UsingVisibleLightToTransmitInformation\OurCode\Decode.cpp(166,39): warning C4244:         with
-D:\Project\GitHub\UsingVisibleLightToTransmitInformation\OurCode\Decode.cpp(166,39): warning C4244:         [
-D:\Project\GitHub\UsingVisibleLightToTransmitInformation\OurCode\Decode.cpp(166,39): warning C4244:             _Tp=float
-D:\Project\GitHub\UsingVisibleLightToTransmitInformation\OurCode\Decode.cpp(166,39): warning C4244:         ]
-D:\Project\GitHub\UsingVisibleLightToTransmitInformation\OurCode\Decode.cpp(167,43): warning C4244: “参数”: 从“double”转换到“_Tp”，可能丢失数据
-D:\Project\GitHub\UsingVisibleLightToTransmitInformation\OurCode\Decode.cpp(167,43): warning C4244:         with
-D:\Project\GitHub\UsingVisibleLightToTransmitInformation\OurCode\Decode.cpp(167,43): warning C4244:         [
-D:\Project\GitHub\UsingVisibleLightToTransmitInformation\OurCode\Decode.cpp(167,43): warning C4244:             _Tp=float
-D:\Project\GitHub\UsingVisibleLightToTransmitInformation\OurCode\Decode.cpp(167,43): warning C4244:         ]
-D:\Project\GitHub\UsingVisibleLightToTransmitInformation\OurCode\Decode.cpp(167,36): warning C4244: “参数”: 从“double”转换到“_Tp”，可能丢失数据
-D:\Project\GitHub\UsingVisibleLightToTransmitInformation\OurCode\Decode.cpp(167,36): warning C4244:         with
-D:\Project\GitHub\UsingVisibleLightToTransmitInformation\OurCode\Decode.cpp(167,36): warning C4244:         [
-D:\Project\GitHub\UsingVisibleLightToTransmitInformation\OurCode\Decode.cpp(167,36): warning C4244:             _Tp=float
-D:\Project\GitHub\UsingVisibleLightToTransmitInformation\OurCode\Decode.cpp(167,36): warning C4244:         ]
-D:\Project\GitHub\UsingVisibleLightToTransmitInformation\OurCode\Decode.cpp(168,36): warning C4244: “参数”: 从“double”转换到“_Tp”，可能丢失数据
-D:\Project\GitHub\UsingVisibleLightToTransmitInformation\OurCode\Decode.cpp(168,36): warning C4244:         with
-D:\Project\GitHub\UsingVisibleLightToTransmitInformation\OurCode\Decode.cpp(168,36): warning C4244:         [
-D:\Project\GitHub\UsingVisibleLightToTransmitInformation\OurCode\Decode.cpp(168,36): warning C4244:             _Tp=float
-D:\Project\GitHub\UsingVisibleLightToTransmitInformation\OurCode\Decode.cpp(168,36): warning C4244:         ]
-D:\Project\GitHub\UsingVisibleLightToTransmitInformation\OurCode\Decode.cpp(178,74): warning C4244: “参数”: 从“double”转换到“_Tp”，可能丢失数据
-D:\Project\GitHub\UsingVisibleLightToTransmitInformation\OurCode\Decode.cpp(178,74): warning C4244:         with
-D:\Project\GitHub\UsingVisibleLightToTransmitInformation\OurCode\Decode.cpp(178,74): warning C4244:         [
-D:\Project\GitHub\UsingVisibleLightToTransmitInformation\OurCode\Decode.cpp(178,74): warning C4244:             _Tp=int
-D:\Project\GitHub\UsingVisibleLightToTransmitInformation\OurCode\Decode.cpp(178,74): warning C4244:         ]
-D:\Project\GitHub\UsingVisibleLightToTransmitInformation\OurCode\Decode.cpp(178,67): warning C4244: “参数”: 从“double”转换到“_Tp”，可能丢失数据
-D:\Project\GitHub\UsingVisibleLightToTransmitInformation\OurCode\Decode.cpp(178,67): warning C4244:         with
-D:\Project\GitHub\UsingVisibleLightToTransmitInformation\OurCode\Decode.cpp(178,67): warning C4244:         [
-D:\Project\GitHub\UsingVisibleLightToTransmitInformation\OurCode\Decode.cpp(178,67): warning C4244:             _Tp=int
-D:\Project\GitHub\UsingVisibleLightToTransmitInformation\OurCode\Decode.cpp(178,67): warning C4244:         ]
-D:\Project\GitHub\UsingVisibleLightToTransmitInformation\OurCode\Decode.cpp(245,53): warning C4244: “参数”: 从“float”转换到“_Tp”，可能丢失数据
-D:\Project\GitHub\UsingVisibleLightToTransmitInformation\OurCode\Decode.cpp(245,53): warning C4244:         with
-D:\Project\GitHub\UsingVisibleLightToTransmitInformation\OurCode\Decode.cpp(245,53): warning C4244:         [
-D:\Project\GitHub\UsingVisibleLightToTransmitInformation\OurCode\Decode.cpp(245,53): warning C4244:             _Tp=int
-D:\Project\GitHub\UsingVisibleLightToTransmitInformation\OurCode\Decode.cpp(245,53): warning C4244:         ]
-D:\Project\GitHub\UsingVisibleLightToTransmitInformation\OurCode\Decode.cpp(245,32): warning C4244: “参数”: 从“float”转换到“_Tp”，可能丢失数据
-D:\Project\GitHub\UsingVisibleLightToTransmitInformation\OurCode\Decode.cpp(245,32): warning C4244:         with
-D:\Project\GitHub\UsingVisibleLightToTransmitInformation\OurCode\Decode.cpp(245,32): warning C4244:         [
-D:\Project\GitHub\UsingVisibleLightToTransmitInformation\OurCode\Decode.cpp(245,32): warning C4244:             _Tp=int
-D:\Project\GitHub\UsingVisibleLightToTransmitInformation\OurCode\Decode.cpp(245,32): warning C4244:         ]
+﻿  Files.cpp
+D:\Project\GitHub\UsingVisibleLightToTransmitInformation\OurCode\Files.cpp(109,26): warning C4930: “std::vector<int,std::allocator<int>> tmp(void)”: 未调用原型函数(是否是有意用变量定义的?)
+D:\Project\GitHub\UsingVisibleLightToTransmitInformation\OurCode\Files.cpp(291,25): warning C4244: “初始化”: 从“double”转换到“int”，可能丢失数据
+D:\Project\GitHub\UsingVisibleLightToTransmitInformation\OurCode\Files.cpp(292,25): warning C4244: “初始化”: 从“double”转换到“int”，可能丢失数据
+D:\Project\GitHub\UsingVisibleLightToTransmitInformation\OurCode\Files.cpp(372,19): warning C4244: “初始化”: 从“float”转换到“int”，可能丢失数据
   OurCode.vcxproj -> D:\Project\GitHub\UsingVisibleLightToTransmitInformation\OurCode\x64\Debug\OurCode.exe
