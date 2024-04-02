@@ -104,14 +104,6 @@ int main()
 
             vector<int> unCheckDatas = Files::CRCDecode(extractedDatas);
             int n = 0;
-
-            // 以下代码为测试一张图传输的原始数据的错误比例
-            for (int i = 0; i < unCheckDatas.size(); i++)
-            {
-                if (unCheckDatas[i] != originalDatas[i])
-                    n++;
-                if (i % (CAPACITY/21*16) == 0) cout << (float)n / (CAPACITY / 21 * 16) << endl , n =0;
-            }
             return 0;
         }
 

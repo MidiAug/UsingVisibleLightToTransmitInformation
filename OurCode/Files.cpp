@@ -335,7 +335,7 @@ namespace Files
         while (true) {
             if (!cap.read(next_frame)) break;
             next_is_white = isFrameWhite(next_frame, threshold, checkRatio);
-            cout << "this: " << this_is_white << "next: " << next_is_white << endl;
+            //cout << "this: " << this_is_white << "next: " << next_is_white << endl;
 
             if (!this_is_white && next_is_white) {
 
@@ -344,7 +344,7 @@ namespace Files
                 std::cout << "±£´æÌáÈ¡Ö¡: " << filename << std::endl;
             }
 
-            this_frame = next_frame;
+            this_frame = next_frame.clone();
             this_is_white = next_is_white;
         }
 

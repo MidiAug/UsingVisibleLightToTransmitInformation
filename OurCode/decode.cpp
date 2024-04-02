@@ -199,6 +199,7 @@ namespace Decode
             Mat src = imread(imgfile);
             Mat extCode = extractCodeHelper(src);
 
+            cout << "保存提取二维码" << outFolderPath + "/extractedCode" + to_string(cnt++) + PICFORMAT <<endl;
             imwrite(outFolderPath + "/extractedCode" + to_string(cnt++) + PICFORMAT, extCode);
         }
         return 0;

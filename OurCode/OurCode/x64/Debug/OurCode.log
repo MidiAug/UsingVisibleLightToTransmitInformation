@@ -1,6 +1,3 @@
-﻿  Files.cpp
-D:\Project\GitHub\UsingVisibleLightToTransmitInformation\OurCode\Files.cpp(109,26): warning C4930: “std::vector<int,std::allocator<int>> tmp(void)”: 未调用原型函数(是否是有意用变量定义的?)
-D:\Project\GitHub\UsingVisibleLightToTransmitInformation\OurCode\Files.cpp(291,25): warning C4244: “初始化”: 从“double”转换到“int”，可能丢失数据
-D:\Project\GitHub\UsingVisibleLightToTransmitInformation\OurCode\Files.cpp(292,25): warning C4244: “初始化”: 从“double”转换到“int”，可能丢失数据
-D:\Project\GitHub\UsingVisibleLightToTransmitInformation\OurCode\Files.cpp(372,19): warning C4244: “初始化”: 从“float”转换到“int”，可能丢失数据
+﻿  OurCode.cpp
+D:\Project\GitHub\UsingVisibleLightToTransmitInformation\OurCode\OurCode.cpp(72,53): warning C4244: “参数”: 从“int”转换到“float”，可能丢失数据
   OurCode.vcxproj -> D:\Project\GitHub\UsingVisibleLightToTransmitInformation\OurCode\x64\Debug\OurCode.exe
