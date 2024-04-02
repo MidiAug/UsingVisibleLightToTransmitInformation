@@ -3,13 +3,20 @@
 #include <opencv2/core/utils/logger.hpp>
 #include "Basic.h"
 #include "Encode.h"
-#include "QR_location.h"
 #include "Decode.h"
 #include "Files.h"
+#include <ctime>
 
 using namespace cv;
 using namespace std;
 
+int getTime()
+{
+    auto cur = std::chrono::steady_clock::now();
+    auto cur_ms = std::chrono::time_point_cast<std::chrono::milliseconds>(cur);
+    auto ms = cur_ms.time_since_epoch().count();
+    return ms;
+}
 int main()
 {   
     cv::utils::logging::setLogLevel(utils::logging::LOG_LEVEL_SILENT);// 关闭控制台输出日志
@@ -54,10 +61,11 @@ int main()
 
             // 二进制转图片
             Mat img;
+            int imgcnt;
             std::string imagePath = "originalImages";
             Files::create_or_clear_directory(imagePath);
             Encode::initImg(HEIGHT, WIDTH, img);
-            Encode::fileToImg(filledDatas, img, imagePath, 0);// 1\0表示 展示\不展示图片
+            imgcnt = Encode::fileToImg(filledDatas, img, imagePath, 0);// 1\0表示 展示\不展示图片
 
             // 图片转视频
             string videoName = Files::getFileName("生成的视频文件（格式：mp4）", ".mp4");
@@ -69,7 +77,7 @@ int main()
                 cout << "请正确输入视频时长（单位：ms）" << endl;
                 cin >> length;
             }
-            Files::ImgToVideo(imagePath, videoName, length, 90,5);
+            Files::ImgToVideo(imagePath, videoName, length, 90,5,5);
 
             return 0;
         }
@@ -92,10 +100,12 @@ int main()
 
             // 截取帧
             cout << "---截取帧---" << endl;
-            Files::FrameExtractor(videoName, extFramePath,0.1,150);
+            Files::FrameExtractor(videoName, extFramePath, 0.1, 150);
+
             // 提取二维码
             cout << "---提取二维码---" << endl;
             Decode::extractCode(extFramePath, extCodePath);
+
             // 解码二维码
             cout << "---解码二维码---" << endl;
             vector<int> extractedDatas;
@@ -126,8 +136,8 @@ int main()
             //std::cout << unCheckDatas.size() << '\n';
             Files::outBin(unCheckDatas, "out.bin");
             int n = 0;
-            cout <<"本次传输正确率为：" << static_cast<double>(wrongBits) / originalDatas.size()<<'\n';
-            cout << "传输数据位数为：" << originalDatas.size();
+            cout << "\n传输数据位数为：" << originalDatas.size() << "，即" << originalDatas.size() / 1024 << "Kb" << endl;
+            cout <<"传输正确率为：" << static_cast<double>(wrongBits) / originalDatas.size()<<'\n';
             
 
             return 0;

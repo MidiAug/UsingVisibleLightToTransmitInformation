@@ -3,6 +3,26 @@
 namespace Files
 {
     
+    void threadSave(vector<Mat> &images, vector<cv::String> &paths)
+    {
+        std::vector<std::thread> threads;
+        for (int i = 0; i < images.size(); i++) {
+            threads.push_back(std::thread([i, &images, &paths] {
+                cv::imwrite(paths[i], images[i]);
+                }));
+        }
+
+        for (auto& thread : threads) {
+            thread.join();
+        }
+    }
+
+    void threadSave(Mat image,cv::String path)
+    {
+        cv::imwrite(path, image);
+    }
+
+    
     string getFileName(string fileInfo, string format)
     {
         string name;
@@ -287,7 +307,7 @@ namespace Files
     }
 
 
-    bool isFrameWhite(const cv::Mat& frame, int threshold, double checkRatio) {
+    inline bool isFrameWhite(const cv::Mat& frame, int threshold, double checkRatio) {
         int rowsToCheck = frame.rows * checkRatio; // 检查中心的行数
         int colsToCheck = frame.cols * checkRatio; // 检查中心的列数
         int rowStart = (frame.rows - rowsToCheck) / 2;
@@ -298,8 +318,8 @@ namespace Files
         int whitePixels = 0;
         int totalPixels = centerRegion.rows * centerRegion.cols;
 
-        for (int row = 0; row < centerRegion.rows; ++row) {
-            for (int col = 0; col < centerRegion.cols; ++col) {
+        for (int row = 0; row < centerRegion.rows; row+=MULTIPLE) {
+            for (int col = 0; col < centerRegion.cols; col+= MULTIPLE) {
                 cv::Vec3b pixel = centerRegion.at<cv::Vec3b>(row, col);
                 if (pixel[0] > threshold && pixel[1] > threshold && pixel[2] > threshold) {
                     ++whitePixels;
@@ -307,7 +327,7 @@ namespace Files
             }
         }
         //std::cout << whitePixels << " " << totalPixels << '\n';
-        return (static_cast<double>(whitePixels) / totalPixels) > 0.8;
+        return (static_cast<double>(whitePixels) / (totalPixels / MULTIPLE /MULTIPLE)) > 0.8;
     }
 
     bool FrameExtractor(const std::string& videoPath, const std::string& outputPath, double samplingRatio, int RGBThreshold) {
@@ -321,7 +341,6 @@ namespace Files
             return false;
         }
 
-        // this会跟next变成同一张图，bug
         cv::Mat this_frame;
         cv::Mat next_frame;
         bool this_is_white = false;
@@ -330,6 +349,8 @@ namespace Files
         int threshold = RGBThreshold;
         double checkRatio = samplingRatio;
 
+        vector<Mat> images;
+        vector<cv::String> paths;
         if (!cap.read(this_frame)) return false;
         this_is_white = isFrameWhite(this_frame, threshold, checkRatio);
         while (true) {
@@ -339,16 +360,26 @@ namespace Files
 
             if (!this_is_white && next_is_white) {
 
-                std::string filename = outputDirectory + "/frame_" + std::to_string(++frameNumber) + PICFORMAT;
-                cv::imwrite(filename, this_frame);
-                std::cout << "保存提取帧: " << filename << std::endl;
+                cv::String filename = outputDirectory + "/frame_" + std::to_string(++frameNumber) + PICFORMAT;
+                paths.push_back(filename);
+                images.push_back(this_frame);
+                //cv::imwrite(filename, this_frame);
+                std::cout << "提取帧: " << filename << std::endl;
             }
 
             this_frame = next_frame.clone();
             this_is_white = next_is_white;
+            if (frameNumber != 0 && frameNumber % THREADCNT == 0)
+            {
+                threadSave(images, paths);
+                images.clear();
+                paths.clear();
+            }
         }
-
-        //std::cout << "Processing Successfully\n";
+        
+        threadSave(images, paths);
+        images.clear();
+        paths.clear();
         return true;
     }
 
@@ -358,14 +389,15 @@ namespace Files
       * - outputVideoPath:输出视频路径
       * - time:时间(毫秒)
     */
-    bool ImgToVideo(std::string imageFolderPath, std::string outputVideoPath, float time, int FPS,int whitefps) {
+    bool ImgToVideo(std::string imageFolderPath, std::string outputVideoPath, float time, int FPS,int whitefps,int imagefps) {
 
         // 获取图片文件列表
         std::vector<cv::String> imageFiles;
         cv::glob(imageFolderPath + "/*" + PICFORMAT, imageFiles);  // 假设图片格式为png
 
         // 每张图片录入几次()
-        int times = time / 1000 * FPS / imageFiles.size();
+        //int times = time / 1000 * FPS / (imageFiles.size()-1) - whitefps;
+        int times = FPS / imagefps - whitefps;
 
         // 检查是否有图片
         if (imageFiles.empty()) {
@@ -384,12 +416,13 @@ namespace Files
             return false;
         }
 
+        String fileName = imageFiles[0].substr(0, imageFiles[0].size() - 5);
         cv::Mat frame0 = cv::imread(imageFiles[0]);// 首张白图
         for (int i = 1; i < imageFiles.size(); i++)
         {
-            cv::Mat frame = cv::imread(imageFiles[i]);
+            cv::Mat frame = cv::imread(fileName+to_string(i)+PICFORMAT);
             
-            for (int j = 1; j < times - 1; j++)
+            for (int j = 0; j < times; j++)
                 videoWriter.write(frame);
 
             for (int j = 0; j < whitefps; j++)

@@ -4,22 +4,6 @@ namespace Decode
 {
     Vec3b pixel1[2] = { {0,0,0},{255,255,255} };
 
-
-    // 黑 蓝 橙 白
-    //Vec3b lowerThresholds[4] = {
-    //    {0, 0, 0},// 00
-    //    {150, 80, 0},//01
-    //    {0, 40, 150},//10
-    //    {181,156, 156}//11
-    //};
-    //Vec3b upperThresholds[4] = {
-    //    {149, 149, 149},//00
-    //    {255, 200, 135},//01
-    //    {180, 160, 255},//10
-    //    {255, 255, 255}//11
-    //};
-
-
     // 黑 蓝 橙 白
     Vec3b lowerThresholds[4] = {
         {0, 0, 0},// 00
@@ -187,21 +171,36 @@ namespace Decode
 
         // 获取图片文件列表
         std::vector<cv::String> imageFiles;
+        std::vector<cv::Mat> images;
+        cv::Mat src;
+        std::vector<cv::String> paths;
+        cv::String path;
         cv::glob(inFolderPath + "/*" + PICFORMAT, imageFiles);  // 假设图片格式为png
         if (imageFiles.size() == 0)
         {
             cout << "错误：帧图片路径" << inFolderPath << "为空" << endl;
             return -1;
         }
-        int cnt = 1;
-        for (auto imgfile : imageFiles)
+        String fileName = imageFiles[0].substr(0, imageFiles[0].size() - 5);
+        for (int i = 1; i <= imageFiles.size(); i++)
         {
-            Mat src = imread(imgfile);
-            Mat extCode = extractCodeHelper(src);
+            src = imread(fileName+to_string(i)+PICFORMAT);
+            //cout << fileName + to_string(i) + PICFORMAT << endl;;
+            images.push_back(extractCodeHelper(src));
+            path = outFolderPath + "/extractedCode" + to_string(i) + PICFORMAT;
+            paths.push_back(path);
+            cout << "提取二维码：" << path << endl;
+            if(i!=0&&i%THREADCNT==0)
+            {
+                Files::threadSave(images, paths);
+                images.clear();
+                paths.clear();
+            }
 
-            cout << "保存提取二维码" << outFolderPath + "/extractedCode" + to_string(cnt++) + PICFORMAT <<endl;
-            imwrite(outFolderPath + "/extractedCode" + to_string(cnt++) + PICFORMAT, extCode);
         }
+        Files::threadSave(images, paths);
+        images.clear();
+        paths.clear();
         return 0;
     }
 
@@ -216,28 +215,28 @@ namespace Decode
         else if (curR >= HEIGHT - (MARGIN + 7 + 1) - 1 && curC <= MARGIN + 7 + 1) return true;
 
 
-        // 矫正点
-        if (curC <= WIDTH / 2 + 2 && curC >= WIDTH / 2 - 2) // 中间三个（258）
-        {
-            if (curR <= MARGIN + 7 + 2 && curR >= MARGIN + 7 - 2) return true;
-            else if (curR <= HEIGHT / 2 + 2 && curR >= HEIGHT / 2 - 2) return true;
-            else if (curR <= HEIGHT - MARGIN - 7 + 2 - 1 && curR >= HEIGHT - MARGIN - 7 - 2 - 1) return true;
-        }
+        //// 矫正点
+        //if (curC <= WIDTH / 2 + 2 && curC >= WIDTH / 2 - 2) // 中间三个（258）
+        //{
+        //    if (curR <= MARGIN + 7 + 2 && curR >= MARGIN + 7 - 2) return true;
+        //    else if (curR <= HEIGHT / 2 + 2 && curR >= HEIGHT / 2 - 2) return true;
+        //    else if (curR <= HEIGHT - MARGIN - 7 + 2 - 1 && curR >= HEIGHT - MARGIN - 7 - 2 - 1) return true;
+        //}
 
-        if (curC <= MARGIN + 7 + 2 && curC >= MARGIN + 7 - 2) // 左中 4
-            if (curR >= HEIGHT / 2 - 2 && curR <= HEIGHT / 2 + 2)
-                return true;
+        //if (curC <= MARGIN + 7 + 2 && curC >= MARGIN + 7 - 2) // 左中 4
+        //    if (curR >= HEIGHT / 2 - 2 && curR <= HEIGHT / 2 + 2)
+        //        return true;
 
-        if (curC <= WIDTH - MARGIN - 7 + 2 - 1 && curC >= WIDTH - MARGIN - 7 - 2 - 1) // 右2个（69）
-        {
-            if (curR <= HEIGHT - MARGIN - 7 + 2 - 1 && curR >= HEIGHT - MARGIN - 7 - 2 - 1) // 9
-                return true;
-            else if (curR <= HEIGHT / 2 + 2 && curR >= HEIGHT / 2 - 2) // 6
-                return true;
-        }
+        //if (curC <= WIDTH - MARGIN - 7 + 2 - 1 && curC >= WIDTH - MARGIN - 7 - 2 - 1) // 右2个（69）
+        //{
+        //    if (curR <= HEIGHT - MARGIN - 7 + 2 - 1 && curR >= HEIGHT - MARGIN - 7 - 2 - 1) // 9
+        //        return true;
+        //    else if (curR <= HEIGHT / 2 + 2 && curR >= HEIGHT / 2 - 2) // 6
+        //        return true;
+        //}
 
 
-        if (curC == 7 + MARGIN || curR == 7 + MARGIN) return true;
+        //if (curC == 7 + MARGIN || curR == 7 + MARGIN) return true;
 
         return false;
     }
@@ -348,17 +347,19 @@ namespace Decode
         std::vector<cv::String> imageFiles;
         if (isColorConflict(upperThresholds, lowerThresholds)) return -1;
         cv::glob(extCodePath + "/*" + PICFORMAT, imageFiles);  // 假设图片格式为png
+        String fileName = imageFiles[0].substr(0, imageFiles[0].size() - 5);
         if (imageFiles.size() == 0)
         {
             cout << "错误：提取二维码路径"<<extCodePath<<"为空" << endl;
         }
-        for (int i = 0;i< imageFiles.size();i++)
+        for (int i = 1;i<= imageFiles.size();i++)
         {
-            image = imread(imageFiles[i]);
-            int error = readCodeHelper(i,data, image, origianl, debugMode);
+            image = imread(fileName+to_string(i)+PICFORMAT);
+            //cout << fileName + to_string(i) + PICFORMAT << endl;
+            int error = readCodeHelper(i-1,data, image, origianl, debugMode);
             if (error == -1) return -1;
             
-            cout << "图" << to_string(i + 1) << " 误码数" << error << " 误码率" << (float)error / CAPACITY * BIT << endl;
+            cout << "图" << to_string(i) << " 误码数" << error << " 误码率" << (float)error / CAPACITY * BIT << endl;
             if(debugMode==1)imwrite("error"+to_string(i)+PICFORMAT, image);
         }
         return 0;

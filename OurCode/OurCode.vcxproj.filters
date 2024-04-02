@@ -21,9 +21,6 @@
     <ClCompile Include="Encode.cpp">
       <Filter>源文件</Filter>
     </ClCompile>
-    <ClCompile Include="QR_Location.cpp">
-      <Filter>源文件</Filter>
-    </ClCompile>
     <ClCompile Include="Files.cpp">
       <Filter>源文件</Filter>
     </ClCompile>
@@ -42,9 +39,6 @@
       <Filter>头文件</Filter>
     </ClInclude>
     <ClInclude Include="Decode.h">
-      <Filter>头文件</Filter>
-    </ClInclude>
-    <ClInclude Include="QR_location.h">
       <Filter>头文件</Filter>
     </ClInclude>
     <ClInclude Include="Files.h">

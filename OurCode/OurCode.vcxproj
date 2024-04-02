@@ -137,7 +137,6 @@
     <ClCompile Include="Encode.cpp" />
     <ClCompile Include="Files.cpp" />
     <ClCompile Include="OurCode.cpp" />
-    <ClCompile Include="QR_Location.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Basic.h" />
@@ -145,7 +144,6 @@
     <ClInclude Include="Encode.h" />
     <ClInclude Include="Files.h" />
     <ClInclude Include="Matrix.h" />
-    <ClInclude Include="QR_location.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

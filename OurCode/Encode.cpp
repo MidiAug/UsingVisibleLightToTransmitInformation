@@ -1,6 +1,6 @@
 #include "Encode.h"
 
-void Encode::fileToImg(std::vector<int>& datas, Mat& img, std::string outputPath,int wait) {
+int Encode::fileToImg(std::vector<int>& datas, Mat& img, std::string outputPath,int wait) {
     initImg(HEIGHT, WIDTH, img);
     int numOfImg = datas.size() / (CAPACITY);
     int curNum = 0;
@@ -16,12 +16,13 @@ void Encode::fileToImg(std::vector<int>& datas, Mat& img, std::string outputPath
     //imshow("Window with adjustable size", img);
     //waitKey(0);
 
+
+    vector<String> paths;
+    String path;
+    vector<Mat> images;
     for (int i = 0; i < numOfImg; i++)
     {
-        string str1 = "image";
-        string str2 = to_string(i + 1);
-        string str3 = ".png";
-        filename = str1 + str2 + str3;
+        filename = "image" + to_string(i + 1)+PICFORMAT;
 
         
         int data1;
@@ -68,8 +69,26 @@ void Encode::fileToImg(std::vector<int>& datas, Mat& img, std::string outputPath
             showImg(adjust);
             waitKey(0);
         }
-        saveImg(outputPath + '/' + filename, adjust);
+        
+        path = outputPath + '/' + filename;
+
+        //Files::threadSave(adjust, path);
+        
+        paths.push_back(path);
+        images.push_back(adjust);
+        if (i != 0 && i % THREADCNT == 0)
+        {
+            Files::threadSave(images, paths);
+            images.clear();
+            paths.clear();
+        }
+
     }
+
+    Files::threadSave(images, paths);
+    images.clear();
+    path.clear();
+    return numOfImg;
 }
 
 // 需要跳过的区域
@@ -84,27 +103,27 @@ bool Encode::jump(int curR, int curC)
 
 
     // 矫正点
-    if (curC <= WIDTH / 2 + 2 && curC >= WIDTH / 2 - 2) // 中间三个（258）
-    {
-        if (curR <= MARGIN + 7 + 2 && curR >= MARGIN + 7 - 2) return true;
-        else if (curR <= HEIGHT / 2 + 2 && curR >= HEIGHT / 2 - 2) return true;
-        else if (curR <= HEIGHT - MARGIN - 7 + 2 - 1 && curR >= HEIGHT - MARGIN - 7 - 2 - 1) return true;
-    }
+    //if (curC <= WIDTH / 2 + 2 && curC >= WIDTH / 2 - 2) // 中间三个（258）
+    //{
+    //    if (curR <= MARGIN + 7 + 2 && curR >= MARGIN + 7 - 2) return true;
+    //    else if (curR <= HEIGHT / 2 + 2 && curR >= HEIGHT / 2 - 2) return true;
+    //    else if (curR <= HEIGHT - MARGIN - 7 + 2 - 1 && curR >= HEIGHT - MARGIN - 7 - 2 - 1) return true;
+    //}
 
-    if (curC <= MARGIN + 7 + 2 && curC >= MARGIN + 7 - 2) // 左中 4
-        if (curR >= HEIGHT / 2 - 2 && curR <= HEIGHT / 2 + 2)
-            return true;
+    //if (curC <= MARGIN + 7 + 2 && curC >= MARGIN + 7 - 2) // 左中 4
+    //    if (curR >= HEIGHT / 2 - 2 && curR <= HEIGHT / 2 + 2)
+    //        return true;
 
-    if (curC <= WIDTH - MARGIN - 7 + 2 -1&& curC >= WIDTH - MARGIN - 7 - 2 -1 ) // 右2个（69）
-    {
-        if (curR <= HEIGHT - MARGIN - 7 + 2 - 1 && curR >= HEIGHT - MARGIN - 7 - 2 - 1) // 9
-            return true;
-        else if (curR <= HEIGHT / 2 + 2 && curR >= HEIGHT / 2 - 2) // 6
-            return true;
-    }
+    //if (curC <= WIDTH - MARGIN - 7 + 2 -1&& curC >= WIDTH - MARGIN - 7 - 2 -1 ) // 右2个（69）
+    //{
+    //    if (curR <= HEIGHT - MARGIN - 7 + 2 - 1 && curR >= HEIGHT - MARGIN - 7 - 2 - 1) // 9
+    //        return true;
+    //    else if (curR <= HEIGHT / 2 + 2 && curR >= HEIGHT / 2 - 2) // 6
+    //        return true;
+    //}
 
 
-    if (curC == 7 + MARGIN || curR == 7 + MARGIN) return true;
+    //if (curC == 7 + MARGIN || curR == 7 + MARGIN) return true;
 
     return false;
 }
@@ -167,14 +186,14 @@ void Encode::correction(int x, int y, Mat& img)
 }
 // 将上述3种东西画到图里
 void Encode::drawBasic(Mat& img) {
-    findLacation(img);
+    //findLacation(img);
     // 寻像区域
     block(MARGIN, MARGIN, img);//左上
     block(WIDTH - MARGIN - 8, MARGIN, img);// 右上
     block(MARGIN, HEIGHT - MARGIN - 8, img); // 左下
 
-    for (int i = 0; i < 6; i++)
-        correction(saveCorrection[i][0], saveCorrection[i][1], img);
+    //for (int i = 0; i < 6; i++)
+    //    correction(saveCorrection[i][0], saveCorrection[i][1], img);
 
 }
 

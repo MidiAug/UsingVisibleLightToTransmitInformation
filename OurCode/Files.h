@@ -10,7 +10,9 @@
 #include <vector>
 #include <unordered_map>
 #include <cmath>
+#include <coroutine>
 #include <opencv2/opencv.hpp>
+#include <opencv2/imgcodecs.hpp>
 #include <filesystem> //这个需要C++17,右键OurCode，属性->常规->C++标准改为C++17及以上
 
 
@@ -19,6 +21,8 @@ using namespace cv;
 
 namespace Files
 {
+	void threadSave(Mat image, cv::String path);
+	void threadSave(vector<Mat> &images, vector<cv::String> &paths);
 	// 使用控制台获取格式为format的文件名
 	string getFileName(string fileInfo, string format);
 
@@ -52,7 +56,7 @@ namespace Files
 	void delete_files_with_format(string format, string path);
 
 	// 图片与视频间的转换
-	bool ImgToVideo(std::string imageFolderPath, std::string outputVideoPath, float time,int FPS, int whitefps);
+	bool ImgToVideo(std::string imageFolderPath, std::string outputVideoPath, float time,int FPS, int whitefps, int imagefps);
 
 
 

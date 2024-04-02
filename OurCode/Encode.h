@@ -40,7 +40,7 @@ namespace Encode {
 
     void initImg(int height, int width, Mat& img);
 
-    void fileToImg(std::vector<int>& datas, Mat& img,std::string outputPath, int wait = 0);
+    int fileToImg(std::vector<int>& datas, Mat& img,std::string outputPath, int wait = 0);
 
     void saveImg(String filePath, Mat& img);
     void showImg(Mat& img);
