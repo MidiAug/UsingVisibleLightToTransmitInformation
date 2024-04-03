@@ -62,7 +62,7 @@ int Encode::fileToImg(std::vector<int>& datas, Mat& img, std::string outputPath,
             }
         }
         curNum++;
-        if (i == 0 && index != CAPACITY) cout << "容量计算有误，重新计算，index为" << index <<"" << endl;
+        if (i == 0 && index != CAPACITY) cout << "容量计算有误，重新计算，index为" << index/BIT <<"" << endl;
         
         Mat adjust = ScaleToDisSize(img, MULTIPLE);
         if (wait == 1) {

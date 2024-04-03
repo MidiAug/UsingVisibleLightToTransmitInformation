@@ -109,7 +109,7 @@ int main()
             // 解码二维码
             cout << "---解码二维码---" << endl;
             vector<int> extractedDatas;
-            Decode::readCode(extCodePath, extractedDatas, filledDatas);
+            Decode::readCode(extCodePath, extractedDatas, filledDatas,1);
 
             //std::cout << extractedDatas.size() << '\n';
             //std::cout << filledDatas.size() << '\n';

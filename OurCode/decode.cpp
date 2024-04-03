@@ -133,8 +133,8 @@ namespace Decode
         if (width > height)
         {
             //cout << "width:" <<width<<" > height: "<<height<<"." << endl;
-            width = 1990;
-            height = 1110;
+            width = WIDTH * MULTIPLE;
+            height = HEIGHT * MULTIPLE;
             dstPoints[0] = Point2f(width, 0);
             dstPoints[1] = Point2f(0, 0);
             dstPoints[2] = Point2f(0, height);
@@ -144,8 +144,8 @@ namespace Decode
         else
         {
             //cout << "width:" << width << " < height: " << height << "." << endl;
-            width = 1990;
-            height = 1110;
+            width = WIDTH * MULTIPLE;
+            height = HEIGHT * MULTIPLE;
             dstPoints[0] = Point2f(0, 0);
             dstPoints[1] = Point2f(0, height);
             dstPoints[2] = Point2f(width, height);
@@ -288,7 +288,7 @@ namespace Decode
             for (int curC = MARGIN; curC < WIDTH - MARGIN; curC++)
             {
                 if (jump(curR, curC)) continue;
-                auto pixel = image.at<Vec3b>(curR * MULTIPLE + MULTIPLE / 2 - 1, curC * MULTIPLE + MULTIPLE / 2 - 1);
+                auto pixel = image.at<Vec3b>(curR * MULTIPLE + MULTIPLE / 2  , curC * MULTIPLE + MULTIPLE / 2 );
                 if (BIT == 1)
                 {
                     int val;
@@ -315,14 +315,15 @@ namespace Decode
                     if (val1 != oVal1 || val2 != oVal2)
                     {
                         error++;
-                        if (debug == 1)
+                        if (debug == 2)
                         {
                             cout << "curR: " << curR << " curC: " << curC;
                             cout << " Ori: " << oVal1 << " " << oVal2;
                             cout << " cur:" << val1 << " " << val2;
                             cout << " RGB: " << pixel << endl;
-                        
-                        
+
+                        }
+                        if(debug==1){
                             rectangle(
                                 image,
                                 cv::Point(curC * MULTIPLE, curR * MULTIPLE),
