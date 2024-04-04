@@ -18,7 +18,7 @@ int getTime()
     return ms;
 }
 int main()
-{   
+{
     cv::utils::logging::setLogLevel(utils::logging::LOG_LEVEL_SILENT);// 关闭控制台输出日志
 
     string mode ;
@@ -100,7 +100,7 @@ int main()
 
             // 截取帧
             cout << "---截取帧---" << endl;
-            Files::FrameExtractor(videoName, extFramePath, 0.1, 150);
+            Files::FrameExtractor(videoName, extFramePath, 0.1, 100);
 
             // 提取二维码
             cout << "---提取二维码---" << endl;

@@ -9,7 +9,7 @@ namespace Decode
 {
 
 	int extractCode(string& inFolderPath, string outFolderPath);
-	Mat extractCodeHelper(Mat& src);
+	void extractCodeHelper(Mat& src, String& path);
 	bool isColorConflict(Vec3b* upperThresholds, Vec3b* lowerThresholds);
 	//判断是否需要跳过
 	bool jump(int curR, int curC);
