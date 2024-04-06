@@ -335,6 +335,9 @@ namespace Files
         // 检查文件夹是否存在，如果不存在，则创建它；若果存在则清空内部文件
         create_or_clear_directory(outputDirectory);
 
+        std::vector<cv::String> orig;
+        cv::glob("originalImages/*.png" , orig);  // 假设图片格式为png
+        int origCnt = orig.size() - 1;
         cv::VideoCapture cap(videoPath);
         if (!cap.isOpened()) {
             std::cout << videoPath << "视频不存在" << endl;
@@ -354,6 +357,7 @@ namespace Files
         if (!cap.read(this_frame)) return false;
         this_is_white = isFrameWhite(this_frame, threshold, checkRatio);
         while (true) {
+            if (origCnt < frameNumber) break;
             if (!cap.read(next_frame)) break;
             next_is_white = isFrameWhite(next_frame, threshold, checkRatio);
             //cout << "this: " << this_is_white << "next: " << next_is_white << endl;
@@ -374,6 +378,7 @@ namespace Files
                 threadSave(images, paths);
                 images.clear();
                 paths.clear();
+               
             }
         }
         
@@ -413,7 +418,7 @@ namespace Files
         cv::Mat firstImage = cv::imread(imageFiles[0]);
 
         // 创建视频编写器
-        cv::VideoWriter videoWriter(outputVideoPath, cv::VideoWriter::fourcc('X', 'V', 'I', 'D'), FPS, firstImage.size());
+        cv::VideoWriter videoWriter(outputVideoPath, cv::VideoWriter::fourcc('m', 'p', '4', 'v'), FPS, firstImage.size());
         // 检查视频编写器是否成功打开
         if (!videoWriter.isOpened()) {
             std::cerr << "failed to open the video writer." << std::endl;
