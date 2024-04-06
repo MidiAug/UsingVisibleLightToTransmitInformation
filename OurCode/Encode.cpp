@@ -7,6 +7,7 @@ int Encode::fileToImg(std::vector<int>& datas, Mat& img, std::string outputPath,
     int index = 0, curC = 0, curR = 0;
     string filename;
     cout << "生成二维码图片数量：" << numOfImg << endl;
+    cout << "本次推荐生成视频时长为：" << numOfImg * 200 << endl;
     cout << endl;
     Mat black_or_white = ScaleToDisSize(img, MULTIPLE);
     //rectangle(black_or_white, Point(0, 0), Point(WIDTH* MULTIPLE, HEIGHT* MULTIPLE),Scalar(0,0,0), FILLED);

@@ -87,6 +87,7 @@ int main()
             vector<cv::String> tmp;
             cv::glob("*.bin"  , tmp);
             std::string binFilename =tmp[0]; // 文件名
+            std::string outName[2];
             
             vector<int> originalDatas = Files::readBinaryFile(binFilename);
             vector<int> postCheckDatas = Files::CRCEncode(originalDatas);
@@ -94,6 +95,10 @@ int main()
             //std::cout << originalDatas.size() << " " << postCheckDatas.size() << " " << filledDatas.size() << "\n";
             cout << endl;
             string videoName = Files::getFileName("拍摄的视频文件（格式：mp4）", ".mp4");
+            cout << "输入输出文件名\n";
+            cin >> outName[0];
+            cout << "输入比对文件名\n";
+            cin >> outName[1];
             string originalCodePath = "originalCodes";
             string extFramePath = "extractedFrames";
             string extCodePath = "extractedCodes";
@@ -131,10 +136,10 @@ int main()
                 
               }
             }
-            Files::outBin(vout, "vout.bin");
+            Files::outBin(vout, outName[1]);
 
             //std::cout << unCheckDatas.size() << '\n';
-            Files::outBin(unCheckDatas, "out.bin");
+            Files::outBin(unCheckDatas, outName[0]);
             int n = 0;
             cout << "\n传输数据位数为：" << originalDatas.size() << "，即" << originalDatas.size() / 1024 << "Kb" << endl;
             cout <<"传输正确率为：" << static_cast<double>(wrongBits) / originalDatas.size()<<'\n';

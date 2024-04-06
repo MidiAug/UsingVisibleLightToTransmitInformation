@@ -396,8 +396,12 @@ namespace Files
         cv::glob(imageFolderPath + "/*" + PICFORMAT, imageFiles);  // 假设图片格式为png
 
         // 每张图片录入几次()
-        //int times = time / 1000 * FPS / (imageFiles.size()-1) - whitefps;
-        int times = FPS / imagefps - whitefps;
+        int times = time / 1000 * FPS / (imageFiles.size()-1) - whitefps;
+        if (times < 1) {
+          cout << "错误：视频时长过短，请重试" << endl;
+          return false;
+        }
+        //int times = FPS / imagefps - whitefps;
 
         // 检查是否有图片
         if (imageFiles.empty()) {
