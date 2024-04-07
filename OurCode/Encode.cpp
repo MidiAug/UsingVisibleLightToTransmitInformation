@@ -10,7 +10,7 @@ int Encode::fileToImg(std::vector<int>& datas, Mat& img, std::string outputPath,
     cout << "本次推荐生成视频时长为：" << numOfImg * 200 << endl;
     cout << endl;
     Mat black_or_white = ScaleToDisSize(img, MULTIPLE);
-    //rectangle(black_or_white, Point(0, 0), Point(WIDTH* MULTIPLE, HEIGHT* MULTIPLE),Scalar(0,0,0), FILLED);
+    rectangle(black_or_white, Point(0, 0), Point(WIDTH* MULTIPLE, HEIGHT* MULTIPLE),Scalar(0,0,0), FILLED);
     cv::imwrite(outputPath + "/image0"+PICFORMAT, black_or_white);
     drawBasic(img);
     //cv::namedWindow("Window with adjustable size", cv::WINDOW_NORMAL);

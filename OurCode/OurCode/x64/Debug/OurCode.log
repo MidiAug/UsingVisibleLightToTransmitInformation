@@ -5,5 +5,5 @@ D:\Project\GitHub\UsingVisibleLightToTransmitInformation\OurCode\OurCode.cpp(18,
 D:\Project\GitHub\UsingVisibleLightToTransmitInformation\OurCode\OurCode.cpp(18,12): warning C4244:         [
 D:\Project\GitHub\UsingVisibleLightToTransmitInformation\OurCode\OurCode.cpp(18,12): warning C4244:             _Rep=__int64
 D:\Project\GitHub\UsingVisibleLightToTransmitInformation\OurCode\OurCode.cpp(18,12): warning C4244:         ]
-D:\Project\GitHub\UsingVisibleLightToTransmitInformation\OurCode\OurCode.cpp(89,49): warning C4244: “参数”: 从“int”转换到“float”，可能丢失数据
+D:\Project\GitHub\UsingVisibleLightToTransmitInformation\OurCode\OurCode.cpp(93,49): warning C4244: “参数”: 从“int”转换到“float”，可能丢失数据
   OurCode.vcxproj -> D:\Project\GitHub\UsingVisibleLightToTransmitInformation\OurCode\x64\Debug\OurCode.exe

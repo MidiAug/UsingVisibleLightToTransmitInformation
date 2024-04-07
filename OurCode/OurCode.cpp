@@ -58,6 +58,8 @@ int main(int argc,char*argv[])
 
         string binFileName = argv[2];
         // 读取、CRC、补齐二进制数据
+        std::cout << "---读取二进制文件---" << endl;
+
         vector<int> originalDatas = Files::readBinaryFile(binFileName);
         vector<int> postCheckDatas = Files::CRCEncode(originalDatas);
         vector<int> filledDatas = Files::fillData(postCheckDatas);
@@ -70,6 +72,7 @@ int main(int argc,char*argv[])
         // 二进制转图片
         Mat img;
         int imgcnt;
+        std::cout << "\n---转为二维码---" << endl;
         std::string imagePath = "originalImages";
         Files::create_or_clear_directory(imagePath);
         Encode::initImg(HEIGHT, WIDTH, img);
@@ -86,10 +89,11 @@ int main(int argc,char*argv[])
         //    std::cout << "请正确输入视频时长（单位：ms）" << endl;
         //    cin >> length;
         //}
+        std::cout << "---生成视频文件中---" << endl;
         Files::ImgToVideo(imagePath, videoName, length, 90,5,5);
 
         return 0;
-    }
+    } 
 
     else if (mode == "decode")
     {
@@ -97,7 +101,7 @@ int main(int argc,char*argv[])
         cv::glob("*.bin"  , tmp);
         std::string binFilename =tmp[0]; // 文件名
         std::string outName[2];
-            
+        std::cout << "---初始化---" << endl;
         vector<int> originalDatas = Files::readBinaryFile(binFilename);
         vector<int> postCheckDatas = Files::CRCEncode(originalDatas);
         vector<int> filledDatas = Files::fillData(postCheckDatas);
@@ -117,7 +121,7 @@ int main(int argc,char*argv[])
 
         // 截取帧
         std::cout << "---截取帧---" << endl;
-        Files::FrameExtractor(videoName, extFramePath, 0.1, 100);
+        //if(Files::FrameExtractor(videoName, extFramePath, 0.1, 200)==false) return -1;
 
         // 提取二维码
         std::cout << "---提取二维码---" << endl;

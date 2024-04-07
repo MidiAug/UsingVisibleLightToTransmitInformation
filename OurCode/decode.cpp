@@ -29,7 +29,7 @@ namespace Decode
          },
         {
             {0, 0, 0},// 00
-            {150, 80, 0},//01
+            {150, 60, 0},//01
             {0, 40, 150},//10
             {190,190, 190}//11
          }
@@ -520,18 +520,17 @@ namespace Decode
         {
             cout << "错误：提取二维码路径"<<extCodePath<<"为空" << endl;
         }
-        int index;
-        for ( index = 1; index <= 5; index++)
-        {
-            image = imread(fileName + to_string(index) + PICFORMAT);
-            totalRGB += setColorMode(image, 0.3);
-            if (index == imageFiles.size()||index == 5) break;
-
-        }
-        cout << "TRGB" << totalRGB << endl;
-        if ((float)totalRGB / index > 29000) COLORMODE = 1;
-        else COLORMODE = 0;
-        //COLORMODE = 1;
+        //int index;
+        //for ( index = 1; index <= 5; index++)
+        //{
+        //    image = imread(fileName + to_string(index) + PICFORMAT);
+        //    totalRGB += setColorMode(image, 0.3);
+        //    if (index == imageFiles.size()||index == 5) break;
+        //}
+        //cout << "TRGB" << totalRGB << endl;
+        //if ((float)totalRGB / index > 29000) COLORMODE = 1;
+        //else COLORMODE = 0;
+        COLORMODE = 1;
         if (isColorConflict(upperThresholds[COLORMODE], lowerThresholds[COLORMODE])) return -1;
 
         for (int i = 1;i<= imageFiles.size();i++)
@@ -542,12 +541,12 @@ namespace Decode
             int error = readCodeHelper(i-1,data, image, origianl, debugMode);
             if (error == -1) return -1;
             float errorRatio = (float)error / CAPACITY * BIT;
-            if (errorRatio > 0.7)
-            {
-                cout << "图" << to_string(i) << "误码数过大" << endl;
-                cout << "图片数量或顺序出错" << endl;
-                return -1;
-            }
+            //if (errorRatio > 0.7)
+            //{
+            //    cout << "图" << to_string(i) << "误码数过大" << endl;
+            //    cout << "图片数量或顺序出错" << endl;
+            //    return -1;
+            //}
             cout << "图" << to_string(i) << " 误码数" << error << " 误码率" << errorRatio << endl;
             if(debugMode==1||debugMode == 2)imwrite("errors/"+to_string(i)+PICFORMAT, image);
         }

@@ -330,6 +330,29 @@ namespace Files
         return (static_cast<double>(whitePixels) / (totalPixels / MULTIPLE /MULTIPLE)) > 0.8;
     }
 
+    inline bool isFrameBlack(const cv::Mat& frame, int threshold, double checkRatio) {
+        int rowsToCheck = frame.rows * checkRatio; // 检查中心的行数
+        int colsToCheck = frame.cols * checkRatio; // 检查中心的列数
+        int rowStart = (frame.rows - rowsToCheck) / 2;
+        int colStart = (frame.cols - colsToCheck) / 2;
+
+        cv::Mat centerRegion = frame(cv::Range(rowStart, rowStart + rowsToCheck), cv::Range(colStart, colStart + colsToCheck));
+
+        int whitePixels = 0;
+        int totalPixels = centerRegion.rows * centerRegion.cols;
+
+        for (int row = 0; row < centerRegion.rows; row += MULTIPLE) {
+            for (int col = 0; col < centerRegion.cols; col += MULTIPLE) {
+                cv::Vec3b pixel = centerRegion.at<cv::Vec3b>(row, col);
+                if (pixel[0] < threshold && pixel[1] < threshold && pixel[2] < threshold) {
+                    ++whitePixels;
+                }
+            }
+        }
+        //std::cout << whitePixels << " " << totalPixels << '\n';
+        return (static_cast<double>(whitePixels) / (totalPixels / MULTIPLE / MULTIPLE)) > 0.4;
+    }
+
     bool FrameExtractor(const std::string& videoPath, const std::string& outputPath, double samplingRatio, int RGBThreshold) {
         std::string outputDirectory = outputPath;
         // 检查文件夹是否存在，如果不存在，则创建它；若果存在则清空内部文件
@@ -348,6 +371,9 @@ namespace Files
         cv::Mat next_frame;
         bool this_is_white = false;
         bool next_is_white = false;
+
+        bool this_is_black = false;
+        bool next_is_black = false;
         int frameNumber = 0;
         int threshold = RGBThreshold;
         double checkRatio = samplingRatio;
@@ -355,15 +381,17 @@ namespace Files
         vector<Mat> images;
         vector<cv::String> paths;
         if (!cap.read(this_frame)) return false;
-        this_is_white = isFrameWhite(this_frame, threshold, checkRatio);
+        //this_is_white = isFrameWhite(this_frame, threshold, checkRatio);
+        this_is_black = isFrameBlack(this_frame, threshold, checkRatio);
         while (true) {
-            if (origCnt < frameNumber) break;
+            //if (origCnt <= frameNumber) break;
             if (!cap.read(next_frame)) break;
-            next_is_white = isFrameWhite(next_frame, threshold, checkRatio);
+            //next_is_white = isFrameWhite(next_frame, threshold, checkRatio);
+            next_is_black = isFrameBlack(next_frame, threshold, checkRatio);
             //cout << "this: " << this_is_white << "next: " << next_is_white << endl;
 
-            if (!this_is_white && next_is_white) {
-
+            //if (!this_is_white && next_is_white) {
+            if (!this_is_black && next_is_black) {
                 cv::String filename = outputDirectory + "/frame_" + std::to_string(++frameNumber) + PICFORMAT;
                 paths.push_back(filename);
                 images.push_back(this_frame);
@@ -372,7 +400,8 @@ namespace Files
             }
 
             this_frame = next_frame.clone();
-            this_is_white = next_is_white;
+            //this_is_white = next_is_white;
+            this_is_black = next_is_black;
             if (frameNumber != 0 && frameNumber % THREADCNT == 0)
             {
                 threadSave(images, paths);
